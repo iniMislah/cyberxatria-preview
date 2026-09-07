@@ -1,26 +1,226 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --font-sans: Arial, Helvetica, sans-serif;
+  --background: #03060d;
+  --foreground: #f8fafc;
+  --card: #090e18;
+  --card-foreground: #f8fafc;
+  --popover: #090e18;
+  --popover-foreground: #f8fafc;
+  --primary: #f43f5e;
+  --primary-foreground: #ffffff;
+  --secondary: #151a25;
+  --secondary-foreground: #f8fafc;
+  --muted: #101622;
+  --muted-foreground: #9aa4b5;
+  --accent: #21101d;
+  --accent-foreground: #ff5d78;
+  --destructive: #ff3b4d;
+  --border: rgba(255, 255, 255, 0.10);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #fb315c;
+  --chart-1: #ff3157;
+  --chart-2: #f72585;
+  --chart-3: #ff8a1f;
+  --chart-4: #22c55e;
+  --chart-5: #38bdf8;
+  --radius: 0.75rem;
+  --sidebar: #060a12;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #f43f5e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #141926;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #fb315c;
+}
+
+.dark {
+  --background: #03060d;
+  --foreground: #f8fafc;
+  --card: #090e18;
+  --card-foreground: #f8fafc;
+  --popover: #090e18;
+  --popover-foreground: #f8fafc;
+  --primary: #f43f5e;
+  --primary-foreground: #ffffff;
+  --secondary: #151a25;
+  --secondary-foreground: #f8fafc;
+  --muted: #101622;
+  --muted-foreground: #9aa4b5;
+  --accent: #21101d;
+  --accent-foreground: #ff5d78;
+  --destructive: #ff3b4d;
+  --border: rgba(255, 255, 255, 0.10);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #fb315c;
+  --sidebar: #060a12;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #f43f5e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #141926;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #fb315c;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-width: 320px;
+    overflow-x: hidden;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 75% -10%, rgba(225, 29, 72, 0.10), transparent 30rem),
+    #03060d;
+}
+
+::selection {
+  background: rgba(244, 63, 94, 0.35);
+  color: white;
+}
+
+.site-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.site-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, black, transparent 68%);
+}
+
+.page-grid {
+  margin-inline: auto;
+  width: min(1180px, calc(100% - 40px));
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #fb4566;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #fb315c);
+}
+
+.eyebrow::after {
+  background: linear-gradient(90deg, #fb315c, transparent);
+}
+
+.cyber-card {
+  border: 1px solid rgba(251, 49, 92, 0.24);
+  background: linear-gradient(145deg, rgba(15, 20, 31, 0.92), rgba(4, 8, 15, 0.90));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 20px 80px rgba(0, 0, 0, 0.18);
+}
+
+.glow-button {
+  background: linear-gradient(100deg, #c9185b, #ff3b36);
+  box-shadow: 0 0 26px rgba(244, 63, 94, 0.30);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #f43f5e, #ff5137, #ff9f2f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-vignette {
+  background: linear-gradient(90deg, #03060d 0%, rgba(3, 6, 13, 0.94) 32%, rgba(3, 6, 13, 0.38) 62%, rgba(3, 6, 13, 0.12) 100%);
+}
+
+.dot-field {
+  background-image: radial-gradient(rgba(251, 49, 92, 0.28) 1px, transparent 1px);
+  background-size: 17px 17px;
+}
+
+@media (max-width: 640px) {
+  .page-grid {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .hero-vignette {
+    background: linear-gradient(180deg, rgba(3, 6, 13, 0.15), #03060d 66%);
+  }
 }

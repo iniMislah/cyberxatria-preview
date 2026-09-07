@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CyberXatria Website
 
-## Getting Started
+Static-first company profile and customer portal prototype for CyberXatria, built with Next.js App Router, TypeScript, Tailwind CSS, and shadcn/ui.
 
-First, run the development server:
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+The build is exported as a static site to `out/`.
 
-To learn more about Next.js, take a look at the following resources:
+## Implemented routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/` — landing page
+- `/company` — company profile
+- `/solutions/soc` — SOC as a Service
+- `/solutions/cyber-drill` — Cyber Drill Exercise
+- `/solutions/tabletop` — Cyber Security Tabletop Exercise
+- `/signup`, `/verify-account`, `/account-created`, `/login` — onboarding flow
+- `/dashboard`, `/request-demo`, `/pricing`, `/billing` — customer portal flow
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Integration notes
 
-## Deploy on Vercel
+The forms and dashboard currently use presentation data and client-side transitions so every required page can be reviewed end-to-end. Authentication, OTP delivery, payment, CRM, and backend APIs can be connected later without changing the page structure.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Set `NEXT_PUBLIC_SITE_URL` to the production origin when building so canonical Open Graph URLs point to the deployed domain.
