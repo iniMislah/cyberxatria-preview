@@ -6,10 +6,12 @@ Static-first company profile and customer portal prototype for CyberXatria, buil
 
 ```bash
 npm install
-npm run dev
+cp .env.example .env.local
+npm run dev -- -p 3001
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3001`. Backend New Identity berjalan terpisah di
+`http://localhost:3000`.
 
 ## Production build
 
@@ -27,11 +29,47 @@ The build is exported as a static site to `out/`.
 - `/solutions/soc` — SOC as a Service
 - `/solutions/cyber-drill` — Cyber Drill Exercise
 - `/solutions/tabletop` — Cyber Security Tabletop Exercise
-- `/signup`, `/verify-account`, `/account-created`, `/login` — onboarding flow
+- `/signup` — input nama, email, telepon, dan Cloudflare Turnstile untuk meminta OTP
+- `/verify-account` — verifikasi OTP dan langsung meminta pengiriman link create password
+- `/account-created` — konfirmasi bahwa link create password sudah dikirim
+- `/activate-account` — membuat password dari token pada link email
+- `/login` — login lokal melalui test-only Identity API
 - `/dashboard`, `/request-demo`, `/pricing`, `/billing` — customer portal flow
+
+## New Identity local flow
+
+Pastikan `.env` backend New Identity berisi nilai berikut saat pengujian lokal:
+
+```env
+CORS_ORIGINS=http://localhost:3001
+FRONTEND_URL=http://localhost:3001
+MAIL_TRANSPORT=log
+ENABLE_TEST_AUTH_API=true
+```
+
+Dengan `MAIL_TRANSPORT=log`, response backend menyertakan OTP dan URL aktivasi
+khusus development. CyberXatria menampilkan keduanya agar seluruh flow dapat
+diuji lokal tanpa SMTP. Pada mode SMTP, user mengambil OTP dan link create
+password dari inbox email.
+
+Self-service registration tidak memakai approval admin. Urutannya adalah:
+
+1. isi nama, email, telepon, dan CAPTCHA;
+2. masukkan OTP email;
+3. Identity langsung mengirim link create password;
+4. buka `/activate-account?token=...`, buat password minimal 8 karakter;
+5. login memakai akun yang baru aktif.
+
+Endpoint login yang dipakai halaman `/login` masih test-only dan harus diganti
+dengan kontrak OIDC/JWT production ketika tersedia.
+
+Untuk wording di seluruh website, user tanpa `role_bindings` aktif dianggap
+memiliki effective role `User`. Ini merupakan default presentasi frontend dan
+tidak otomatis memberikan permission RBAC; authorization backend tetap hanya
+berasal dari binding dan permission yang tersimpan di database.
 
 ## Integration notes
 
-The forms and dashboard currently use presentation data and client-side transitions so every required page can be reviewed end-to-end. Authentication, OTP delivery, payment, CRM, and backend APIs can be connected later without changing the page structure.
+Dashboard, billing, dan halaman bisnis lainnya masih memakai presentation data.
 
 Set `NEXT_PUBLIC_SITE_URL` to the production origin when building so canonical Open Graph URLs point to the deployed domain.
