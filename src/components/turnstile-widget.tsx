@@ -30,9 +30,11 @@ const LOCAL_TEST_SITE_KEY = "1x00000000000000000000AA";
 export function TurnstileWidget({
   onToken,
   onError,
+  action = "registration_request_otp",
 }: {
   onToken: (token: string) => void;
   onError?: () => void;
+  action?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
@@ -46,7 +48,7 @@ export function TurnstileWidget({
 
     widgetIdRef.current = window.turnstile.render(containerRef.current, {
       sitekey: siteKey,
-      action: "registration_request_otp",
+      action,
       theme: "dark",
       size: "flexible",
       callback: onToken,
@@ -56,7 +58,7 @@ export function TurnstileWidget({
         onError?.();
       },
     });
-  }, [onError, onToken, siteKey]);
+  }, [action, onError, onToken, siteKey]);
 
   useEffect(() => {
     renderWidget();
@@ -79,4 +81,3 @@ export function TurnstileWidget({
     </div>
   );
 }
-

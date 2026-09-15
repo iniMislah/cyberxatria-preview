@@ -17,7 +17,11 @@ import { SiteHeader } from "@/components/site-header";
 const inputClass =
   "h-12 border-white/10 bg-white/[0.025] px-4 pr-12 text-white placeholder:text-slate-600 focus-visible:border-rose-500/70 focus-visible:ring-rose-500/20";
 
-export function PasswordActivationForm() {
+export function PasswordActivationForm({
+  mode = "registration",
+}: {
+  mode?: "registration" | "reset";
+}) {
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
   const [submitting, setSubmitting] = useState(false);
@@ -36,7 +40,11 @@ export function PasswordActivationForm() {
     );
 
     if (!token) {
-      setError("Token create password tidak ditemukan pada link ini.");
+      setError(
+        mode === "registration"
+          ? "Token create password tidak ditemukan pada link ini."
+          : "Token reset password tidak ditemukan pada link ini.",
+      );
       return;
     }
     if (password !== passwordConfirmation) {
@@ -47,7 +55,9 @@ export function PasswordActivationForm() {
     setSubmitting(true);
     try {
       await identityApiRequest<CompleteRegistrationResponse>(
-        "/auth/registration/complete",
+        mode === "registration"
+          ? "/auth/registration/complete"
+          : "/authentication/password-reset/confirm",
         {
           method: "POST",
           body: JSON.stringify({ token, password, passwordConfirmation }),
@@ -78,10 +88,15 @@ export function PasswordActivationForm() {
                 <div className="mx-auto grid size-20 place-items-center rounded-full border border-emerald-400/30 bg-emerald-500/10">
                   <Check className="size-10 text-emerald-400" />
                 </div>
-                <h1 className="mt-7 text-3xl font-bold">Password berhasil dibuat</h1>
+                <h1 className="mt-7 text-3xl font-bold">
+                  {mode === "registration"
+                    ? "Password berhasil dibuat"
+                    : "Password berhasil di-reset"}
+                </h1>
                 <p className="mt-3 leading-7 text-slate-400">
-                  Akun CyberXatria Anda sudah aktif dan sekarang dapat digunakan
-                  untuk login.
+                  {mode === "registration"
+                    ? "Akun CyberXatria Anda sudah aktif dan sekarang dapat digunakan untuk login."
+                    : "Password baru sudah aktif. Silakan login kembali; seluruh session lama telah dikeluarkan."}
                 </p>
                 <Link
                   href="/login"
@@ -95,11 +110,14 @@ export function PasswordActivationForm() {
                 <div className="grid size-12 place-items-center rounded-xl bg-gradient-to-br from-fuchsia-700 to-red-500">
                   <KeyRound />
                 </div>
-                <p className="eyebrow mt-7">Aktivasi akun</p>
+                <p className="eyebrow mt-7">
+                  {mode === "registration" ? "Aktivasi akun" : "Reset password"}
+                </p>
                 <h1 className="mt-4 text-3xl font-bold">Buat password Anda</h1>
                 <p className="mt-3 text-sm leading-6 text-slate-400">
-                  Email telah terverifikasi. Buat password minimal 8 karakter
-                  untuk menyelesaikan registrasi.
+                  {mode === "registration"
+                    ? "Email telah terverifikasi. Buat password minimal 8 karakter untuk menyelesaikan registrasi."
+                    : "Buat password baru minimal 8 karakter. Semua session lama akan dikeluarkan setelah password disimpan."}
                 </p>
 
                 {!token && (
@@ -159,7 +177,11 @@ export function PasswordActivationForm() {
                   disabled={submitting || !token}
                   className="glow-button mt-7 h-12 w-full text-base disabled:opacity-50"
                 >
-                  {submitting ? "Mengaktifkan akun..." : "Simpan password & aktifkan akun"}
+                  {submitting
+                    ? "Menyimpan password..."
+                    : mode === "registration"
+                      ? "Simpan password & aktifkan akun"
+                      : "Simpan password baru"}
                 </Button>
               </form>
             )}
@@ -170,4 +192,3 @@ export function PasswordActivationForm() {
     </main>
   );
 }
-

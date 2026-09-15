@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Bell, CreditCard, FileText, Home, LifeBuoy, LogOut, Menu, Package, ReceiptText, Settings, ShieldCheck, Target, X } from "lucide-react";
 import { useState } from "react";
 import { AUTH_SESSION_KEY, useCurrentUser } from "@/lib/current-user";
+import { identityApiRequest } from "@/lib/identity-api";
 
 const nav = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
@@ -23,6 +24,19 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
   const { fullName, initials, roleLabel } = useCurrentUser();
 
   function logout() {
+    try {
+      const session = JSON.parse(
+        sessionStorage.getItem(AUTH_SESSION_KEY) ?? "null",
+      ) as { accessToken?: string } | null;
+      if (session?.accessToken) {
+        void identityApiRequest("/authentication/logout", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${session.accessToken}` },
+        });
+      }
+    } catch {
+      // Local session is cleared even when its stored value is malformed.
+    }
     sessionStorage.removeItem(AUTH_SESSION_KEY);
   }
   return <main className="min-h-screen bg-[#03060d] text-white">

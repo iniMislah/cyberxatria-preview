@@ -5,14 +5,15 @@ import { useMemo, useSyncExternalStore } from "react";
 export const AUTH_SESSION_KEY = "cyberxatria-test-session";
 
 export type ActiveRole = {
-  bindingId: string;
+  bindingId?: string;
   code: string;
   name: string;
-  scopeType: "platform" | "tenant" | "organization" | "application";
-  tenantId: string | null;
-  organizationId: string | null;
-  validFrom: string | null;
-  validUntil: string | null;
+  scopeType?: "platform" | "channel" | "company" | "application";
+  adminScope?: "CHANNEL" | "COMPANY" | null;
+  channelId?: string | null;
+  companyId?: string | null;
+  validFrom?: string | null;
+  validUntil?: string | null;
 };
 
 export type EffectiveRole = ActiveRole & {
@@ -23,15 +24,19 @@ const DEFAULT_USER_ROLE: EffectiveRole = {
   bindingId: "",
   code: "user",
   name: "User",
-  scopeType: "platform",
-  tenantId: null,
-  organizationId: null,
+  scopeType: "company",
+  adminScope: null,
+  channelId: null,
+  companyId: null,
   validFrom: null,
   validUntil: null,
   source: "default",
 };
 
 export type IdentityLoginSession = {
+  accessToken: string;
+  refreshToken: string;
+  sessionId: string;
   user: {
     id: string;
     email: string;
@@ -45,6 +50,8 @@ export type IdentityLoginSession = {
     id: string;
     expiresAt: string;
     refreshToken: string;
+    channelId?: string | null;
+    companyId?: string | null;
   };
 };
 

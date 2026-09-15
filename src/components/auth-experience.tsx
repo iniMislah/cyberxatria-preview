@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   Check,
   ExternalLink,
+  KeyRound,
   LockKeyhole,
   Mail,
   Phone,
@@ -35,7 +36,7 @@ import {
 } from "@/lib/identity-api";
 import { AUTH_SESSION_KEY, type IdentityLoginSession } from "@/lib/current-user";
 
-type Mode = "login" | "signup" | "verify" | "success";
+type Mode = "login" | "signup" | "verify" | "success" | "forgot";
 
 const inputClass =
   "h-12 border-white/10 bg-white/[0.025] px-4 text-white placeholder:text-slate-600 focus-visible:border-rose-500/70 focus-visible:ring-rose-500/20";
@@ -73,6 +74,7 @@ export function AuthExperience({ mode }: { mode: Mode }) {
 
 function AuthCard({ mode }: { mode: Exclude<Mode, "success"> }) {
   const isLogin = mode === "login";
+  const isRecovery = mode === "forgot";
 
   return (
     <div className="grid overflow-hidden rounded-3xl border border-white/10 bg-[#070b13] shadow-2xl lg:grid-cols-[.9fr_1.1fr]">
@@ -89,15 +91,15 @@ function AuthCard({ mode }: { mode: Exclude<Mode, "success"> }) {
           <div>
             <p className="eyebrow">Secure access</p>
             <h1 className="mt-5 max-w-md text-4xl font-bold leading-tight">
-              {isLogin ? (
+              {isLogin || isRecovery ? (
                 <>Selamat datang kembali di <span className="text-gradient">CyberXatria</span></>
               ) : (
                 <>Mulai Lindungi Bisnis Anda Bersama <span className="text-gradient">CyberXatria</span></>
               )}
             </h1>
             <p className="mt-5 max-w-sm leading-7 text-slate-300">
-              {isLogin
-                ? "Masuk untuk mengakses layanan keamanan dan meningkatkan kesiapan organisasi Anda."
+              {isLogin || isRecovery
+                ? "Pulihkan akses akun Anda melalui link aman yang dikirim ke email terdaftar."
                 : "Daftarkan email, verifikasi OTP, lalu buat password melalui link yang dikirim ke email Anda."}
             </p>
           </div>
@@ -113,7 +115,15 @@ function AuthCard({ mode }: { mode: Exclude<Mode, "success"> }) {
       </div>
 
       <div className="p-6 sm:p-10 lg:p-12">
-        {mode === "verify" ? <VerifyOtpForm /> : isLogin ? <LoginForm /> : <SignupForm />}
+        {mode === "verify" ? (
+          <VerifyOtpForm />
+        ) : isLogin ? (
+          <LoginForm />
+        ) : isRecovery ? (
+          <ForgotPasswordForm />
+        ) : (
+          <SignupForm />
+        )}
       </div>
     </div>
   );
@@ -333,7 +343,7 @@ function LoginForm() {
     const form = new FormData(event.currentTarget);
     setSubmitting(true);
     try {
-      const result = await identityApiRequest<IdentityLoginSession>("/authentication/test/login", {
+      const result = await identityApiRequest<IdentityLoginSession>("/authentication/login", {
         method: "POST",
         body: JSON.stringify({ email: String(form.get("email") ?? ""), password: String(form.get("password") ?? ""), deviceName: "CyberXatria local web" }),
       });
@@ -353,12 +363,95 @@ function LoginForm() {
       <p className="mt-3 text-sm text-slate-400">Masukkan email dan password untuk melanjutkan.</p>
       <div className="mt-8 space-y-5">
         <div><Label htmlFor="email">Email *</Label><Input id="email" name="email" type="email" required autoComplete="email" placeholder="nama@perusahaan.com" className={`${inputClass} mt-2`} /></div>
-        <div><div className="flex justify-between"><Label htmlFor="password">Password *</Label><a href="#" className="text-xs text-rose-400">Lupa password?</a></div><Input id="password" name="password" type="password" required autoComplete="current-password" placeholder="Masukkan password Anda" className={`${inputClass} mt-2`} /></div>
+        <div><div className="flex justify-between"><Label htmlFor="password">Password *</Label><Link href="/forgot-password" className="text-xs text-rose-400">Lupa password?</Link></div><Input id="password" name="password" type="password" required autoComplete="current-password" placeholder="Masukkan password Anda" className={`${inputClass} mt-2`} /></div>
         <div className="flex items-start gap-3"><Checkbox id="remember" className="mt-0.5" /><Label htmlFor="remember" className="text-xs font-normal leading-5 text-slate-400">Ingat saya</Label></div>
       </div>
       {error && <ErrorNotice message={error} />}
       <Button type="submit" disabled={submitting} className="glow-button mt-7 h-12 w-full text-base disabled:opacity-50">{submitting ? "Masuk..." : "Masuk"}</Button>
       <p className="mt-7 text-center text-sm text-slate-500">Belum memiliki akun? <Link href="/signup" className="font-semibold text-rose-400">Buat akun di sini</Link></p>
+    </form>
+  );
+}
+
+function ForgotPasswordForm() {
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaVersion, setCaptchaVersion] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    if (!captchaToken) {
+      setError("Selesaikan verifikasi CAPTCHA terlebih dahulu.");
+      return;
+    }
+    const form = new FormData(event.currentTarget);
+    setSubmitting(true);
+    try {
+      await identityApiRequest("/authentication/password-reset/request", {
+        method: "POST",
+        body: JSON.stringify({
+          email: String(form.get("email") ?? ""),
+          captchaToken,
+        }),
+      });
+      setSent(true);
+    } catch (caught) {
+      setError(messageFrom(caught, "Gagal meminta reset password"));
+      setCaptchaToken("");
+      setCaptchaVersion((value) => value + 1);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (sent) {
+    return (
+      <div className="mx-auto max-w-lg text-center">
+        <div className="mx-auto grid size-20 place-items-center rounded-full border border-emerald-400/30 bg-emerald-500/10">
+          <Mail className="size-9 text-emerald-400" />
+        </div>
+        <h2 className="mt-7 text-3xl font-bold">Periksa email Anda</h2>
+        <p className="mt-3 leading-7 text-slate-400">
+          Jika email terdaftar, link reset password sudah dikirim.
+        </p>
+        <Link href="/login" className="glow-button mt-8 inline-flex h-12 w-full items-center justify-center rounded-lg font-semibold">
+          Kembali ke login
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={submit} className="mx-auto max-w-lg">
+      <div className="mb-8 grid size-12 place-items-center rounded-xl bg-gradient-to-br from-fuchsia-700 to-red-500">
+        <KeyRound />
+      </div>
+      <h2 className="text-3xl font-bold">Reset password</h2>
+      <p className="mt-3 text-sm leading-6 text-slate-400">
+        Masukkan email akun. Kami akan mengirim link reset yang hanya dapat digunakan satu kali.
+      </p>
+      <div className="mt-8 space-y-5">
+        <div>
+          <Label htmlFor="resetEmail">Email *</Label>
+          <Input id="resetEmail" name="email" type="email" required autoComplete="email" className={`${inputClass} mt-2`} />
+        </div>
+        <TurnstileWidget
+          key={captchaVersion}
+          action="password_reset"
+          onToken={setCaptchaToken}
+          onError={() => setError("Widget CAPTCHA gagal dimuat.")}
+        />
+      </div>
+      {error && <ErrorNotice message={error} />}
+      <Button type="submit" disabled={submitting} className="glow-button mt-7 h-12 w-full text-base disabled:opacity-50">
+        {submitting ? "Mengirim..." : "Kirim link reset password"}
+      </Button>
+      <p className="mt-7 text-center text-sm text-slate-500">
+        Ingat password? <Link href="/login" className="font-semibold text-rose-400">Kembali ke login</Link>
+      </p>
     </form>
   );
 }
