@@ -11,7 +11,10 @@ import {
   LogOut,
   Menu,
   Network,
+  ServerCog,
   Settings,
+  ShieldCheck,
+  Users,
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
@@ -39,17 +42,28 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
       return [
         { href: "/admin/channels", label: "Channel", icon: Network },
         { href: "/admin/companies", label: "Company", icon: Building2 },
+        { href: "/admin/users", label: "User Management", icon: Users },
+        {
+          href: "/admin/admin-scopes",
+          label: "Admin Scope",
+          icon: ShieldCheck,
+        },
+        { href: "/admin/assets", label: "Asset Mapping", icon: ServerCog },
       ];
     }
     if (roleCode === "ADMIN" && effectiveRole.adminScope === "CHANNEL") {
       return [
         { href: "/admin/channels", label: "Channel Saya", icon: Network },
         { href: "/admin/companies", label: "Company", icon: Building2 },
+        { href: "/admin/users", label: "User Management", icon: Users },
+        { href: "/admin/assets", label: "Asset Mapping", icon: ServerCog },
       ];
     }
     if (roleCode === "ADMIN" && effectiveRole.adminScope === "COMPANY") {
       return [
         { href: "/admin/companies", label: "Company Saya", icon: Building2 },
+        { href: "/admin/users", label: "User Management", icon: Users },
+        { href: "/admin/assets", label: "Asset Mapping", icon: ServerCog },
       ];
     }
     return [{ href: "/dashboard", label: "SOC Dashboard", icon: Home }];
@@ -63,6 +77,15 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
       );
     }
     if (path.startsWith("/admin/companies")) {
+      return roleCode === "SUPER_ADMIN" || roleCode === "ADMIN";
+    }
+    if (path.startsWith("/admin/users")) {
+      return roleCode === "SUPER_ADMIN" || roleCode === "ADMIN";
+    }
+    if (path.startsWith("/admin/admin-scopes")) {
+      return roleCode === "SUPER_ADMIN";
+    }
+    if (path.startsWith("/admin/assets")) {
       return roleCode === "SUPER_ADMIN" || roleCode === "ADMIN";
     }
     if (path === "/dashboard") return roleCode === "USER";
