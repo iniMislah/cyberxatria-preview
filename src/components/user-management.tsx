@@ -19,6 +19,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCurrentUser } from "@/lib/current-user";
+import { UserPrivilegePanel } from "@/components/user-privilege-panel";
 import {
   authenticatedIdentityRequest,
   type PaginatedResponse,
@@ -65,7 +66,7 @@ function fullName(user: IdentityUser) {
 }
 
 export function UserManagement() {
-  const { roleCode } = useCurrentUser();
+  const { roleCode, hasPermission } = useCurrentUser();
   const isSuperAdmin = roleCode === "SUPER_ADMIN";
   const [items, setItems] = useState<IdentityUser[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
@@ -388,6 +389,13 @@ export function UserManagement() {
                     Assign Company
                   </Button>
                 </div>
+              )}
+              {selected.access.role === "USER" && hasPermission("privilege.view") && (
+                <UserPrivilegePanel
+                  userId={selected.id}
+                  canAssign={hasPermission("privilege.assign")}
+                  canRemove={hasPermission("privilege.remove")}
+                />
               )}
               <div className="flex flex-wrap gap-2">
                 <Button variant="outline" onClick={() => setMode("edit")}><Pencil /> Update</Button>

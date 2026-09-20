@@ -15,6 +15,7 @@ export type ActiveRole = {
   adminScope?: AdminScope | null;
   channelId?: string | null;
   companyId?: string | null;
+  permissions?: string[];
   validFrom?: string | null;
   validUntil?: string | null;
 };
@@ -53,6 +54,7 @@ export type IdentityLoginSession = {
   adminScope?: AdminScope | null;
   channelId?: string | null;
   companyId?: string | null;
+  permissions?: string[];
   session: {
     id: string;
     expiresAt: string;
@@ -189,6 +191,9 @@ export function useCurrentUser() {
       effectiveRole,
       roles,
       hasDatabaseRole: effectiveRole.source === "database",
+      permissions: session?.permissions ?? [],
+      hasPermission: (permission: string) =>
+        (session?.permissions ?? []).includes(permission),
     };
   }, [rawSession]);
 }

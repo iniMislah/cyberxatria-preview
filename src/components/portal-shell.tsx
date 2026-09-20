@@ -5,9 +5,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
+  Boxes,
   Building2,
   Home,
   LifeBuoy,
+  Layers3,
   LogOut,
   Menu,
   Network,
@@ -35,7 +37,7 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
     () => true,
     () => false,
   );
-  const { fullName, initials, roleLabel, roleCode, effectiveRole, session } =
+  const { fullName, initials, roleLabel, roleCode, effectiveRole, session, permissions } =
     useCurrentUser();
   const nav = useMemo(() => {
     if (roleCode === "SUPER_ADMIN") {
@@ -49,6 +51,8 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
           icon: ShieldCheck,
         },
         { href: "/admin/assets", label: "Asset Mapping", icon: ServerCog },
+        ...(permissions.includes("feature.view") ? [{ href: "/admin/features", label: "Features & Plans", icon: Layers3 }] : []),
+        ...(permissions.includes("entitlement.view") && permissions.includes("access_set.view") ? [{ href: "/admin/privilege-config", label: "Privilege Config", icon: Boxes }] : []),
       ];
     }
     if (roleCode === "ADMIN" && effectiveRole.adminScope === "CHANNEL") {
@@ -57,6 +61,8 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
         { href: "/admin/companies", label: "Company", icon: Building2 },
         { href: "/admin/users", label: "User Management", icon: Users },
         { href: "/admin/assets", label: "Asset Mapping", icon: ServerCog },
+        ...(permissions.includes("feature.view") ? [{ href: "/admin/features", label: "Feature Catalog", icon: Layers3 }] : []),
+        ...(permissions.includes("entitlement.view") && permissions.includes("access_set.view") ? [{ href: "/admin/privilege-config", label: "Privilege Config", icon: Boxes }] : []),
       ];
     }
     if (roleCode === "ADMIN" && effectiveRole.adminScope === "COMPANY") {
@@ -64,10 +70,12 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
         { href: "/admin/companies", label: "Company Saya", icon: Building2 },
         { href: "/admin/users", label: "User Management", icon: Users },
         { href: "/admin/assets", label: "Asset Mapping", icon: ServerCog },
+        ...(permissions.includes("feature.view") ? [{ href: "/admin/features", label: "Feature Catalog", icon: Layers3 }] : []),
+        ...(permissions.includes("entitlement.view") && permissions.includes("access_set.view") ? [{ href: "/admin/privilege-config", label: "Privilege Config", icon: Boxes }] : []),
       ];
     }
     return [{ href: "/dashboard", label: "SOC Dashboard", icon: Home }];
-  }, [effectiveRole.adminScope, roleCode]);
+  }, [effectiveRole.adminScope, permissions, roleCode]);
 
   const isAllowed = useMemo(() => {
     if (path.startsWith("/admin/channels")) {
@@ -88,9 +96,18 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
     if (path.startsWith("/admin/assets")) {
       return roleCode === "SUPER_ADMIN" || roleCode === "ADMIN";
     }
+    if (path.startsWith("/admin/features")) {
+      return permissions.includes("feature.view");
+    }
+    if (path.startsWith("/admin/privilege-config")) {
+      return (
+        permissions.includes("entitlement.view") &&
+        permissions.includes("access_set.view")
+      );
+    }
     if (path === "/dashboard") return roleCode === "USER";
     return false;
-  }, [effectiveRole.adminScope, path, roleCode]);
+  }, [effectiveRole.adminScope, path, permissions, roleCode]);
 
   useEffect(() => {
     if (!hydrated) return;

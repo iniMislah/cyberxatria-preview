@@ -35,6 +35,9 @@ The build is exported as a static site to `out/`.
 - `/activate-account` — membuat password dari token pada link email
 - `/login` — login lokal melalui test-only Identity API
 - `/dashboard`, `/request-demo`, `/pricing`, `/billing` — customer portal flow
+- `/admin/users` — user management, company assignment, dan pengelolaan privilege fitur/aset
+- `/admin/features` — katalog feature dan feature plan
+- `/admin/privilege-config` — entitlement company dan access set aset
 
 ## New Identity local flow
 
@@ -67,6 +70,11 @@ Untuk wording di seluruh website, user tanpa `role_bindings` aktif dianggap
 memiliki effective role `User`. Ini merupakan default presentasi frontend dan
 tidak otomatis memberikan permission RBAC; authorization backend tetap hanya
 berasal dari binding dan permission yang tersimpan di database.
+
+Setelah migration permission dijalankan, login ulang diperlukan agar frontend
+menerima daftar permission terbaru. Panel privilege hanya muncul jika session
+memiliki `privilege.view`; tombol assign dan remove masing-masing mengikuti
+`privilege.assign` dan `privilege.remove`.
 
 ## Integration notes
 
