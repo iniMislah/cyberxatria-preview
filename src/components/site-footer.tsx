@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BriefcaseBusiness, Camera, Mail, MapPin, Phone } from "lucide-react";
+import { APP_VERSION } from "@/lib/app-version";
 
 export function SiteFooter() {
   return (
@@ -40,7 +41,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="page-grid mt-10 flex flex-col gap-3 border-t border-white/8 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-        <p>© 2026 CyberXatria. Semua hak dilindungi.</p>
+        <p>© 2026 CyberXatria. Semua hak dilindungi. · v{APP_VERSION}</p>
         <div className="flex gap-5"><a href="#">Kebijakan Privasi</a><a href="#">Syarat & Ketentuan</a></div>
       </div>
     </footer>
