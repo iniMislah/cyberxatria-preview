@@ -40,7 +40,7 @@ Contoh singkat:
 
 Lakukan di **repo yang berubah** saja (BE saja, FE saja, atau keduanya).
 
-Pakai satu perintah ini di repo yang berubah — jangan edit `package.json` manual, jangan `git tag` manual:
+Pakai satu perintah ini — jangan edit `package.json` manual, jangan `git tag` manual:
 
 | Perubahan | Perintah |
 |-----------|----------|

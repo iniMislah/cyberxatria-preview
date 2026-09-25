@@ -22,6 +22,20 @@ npm run build
 
 The build is exported as a static site to `out/`.
 
+## Deploy VM
+
+Jangan jalankan compose dari repo ini. Satu compose ada di
+`be_identity_cyberxatria/docker-compose.yml` (FE + Identity).
+
+Di VM, clone kedua repo sebagai sibling, isi `.env` di BE, lalu:
+
+```bash
+cd be_identity_cyberxatria
+docker compose up -d --build
+```
+
+FE listen di port `3001` (`network_mode: host`). Detail env ada di README BE.
+
 ## Implemented routes
 
 - `/` — landing page
