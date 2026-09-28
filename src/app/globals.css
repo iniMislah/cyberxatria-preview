@@ -462,6 +462,10 @@ html:not(.dark) .brand-logo {
   overflow: hidden;
 }
 
+.dark .premium-panel {
+  background-color: #080c16;
+}
+
 .premium-panel::before {
   content: "";
   position: absolute;

@@ -200,7 +200,17 @@ export function ServicePage({ content }: ServicePageProps) {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20"><div className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 dark:bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,.22),transparent_35%),#080c14] px-6 py-14 text-center sm:px-12 shadow-lg dark:shadow-[0_0_50px_rgba(244,63,94,0.15)]"><p className="eyebrow justify-center">{props.ctaEyebrow}</p><h2 className="mx-auto mt-5 max-w-3xl text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{props.ctaTitle}</h2><div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><Link href="/request-demo" className="glow-button inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white">{props.ctaButton} <ArrowRight className="size-4" /></Link></div></div></section>
+      <section className="py-16 sm:py-20">
+        <div className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 dark:from-[#0c101d] dark:via-[#080c16] dark:to-[#04060b] px-6 py-14 text-center sm:px-12 shadow-lg dark:shadow-[0_0_50px_rgba(244,63,94,0.15)]">
+          <p className="eyebrow justify-center">{props.ctaEyebrow}</p>
+          <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{props.ctaTitle}</h2>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link href="/request-demo" className="glow-button inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white">
+              {props.ctaButton} <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
       <SiteFooter />
     </main>
   );
