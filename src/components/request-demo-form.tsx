@@ -19,6 +19,7 @@ export function RequestDemoForm() {
       { id: "phone", label: "Nomor Telepon", placeholder: "+62 812-3456-7890", type: "tel" },
       { id: "country", label: "Negara Kantor Pusat", placeholder: "Indonesia", type: "text" },
       { id: "interest", label: "Solusi yang Diminati", placeholder: "SOC / Cyber Drill / Tabletop", type: "text" },
+      { id: "message", label: "Pesan", placeholder: "Ceritakan kebutuhan atau konteks singkat", type: "textarea" },
     ],
     en: [
       { id: "name", label: "Full Name", placeholder: "Your name", type: "text" },
@@ -27,6 +28,7 @@ export function RequestDemoForm() {
       { id: "phone", label: "Phone Number", placeholder: "+1 555-0123", type: "tel" },
       { id: "country", label: "HQ Country", placeholder: "United States", type: "text" },
       { id: "interest", label: "Solution of Interest", placeholder: "SOC / Cyber Drill / Tabletop", type: "text" },
+      { id: "message", label: "Message", placeholder: "Share brief needs or context", type: "textarea" },
     ],
   });
 
@@ -51,12 +53,16 @@ export function RequestDemoForm() {
   return (
     <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="cyber-card rounded-3xl p-6 sm:p-8">
       <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{t({ id: "Form Kontak", en: "Contact Form" })}</h2>
-      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{t({ id: "Lengkapi informasi di bawah ini. Seluruh kolom wajib diisi.", en: "Complete the information below. All fields are required." })}</p>
+      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{t({ id: "Lengkapi informasi di bawah ini. Pesan bersifat opsional.", en: "Complete the information below. Message is optional." })}</p>
       <div className="mt-7 grid gap-5 sm:grid-cols-2">
         {fields.map((field) => (
-          <div key={field.id}>
-            <Label htmlFor={field.id} className="text-slate-800 dark:text-slate-200 font-medium">{field.label} *</Label>
-            <Input id={field.id} required type={field.type} placeholder={field.placeholder} className="mt-2 h-12 border-slate-300 dark:border-white/10 bg-white/70 dark:bg-white/[0.025] text-slate-900 dark:text-white placeholder:text-slate-400 px-4 focus-visible:border-rose-500 focus-visible:ring-rose-500/20" />
+          <div key={field.id} className={field.type === "textarea" ? "sm:col-span-2" : ""}>
+            <Label htmlFor={field.id} className="text-slate-800 dark:text-slate-200 font-medium">{field.label}{field.type !== "textarea" ? " *" : ""}</Label>
+            {field.type === "textarea" ? (
+              <textarea id={field.id} placeholder={field.placeholder} rows={5} className="mt-2 min-h-32 w-full resize-y rounded-lg border border-slate-300 bg-white/70 px-4 py-3 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus-visible:border-rose-500 focus-visible:ring-3 focus-visible:ring-rose-500/20 dark:border-white/10 dark:bg-white/[0.025] dark:text-white" />
+            ) : (
+              <Input id={field.id} required type={field.type} placeholder={field.placeholder} className="mt-2 h-12 border-slate-300 dark:border-white/10 bg-white/70 dark:bg-white/[0.025] text-slate-900 dark:text-white placeholder:text-slate-400 px-4 focus-visible:border-rose-500 focus-visible:ring-rose-500/20" />
+            )}
           </div>
         ))}
       </div>

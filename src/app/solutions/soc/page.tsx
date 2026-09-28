@@ -1,110 +1,24 @@
-import type { Metadata } from "next";
-import { ServicePage } from "@/components/service-page";
+"use client";
 
-export const metadata: Metadata = { title: "SOC as a Service", description: "Monitoring, deteksi, dan respons ancaman keamanan 24/7 bersama SOC CyberXatria." };
-
-const common = {
-  image: "/images/cyber-shield-hero.png",
-  flow: ["Data Source", "Monitoring", "Threat Detection", "Analysis", "Alert / Incident", "Response", "Report & Improvement"],
-  packages: [
-    { name: "SOC Lite", description: "Entry-level reactive SOC untuk organisasi dengan cakupan aset terbatas.", items: ["Layanan 8 x 5 hari kerja", "First response 30 menit", "SD-WAN & endpoint", "Incident response reaktif", "SLA best effort"] },
-    { name: "SOC Essential", description: "Pemantauan dan respons berkelanjutan untuk seluruh aset terintegrasi.", featured: true, items: ["Monitoring 24 x 7", "First response 15 menit", "Seluruh tipe aset", "Incident response reaktif", "SLA 95%"] },
-    { name: "SOC Advanced", description: "Threat hunting proaktif dan SLA tinggi untuk risiko yang lebih kompleks.", items: ["Monitoring 24 x 7", "Respons reaktif + proaktif", "Threat hunting 4x / tahun", "Annual Cyber Drill", "SLA 99%"] },
-  ],
-};
+import { useEffect } from "react";
+import Link from "next/link";
+import { publicAsset } from "@/lib/asset-path";
 
 export default function SocPage() {
-  return <ServicePage content={{
-    id: {
-      ...common,
-      eyebrow: "Security Operations Center",
-      title: "Monitor. Detect.",
-      accent: "Respond.",
-      summary: "Layanan monitoring keamanan siber yang membantu organisasi mendeteksi, menganalisis, dan merespons ancaman secara lebih cepat dan terukur.",
-      imageAlt: "Operasi keamanan digital CyberXatria",
-      aboutEyebrow: "Tentang layanan",
-      aboutTitle: "Apa itu SOC CyberXatria?",
-      about: ["Security Operations Center (SOC) adalah layanan terpusat yang memantau aktivitas keamanan pada lingkungan IT organisasi untuk mengidentifikasi potensi ancaman, menganalisis indikasi serangan, dan membantu proses respons terhadap insiden.", "SOC CyberXatria memberikan visibilitas terhadap kondisi keamanan sehingga potensi ancaman dapat diketahui dan ditindaklanjuti sebelum berkembang menjadi insiden yang lebih besar."],
-      pillars: ["Visibilitas", "Kesiapan", "Respons"],
-      challengesEyebrow: "Risiko operasional",
-      challengesTitle: "Tantangan yang Kami Bantu Atasi",
-      challengesText: "Kami membantu tim melihat risiko lebih dini dan memperkuat koordinasi sebelum dampaknya meluas.",
-      challenges: [
-        { icon: "Eye", title: "Ancaman Sulit Dipantau", text: "Aktivitas keamanan tersebar di berbagai sistem dan perlu dipantau secara terus-menerus." },
-        { icon: "BellRing", title: "Alert Overload", text: "Alert terlalu banyak dan sulit diprioritaskan oleh tim internal." },
-        { icon: "UsersRound", title: "Keterbatasan Keahlian", text: "Tenaga dan keahlian cybersecurity belum mencukupi kebutuhan operasional." },
-      ],
-      featuresEyebrow: "Kapabilitas",
-      featuresTitle: "Layanan & Fitur Utama",
-      features: [
-        { icon: "RadioTower", title: "Security Monitoring", text: "Monitoring aktivitas keamanan untuk membantu mengidentifikasi potensi ancaman." },
-        { icon: "ScanSearch", title: "Threat Detection", text: "Mendeteksi aktivitas atau pola yang berindikasi sebagai ancaman keamanan." },
-        { icon: "Siren", title: "Incident Response", text: "Memberikan alert dan membantu proses penanganan potensi insiden." },
-        { icon: "Binoculars", title: "Vulnerability Monitoring", text: "Memantau eksposur dan membantu memprioritaskan risiko yang perlu ditangani." },
-      ],
-      flowEyebrow: "Alur terukur",
-      flowTitle: "Bagaimana Prosesnya Bekerja",
-      packagesEyebrow: "Pilihan layanan",
-      packagesTitle: "Service Packages",
-      packagesText: "Pilih paket awal yang paling sesuai. Hubungi tim kami untuk detail komersial dan ruang lingkup layanan.",
-      recommended: "Direkomendasikan",
-      audienceEyebrow: "Cocok untuk siapa?",
-      audienceTitle: "Dibangun untuk Organisasi yang Serius dengan Kesiapan Siber",
-      audience: ["Memiliki infrastruktur IT yang kompleks", "Membutuhkan monitoring keamanan berkelanjutan", "Ingin meningkatkan kemampuan detection & response"],
-      benefits: [
-        { icon: "Gauge", title: "Deteksi Lebih Cepat", text: "Identifikasi indikasi ancaman sebelum berdampak lebih luas." },
-        { icon: "Activity", title: "Dampak Insiden Berkurang", text: "Percepat respons dan minimalkan gangguan operasional." },
-        { icon: "ShieldCheck", title: "Kesiapan Kepatuhan", text: "Dukungan reporting untuk kebutuhan audit dan regulasi." },
-      ],
-      ctaEyebrow: "Langkah berikutnya",
-      ctaTitle: "Tingkatkan visibilitas. Percepat respons. Lindungi bisnis Anda.",
-      ctaButton: "Request Consultation",
-    },
-    en: {
-      ...common,
-      packages: common.packages.map((pkg) => ({ ...pkg, description: pkg.description.replace("untuk organisasi dengan cakupan aset terbatas.", "for organizations with limited asset scope.").replace("Pemantauan dan respons berkelanjutan untuk seluruh aset terintegrasi.", "Continuous monitoring and response for integrated assets.").replace("Threat hunting proaktif dan SLA tinggi untuk risiko yang lebih kompleks.", "Proactive threat hunting and higher SLA for more complex risk."), items: pkg.items })),
-      eyebrow: "Security Operations Center",
-      title: "Monitor. Detect.",
-      accent: "Respond.",
-      summary: "A cybersecurity monitoring service that helps organizations detect, analyze, and respond to threats more quickly and effectively.",
-      imageAlt: "CyberXatria digital security operations",
-      aboutEyebrow: "About the service",
-      aboutTitle: "What is CyberXatria SOC?",
-      about: ["Security Operations Center (SOC) is a centralized service that monitors security activity in an organization's IT environment to identify potential threats, analyze attack indicators, and support incident response.", "CyberXatria SOC provides visibility into security conditions so potential threats can be identified and followed up before they grow into larger incidents."],
-      pillars: ["Visibility", "Readiness", "Response"],
-      challengesEyebrow: "Operational risk",
-      challengesTitle: "Challenges We Help Address",
-      challengesText: "We help teams see risk earlier and strengthen coordination before impact expands.",
-      challenges: [
-        { icon: "Eye", title: "Threats Are Hard to Monitor", text: "Security activity is spread across multiple systems and needs continuous monitoring." },
-        { icon: "BellRing", title: "Alert Overload", text: "Too many alerts make prioritization difficult for internal teams." },
-        { icon: "UsersRound", title: "Limited Expertise", text: "Cybersecurity staffing and expertise may not meet operational needs." },
-      ],
-      featuresEyebrow: "Capabilities",
-      featuresTitle: "Core Services & Features",
-      features: [
-        { icon: "RadioTower", title: "Security Monitoring", text: "Monitoring security activity to help identify potential threats." },
-        { icon: "ScanSearch", title: "Threat Detection", text: "Detecting activity or patterns that indicate security threats." },
-        { icon: "Siren", title: "Incident Response", text: "Providing alerts and supporting potential incident handling." },
-        { icon: "Binoculars", title: "Vulnerability Monitoring", text: "Monitoring exposure and helping prioritize risks that need action." },
-      ],
-      flowEyebrow: "Measured flow",
-      flowTitle: "How the Process Works",
-      packagesEyebrow: "Service options",
-      packagesTitle: "Service Packages",
-      packagesText: "Choose the most suitable starting package. Contact our team for commercial details and service scope.",
-      recommended: "Recommended",
-      audienceEyebrow: "Who is it for?",
-      audienceTitle: "Built for Organizations Serious About Cyber Readiness",
-      audience: ["Organizations with complex IT infrastructure", "Teams needing continuous security monitoring", "Teams wanting to improve detection & response"],
-      benefits: [
-        { icon: "Gauge", title: "Faster Detection", text: "Identify threat indicators before they have wider impact." },
-        { icon: "Activity", title: "Reduced Incident Impact", text: "Accelerate response and minimize operational disruption." },
-        { icon: "ShieldCheck", title: "Compliance Readiness", text: "Reporting support for audit and regulatory needs." },
-      ],
-      ctaEyebrow: "Next step",
-      ctaTitle: "Improve visibility. Accelerate response. Protect your business.",
-      ctaButton: "Request Consultation",
-    },
-  }} />;
+  useEffect(() => {
+    window.location.replace(publicAsset("/#solutions"));
+  }, []);
+
+  return (
+    <main className="site-shell grid min-h-screen place-items-center bg-background px-6 text-center text-foreground">
+      <meta httpEquiv="refresh" content={`0;url=${publicAsset("/#solutions")}`} />
+      <div>
+        <p className="text-sm font-bold uppercase tracking-widest text-rose-500">SOC AI</p>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white">Coming Soon</h1>
+        <Link href="/#solutions" className="mt-6 inline-flex text-sm font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300">
+          Back to solutions
+        </Link>
+      </div>
+    </main>
+  );
 }

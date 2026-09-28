@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import {
   ArrowRight,
   BadgeDollarSign,
@@ -13,7 +12,6 @@ import {
   Landmark,
   LockKeyhole,
   Network,
-  Radar,
   ShieldAlert,
   ShieldCheck,
   Target,
@@ -22,14 +20,14 @@ import {
 import { CountUpValue, Reveal } from "@/components/public-motion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ApproachComparison } from "@/components/approach-comparison";
 import { usePublicPreferences } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
 
 const threatIcons = [LockKeyhole, ShieldAlert, DatabaseZap, UsersRound];
 const impactIcons = [ShieldAlert, DatabaseZap, BadgeDollarSign, LockKeyhole, UsersRound];
-const serviceIcons = [Radar, Target, UsersRound];
+const serviceIcons = [Target, UsersRound, ShieldCheck];
 const industryIcons = [Factory, Landmark, Building2, Network];
-const capabilities = ["SOC MONITORING", "THREAT DETECTION", "INCIDENT RESPONSE", "CYBER DRILL", "TABLETOP EXERCISE", "VULNERABILITY MONITORING"];
 
 const content = {
   id: {
@@ -66,9 +64,9 @@ const content = {
     solutionsAccent: "Kami",
     solutionsIntro: "Layanan keamanan siber untuk memantau, menguji, dan memperkuat kesiapan organisasi.",
     services: [
-      ["SOC as a Service", "/solutions/soc", "Layanan monitoring keamanan siber yang membantu organisasi mendeteksi, menganalisis, dan merespons ancaman secara lebih cepat dan terukur.", ["Security Monitoring", "Threat Detection", "Incident Response", "Vulnerability Monitoring"]],
       ["Cyber Drill Exercise", "/solutions/cyber-drill", "Simulasi serangan siber dari sisi teknis yang dirancang untuk menguji kemampuan organisasi dalam mendeteksi, merespons, dan menangani insiden keamanan secara nyata.", ["Simulated Attack Scenario", "Blue Team Validation", "Gap Assessment"]],
       ["Tabletop Exercise", "/solutions/tabletop", "Simulasi berbasis skenario yang melibatkan berbagai fungsi dalam organisasi untuk menguji pengambilan keputusan, koordinasi, dan prosedur respons insiden siber.", ["Crisis Simulation", "Real Scenario", "Executive Readiness", "Stakeholder Coordination"]],
+      ["SOC AI", "", "Coming Soon", []],
     ],
     learnMore: "Pelajari Lebih Lanjut",
     approachEyebrow: "Pendekatan kami",
@@ -76,6 +74,14 @@ const content = {
     approachAccent: "Memilih Kami?",
     traditional: "Pendekatan Tradisional",
     cyberxatria: "Pendekatan CyberXatria",
+    comparisonPairs: [
+      { traditional: "Keamanan reaktif", cyberxatria: "Keamanan proaktif" },
+      { traditional: "Penilaian pada satu titik waktu", cyberxatria: "Kesiapan berkelanjutan" },
+      { traditional: "Manual dan terfragmentasi", cyberxatria: "Pendekatan terintegrasi" },
+      { traditional: "Merespons setelah insiden", cyberxatria: "Bersiap sebelum insiden terjadi" },
+      { traditional: "Pelaporan berfokus pada teknis", cyberxatria: "Insight bisnis yang dapat ditindaklanjuti" },
+      { traditional: "Latihan dilakukan secara berkala", cyberxatria: "Pengujian berbasis skenario" },
+    ],
     traditionalPoints: ["Keamanan reaktif", "Penilaian pada satu titik waktu", "Manual dan terfragmentasi", "Merespons setelah insiden", "Pelaporan berfokus pada teknis", "Latihan dilakukan secara berkala"],
     cyberxatriaPoints: ["Keamanan proaktif", "Kesiapan berkelanjutan", "Pendekatan terintegrasi", "Bersiap sebelum insiden terjadi", "Insight bisnis yang dapat ditindaklanjuti", "Pengujian berbasis skenario"],
     industriesEyebrow: "Dipercaya berbagai industri",
@@ -123,9 +129,9 @@ const content = {
     solutionsAccent: "Solutions",
     solutionsIntro: "Cybersecurity services to monitor, test, and strengthen organizational readiness.",
     services: [
-      ["SOC as a Service", "/solutions/soc", "A cybersecurity monitoring service that helps organizations detect, analyze, and respond to threats more quickly and effectively.", ["Security Monitoring", "Threat Detection", "Incident Response", "Vulnerability Monitoring"]],
       ["Cyber Drill Exercise", "/solutions/cyber-drill", "A technical cyberattack simulation designed to test an organization's ability to detect, respond to, and handle real-world security incidents.", ["Simulated Attack Scenario", "Blue Team Validation", "Gap Assessment"]],
       ["Tabletop Exercise", "/solutions/tabletop", "A scenario-based simulation involving various functions within an organization to test decision-making, coordination, and cyber incident response procedures.", ["Crisis Simulation", "Real Scenario", "Executive Readiness", "Stakeholder Coordination"]],
+      ["SOC AI", "", "Coming Soon", []],
     ],
     learnMore: "Learn More",
     approachEyebrow: "Our approach",
@@ -133,6 +139,14 @@ const content = {
     approachAccent: "Choose Us?",
     traditional: "Traditional Approach",
     cyberxatria: "CyberXatria Approach",
+    comparisonPairs: [
+      { traditional: "Reactive security", cyberxatria: "Proactive security" },
+      { traditional: "Point-in-time assessment", cyberxatria: "Continuous readiness" },
+      { traditional: "Manual and fragmented", cyberxatria: "Integrated approach" },
+      { traditional: "Responding after incidents", cyberxatria: "Prepared before incidents occur" },
+      { traditional: "Technical-focused reporting", cyberxatria: "Actionable business insight" },
+      { traditional: "Periodic exercises", cyberxatria: "Scenario-based testing" },
+    ],
     traditionalPoints: ["Reactive security", "Point-in-time assessment", "Manual and fragmented", "Responding after incidents", "Technical-focused reporting", "Periodic exercises"],
     cyberxatriaPoints: ["Proactive security", "Continuous readiness", "Integrated approach", "Prepared before incidents occur", "Actionable business insight", "Scenario-based testing"],
     industriesEyebrow: "Trusted across industries",
@@ -151,7 +165,6 @@ const content = {
 export default function Home() {
   const { t } = usePublicPreferences();
   const copy = t(content);
-  const [activeImpact, setActiveImpact] = useState(0);
 
   return (
     <main className="site-shell min-h-screen bg-background text-foreground">
@@ -183,12 +196,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="capability-marquee" aria-label="CyberXatria capabilities">
-        <div className="capability-track">
-          {[...capabilities, ...capabilities].map((item, index) => <span key={`${item}-${index}`} className="capability-item">{item}<span aria-hidden="true">✦</span></span>)}
-        </div>
-      </section>
-
       <section className="relative py-16 sm:py-20">
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
@@ -207,14 +214,13 @@ export default function Home() {
                     <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{label}</p>
                     <p className={`mt-3 text-4xl font-black ${tone}`}><CountUpValue value={value} /></p>
                     <p className="mt-2 text-sm text-slate-600 dark:text-slate-500 flex-1">{note}</p>
-                    <div className="threat-meter mt-4" aria-hidden="true"><span style={{ "--meter": `${[49, 38, 72, 64][index]}%` } as React.CSSProperties} /></div>
                   </div>
                 </Reveal>
               );
             })}
           </div>
-          <Reveal delay={120} className="mt-4 flex items-start gap-3 rounded-xl border border-orange-500/30 bg-orange-500/10 px-5 py-4 text-sm text-slate-700 dark:text-slate-300">
-            <ShieldAlert className="mt-0.5 size-5 shrink-0 text-orange-500 dark:text-orange-400" /><p>{copy.threatNote}</p>
+          <Reveal delay={120} className="mt-6 flex items-start gap-4 rounded-2xl border border-orange-500/35 bg-orange-500/10 px-6 py-5 text-base font-semibold leading-7 text-slate-800 shadow-sm dark:text-slate-200">
+            <ShieldAlert className="mt-1 size-6 shrink-0 text-orange-500 dark:text-orange-400" /><p>{copy.threatNote}</p>
           </Reveal>
         </div>
       </section>
@@ -226,27 +232,19 @@ export default function Home() {
             <h2 className="mt-4 text-4xl font-bold text-slate-900 dark:text-white sm:text-5xl">{copy.readinessTitle} <span className="text-gradient">{copy.readinessAccent}</span> {copy.readinessSuffix}</h2>
             <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.readinessIntro}</p>
           </Reveal>
-          <Reveal className="readiness-sequence grid gap-3 md:grid-cols-5">
+          <Reveal className="grid gap-3 md:grid-cols-5">
             {copy.impacts.map(([title, text], index) => {
               const Icon = impactIcons[index];
               return (
-                <button
+                <article
                   key={title}
-                  type="button"
-                  onClick={() => setActiveImpact(index)}
-                  onFocus={() => setActiveImpact(index)}
-                  aria-expanded={activeImpact === index}
-                  className={`readiness-card motion-card relative flex h-full flex-col rounded-2xl border p-5 text-center transition-all ${
-                    activeImpact === index
-                      ? "border-rose-500/80 bg-rose-50/80 dark:bg-rose-950/25 shadow-[0_8px_25px_rgba(244,63,94,0.12)] ring-1 ring-rose-500/30"
-                      : "border-slate-200/90 dark:border-white/8 bg-white dark:bg-[#0a0e17] shadow-sm dark:shadow-none hover:border-rose-500/40"
-                  }`}
+                  tabIndex={0}
+                  className="motion-card relative flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white p-5 text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/8 dark:bg-[#0a0e17] dark:shadow-none"
                 >
                   <div className="mx-auto mb-4 grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400"><Icon className="size-6" /></div>
                   <h3 className="text-sm font-bold uppercase text-rose-600 dark:text-rose-400 min-h-[2.5rem] flex items-center justify-center">{title}</h3>
                   <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400 flex-1">{text}</p>
-                  {index < copy.impacts.length - 1 && <ArrowRight className="absolute -right-5 top-1/2 z-10 hidden size-6 -translate-y-1/2 text-rose-400/60 dark:text-rose-700 md:block" />}
-                </button>
+                </article>
               );
             })}
           </Reveal>
@@ -265,14 +263,22 @@ export default function Home() {
             {copy.services.map((service, index) => {
               const [title, href, text, points] = service as [string, string, string, string[]];
               const Icon = serviceIcons[index];
+              const comingSoon = !href;
               return (
                 <Reveal key={title} delay={index * 90} className="h-full flex flex-col">
-                  <article className="cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-7">
+                  <article className={`cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-7 ${comingSoon ? "opacity-80" : ""}`}>
                     <div className="mb-6 grid size-12 place-items-center rounded-xl border border-rose-500/35 bg-rose-500/10 text-rose-500 dark:text-rose-400"><Icon className="size-6" /></div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
+                      {comingSoon && <span className="rounded-full border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-white/10 dark:text-slate-400">Coming Soon</span>}
+                    </div>
                     <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400 min-h-[4.5rem]">{text}</p>
                     <ul className="mt-6 space-y-3 text-sm text-slate-700 dark:text-slate-300 min-h-[7.5rem]">{points.map((point) => <li key={point} className="flex items-center gap-2"><Check className="size-4 shrink-0 text-rose-500" /> {point}</li>)}</ul>
-                    <Link href={href} className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300">{copy.learnMore} <ArrowRight className="size-4" /></Link>
+                    {comingSoon ? (
+                      <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-slate-500 dark:text-slate-500">Coming Soon</span>
+                    ) : (
+                      <Link href={href} className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300">{copy.learnMore} <ArrowRight className="size-4" /></Link>
+                    )}
                   </article>
                 </Reveal>
               );
@@ -287,16 +293,13 @@ export default function Home() {
             <p className="eyebrow justify-center">{copy.approachEyebrow}</p>
             <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.approachTitle} <span className="text-gradient">{copy.approachAccent}</span></h2>
           </Reveal>
-          <Reveal className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-2">
-            <div className="motion-card flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-7 shadow-sm dark:shadow-none">
-              <h3 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-500">{copy.traditional}</h3>
-              <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400 flex-1">{copy.traditionalPoints.map((item) => <li key={item} className="flex gap-3"><span className="text-slate-400 dark:text-slate-600">○</span>{item}</li>)}</ul>
-            </div>
-            <div className="cyber-card motion-card flex h-full flex-col rounded-2xl p-7 shadow-[0_0_50px_rgba(244,63,94,0.08)] dark:shadow-[0_0_60px_rgba(244,63,94,0.12)]">
-              <h3 className="mb-6 text-sm font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400">{copy.cyberxatria}</h3>
-              <ul className="space-y-4 text-sm text-slate-800 dark:text-slate-200 flex-1">{copy.cyberxatriaPoints.map((item) => <li key={item} className="flex gap-3"><Check className="size-4 shrink-0 text-rose-500" />{item}</li>)}</ul>
-            </div>
-          </Reveal>
+          <ApproachComparison
+            traditionalTitle={copy.traditional}
+            cyberxatriaTitle={copy.cyberxatria}
+            pairs={copy.comparisonPairs}
+          />
+
+
         </div>
       </section>
 

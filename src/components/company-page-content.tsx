@@ -1,16 +1,99 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Award, Check, Handshake, Network, ScanSearch, ShieldCheck, Sparkles, Target, UsersRound } from "lucide-react";
+import { useRef, useState } from "react";
+import {
+  Activity,
+  ArrowRight,
+  Award,
+  Check,
+  ClipboardCheck,
+  GraduationCap,
+  Handshake,
+  Network,
+  ScanSearch,
+  ShieldCheck,
+  UsersRound,
+  Wrench,
+} from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ApproachComparison } from "@/components/approach-comparison";
 import { usePublicPreferences } from "@/lib/public-preferences";
 
-const reasonIcons = [Target, UsersRound, Network, Sparkles];
 const badgeIcons = [Award, ShieldCheck, Handshake, Network];
+
+const capabilityIcons = [
+  ShieldCheck,
+  Activity,
+  UsersRound,
+  ScanSearch,
+  ClipboardCheck,
+  Wrench,
+  GraduationCap,
+];
 
 export function CompanyPageContent() {
   const { t } = usePublicPreferences();
+  const [scrollPosition, setScrollPosition] = useState<0 | 1 | 2>(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isDownRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (maxScroll <= 0) {
+      setScrollPosition(0);
+      return;
+    }
+    const ratio = el.scrollLeft / maxScroll;
+    if (ratio < 0.33) {
+      setScrollPosition(0);
+    } else if (ratio < 0.67) {
+      setScrollPosition(1);
+    } else {
+      setScrollPosition(2);
+    }
+  };
+
+  const scrollToState = (state: 0 | 1 | 2) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (maxScroll <= 0) return;
+    const target = state === 0 ? 0 : state === 1 ? maxScroll * 0.5 : maxScroll;
+    el.scrollTo({ left: target, behavior: "smooth" });
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    isDownRef.current = true;
+    startXRef.current = e.pageX - el.offsetLeft;
+    scrollLeftRef.current = el.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    isDownRef.current = false;
+  };
+
+  const handleMouseUp = () => {
+    isDownRef.current = false;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDownRef.current) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    e.preventDefault();
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startXRef.current) * 1.4;
+    el.scrollLeft = scrollLeftRef.current - walk;
+  };
+
   const copy = t({
     id: {
       eyebrow: "Tentang CyberXatria",
@@ -20,11 +103,24 @@ export function CompanyPageContent() {
       visionTitle: "Visi Kami",
       vision: "Memberdayakan organisasi dengan kemampuan cybersecurity yang lebih kuat serta membangun ekosistem digital yang lebih tangguh dan aman.",
       missionTitle: "Misi Kami",
-      mission: ["Menyediakan solusi cybersecurity yang praktis dan efektif.", "Meningkatkan kesadaran keamanan serta kemampuan teknis.", "Membantu organisasi mengidentifikasi, mengelola, dan merespons ancaman.", "Mendukung peningkatan kesiapan cybersecurity berkelanjutan."],
+      mission: [
+        "Menyediakan solusi cybersecurity yang praktis dan efektif.",
+        "Meningkatkan kesadaran keamanan serta kemampuan teknis.",
+        "Membantu organisasi mengidentifikasi, mengelola, dan merespons ancaman.",
+        "Mendukung peningkatan kesiapan cybersecurity berkelanjutan.",
+      ],
       capability: "Kapabilitas",
       expertiseTitle: "Keahlian",
       expertiseAccent: "Kami",
-      expertise: ["Security Operations Center (SOC)", "Cyber Drill Exercise", "Tabletop Exercise (TTX)", "Cyber Threat Intelligence", "Security Assessment", "Remediation", "Security Awareness & Training"],
+      expertise: [
+        "Security Operations Center (SOC)",
+        "Cyber Drill Exercise",
+        "Tabletop Exercise (TTX)",
+        "Cyber Threat Intelligence",
+        "Security Assessment",
+        "Remediation",
+        "Security Awareness & Training",
+      ],
       framework: "Framework NIST",
       lifecycleTitle: "Pendekatan",
       lifecycleAccent: "Berkelanjutan",
@@ -32,11 +128,15 @@ export function CompanyPageContent() {
       lifecycle: ["Asesmen", "Persiapan", "Deteksi", "Respons", "Peningkatan"],
       differentiator: "Nilai pembeda",
       whyTitle: "Mengapa Memilih",
-      reasons: [
-        ["Practical & Scenario-Based", "Pendekatan praktis dengan skenario yang relevan terhadap ancaman nyata."],
-        ["Experienced Professionals", "Didukung tenaga profesional dan ahli di bidang cybersecurity."],
-        ["End-to-End Approach", "Pendekatan menyeluruh mulai dari assessment hingga improvement."],
-        ["Continuous Improvement", "Meningkatkan cybersecurity maturity organisasi secara berkelanjutan."],
+      traditional: "Pendekatan Tradisional",
+      cyberxatria: "Pendekatan CyberXatria",
+      comparisonPairs: [
+        { traditional: "Keamanan reaktif", cyberxatria: "Keamanan proaktif" },
+        { traditional: "Penilaian pada satu titik waktu", cyberxatria: "Kesiapan berkelanjutan" },
+        { traditional: "Manual dan terfragmentasi", cyberxatria: "Pendekatan terintegrasi" },
+        { traditional: "Merespons setelah insiden", cyberxatria: "Bersiap sebelum insiden terjadi" },
+        { traditional: "Pelaporan berfokus pada teknis", cyberxatria: "Insight bisnis yang dapat ditindaklanjuti" },
+        { traditional: "Latihan dilakukan secara berkala", cyberxatria: "Pengujian berbasis skenario" },
       ],
       ecosystem: "Ekosistem terpercaya",
       certTitle: "Sertifikasi & Kemitraan",
@@ -54,11 +154,24 @@ export function CompanyPageContent() {
       visionTitle: "Our Vision",
       vision: "Empower organizations with stronger cybersecurity capabilities and build a more resilient and secure digital ecosystem.",
       missionTitle: "Our Mission",
-      mission: ["Provide practical and effective cybersecurity solutions.", "Improve security awareness and technical capabilities.", "Help organizations identify, manage, and respond to threats.", "Support continuous cybersecurity readiness improvement."],
+      mission: [
+        "Provide practical and effective cybersecurity solutions.",
+        "Improve security awareness and technical capabilities.",
+        "Help organizations identify, manage, and respond to threats.",
+        "Support continuous cybersecurity readiness improvement.",
+      ],
       capability: "Capabilities",
       expertiseTitle: "Our",
       expertiseAccent: "Expertise",
-      expertise: ["Security Operations Center (SOC)", "Cyber Drill Exercise", "Tabletop Exercise (TTX)", "Cyber Threat Intelligence", "Security Assessment", "Remediation", "Security Awareness & Training"],
+      expertise: [
+        "Security Operations Center (SOC)",
+        "Cyber Drill Exercise",
+        "Tabletop Exercise (TTX)",
+        "Cyber Threat Intelligence",
+        "Security Assessment",
+        "Remediation",
+        "Security Awareness & Training",
+      ],
       framework: "NIST Framework",
       lifecycleTitle: "Continuous",
       lifecycleAccent: "Approach",
@@ -66,11 +179,15 @@ export function CompanyPageContent() {
       lifecycle: ["Assess", "Prepare", "Detect", "Respond", "Improve"],
       differentiator: "Differentiators",
       whyTitle: "Why Choose",
-      reasons: [
-        ["Practical & Scenario-Based", "A practical approach with scenarios relevant to real threats."],
-        ["Experienced Professionals", "Supported by experienced cybersecurity professionals and experts."],
-        ["End-to-End Approach", "A comprehensive approach from assessment to improvement."],
-        ["Continuous Improvement", "Improving the organization's cybersecurity maturity continuously."],
+      traditional: "Traditional Approach",
+      cyberxatria: "CyberXatria Approach",
+      comparisonPairs: [
+        { traditional: "Reactive security", cyberxatria: "Proactive security" },
+        { traditional: "Point-in-time assessment", cyberxatria: "Continuous readiness" },
+        { traditional: "Manual and fragmented", cyberxatria: "Integrated approach" },
+        { traditional: "Responding after incidents", cyberxatria: "Prepared before incidents occur" },
+        { traditional: "Technical-focused reporting", cyberxatria: "Actionable business insight" },
+        { traditional: "Periodic exercises", cyberxatria: "Scenario-based testing" },
       ],
       ecosystem: "Trusted ecosystem",
       certTitle: "Certifications & Partnerships",
@@ -90,8 +207,12 @@ export function CompanyPageContent() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(244,63,94,.14),transparent_36%)]" />
         <div className="page-grid relative text-center">
           <p className="eyebrow justify-center">{copy.eyebrow}</p>
-          <h1 className="mx-auto mt-6 max-w-4xl text-5xl font-bold tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl">{copy.title} <span className="text-gradient">{copy.accent}</span></h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.intro}</p>
+          <h1 className="mx-auto mt-6 max-w-4xl text-5xl font-bold tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl">
+            {copy.title} <span className="text-gradient">{copy.accent}</span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
+            {copy.intro}
+          </p>
         </div>
       </section>
 
@@ -99,78 +220,159 @@ export function CompanyPageContent() {
         <div className="page-grid grid gap-6 lg:grid-cols-2">
           <div className="cyber-card rounded-3xl p-8 sm:p-10 flex flex-col justify-between">
             <div>
-              <div className="grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400"><ScanSearch /></div>
-              <h2 className="mt-6 text-3xl font-bold text-slate-900 dark:text-white">{copy.visionTitle}</h2>
+              <div className="grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400">
+                <ScanSearch />
+              </div>
+              <h2 className="mt-6 text-3xl font-bold text-slate-900 dark:text-white">
+                {copy.visionTitle}
+              </h2>
               <p className="mt-4 leading-7 text-slate-600 dark:text-slate-400">{copy.vision}</p>
             </div>
           </div>
           <div className="cyber-card rounded-3xl p-8 sm:p-10 flex flex-col justify-between">
             <div>
-              <div className="grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400"><ShieldCheck /></div>
-              <h2 className="mt-6 text-3xl font-bold text-slate-900 dark:text-white">{copy.missionTitle}</h2>
-              <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-700 dark:text-slate-300">{copy.mission.map((item) => <li key={item} className="flex gap-3"><Check className="mt-1 size-4 shrink-0 text-rose-500" />{item}</li>)}</ul>
+              <div className="grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400">
+                <ShieldCheck />
+              </div>
+              <h2 className="mt-6 text-3xl font-bold text-slate-900 dark:text-white">
+                {copy.missionTitle}
+              </h2>
+              <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
+                {copy.mission.map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <Check className="mt-1 size-4 shrink-0 text-rose-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
+      {/* Soft Premium Horizontal Capabilities Showcase */}
+      <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-14 sm:py-16 transition-colors overflow-hidden">
         <div className="page-grid">
-          <div className="mx-auto mb-10 max-w-2xl text-center">
+          <div className="mx-auto mb-8 sm:mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.capability}</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.expertiseTitle} <span className="text-gradient">{copy.expertiseAccent}</span></h2>
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
+              {copy.expertiseTitle} <span className="text-gradient">{copy.expertiseAccent}</span>
+            </h2>
           </div>
-          <div className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {copy.expertise.map((item, index) => (
-              <div key={item} className="motion-card flex items-center gap-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none hover:border-rose-500/40 transition">
-                <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-rose-500/30 bg-rose-500/10 text-xs font-black text-rose-600 dark:text-rose-400">0{index + 1}</span>
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-200">{item}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="py-16 sm:py-20">
-        <div className="page-grid">
-          <div className="mx-auto mb-10 max-w-2xl text-center">
-            <p className="eyebrow justify-center">{copy.framework}</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.lifecycleTitle} <span className="text-gradient">{copy.lifecycleAccent}</span></h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.lifecycleIntro}</p>
-          </div>
-          <div className="grid gap-3.5 sm:grid-cols-2 md:grid-cols-5">
-            {copy.lifecycle.map((item, index) => (
-              <div key={item} className="motion-card group relative flex h-full flex-col justify-between rounded-2xl border border-rose-500/25 dark:border-rose-500/30 bg-white dark:bg-[#090d15] px-4 py-6 text-center shadow-sm dark:shadow-none hover:border-rose-500/60 transition-all">
-                <span className="mx-auto grid size-8 place-items-center rounded-full bg-rose-500/10 text-xs font-black text-rose-600 dark:text-rose-400 ring-1 ring-rose-500/25 group-hover:scale-110 transition-transform">0{index + 1}</span>
-                <p className="mt-3 font-bold text-slate-900 dark:text-white flex-1 flex items-center justify-center">{item}</p>
-                {index < copy.lifecycle.length - 1 && <ArrowRight className="absolute -right-4 top-1/2 z-10 hidden size-5 -translate-y-1/2 text-rose-400/60 dark:text-rose-700 md:block" />}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
-        <div className="page-grid">
-          <div className="mx-auto mb-10 max-w-2xl text-center">
-            <p className="eyebrow justify-center">{copy.differentiator}</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.whyTitle} <span className="text-gradient">CyberXatria?</span></h2>
-          </div>
-          <div className="grid gap-5 md:grid-cols-2">
-            {copy.reasons.map(([title, text], index) => {
-              const Icon = reasonIcons[index];
+          {/* Horizontally Scrollable 7-Card Showcase */}
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+            className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto pb-4 pt-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing select-none"
+            style={{ scrollSnapType: "x proximity" }}
+          >
+            {copy.expertise.map((title, index) => {
+              const Icon = capabilityIcons[index % capabilityIcons.length];
               return (
-                <div key={title} className="cyber-card motion-card flex h-full flex-col rounded-2xl p-7">
-                  <div className="grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400 mb-4"><Icon className="size-6" /></div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">{title}</h3>
-                  <p className="mt-2.5 text-sm leading-6 text-slate-600 dark:text-slate-400 flex-1">{text}</p>
-                </div>
+                <article
+                  key={title}
+                  tabIndex={0}
+                  className="group flex flex-col justify-between w-[260px] sm:w-[270px] lg:w-[280px] shrink-0 snap-start rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm dark:border-white/[0.08] dark:bg-[#090d16] dark:shadow-none dark:hover:border-rose-500/40"
+                >
+                  <div>
+                    {/* Header: Minimal Icon Container & Subtle Editorial Number */}
+                    <div className="flex items-center justify-between">
+                      <div className="grid size-9 place-items-center rounded-xl bg-rose-500/[0.08] text-rose-500 transition-colors duration-200 group-hover:bg-rose-500/15 group-hover:text-rose-600 dark:bg-rose-500/10 dark:text-rose-400 dark:group-hover:text-rose-300">
+                        <Icon className="size-4.5" />
+                      </div>
+                      <span className="font-mono text-xs font-semibold tracking-wider text-slate-400 dark:text-slate-500">
+                        0{index + 1}
+                      </span>
+                    </div>
+
+                    {/* Capability Name (NO descriptions underneath) */}
+                    <h3 className="mt-4 text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug tracking-tight transition-colors duration-200 group-hover:text-rose-600 dark:group-hover:text-rose-400 min-h-[2.5rem] flex items-center">
+                      {title}
+                    </h3>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          {/* Minimal 3-State Scroll Progress Indicator (START, MIDDLE, END) */}
+          <div className="mt-6 flex justify-center items-center gap-2" aria-hidden="true">
+            {[0, 1, 2].map((idx) => {
+              const isActive = scrollPosition === idx;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => scrollToState(idx as 0 | 1 | 2)}
+                  aria-label={`Scroll position ${idx === 0 ? "Start" : idx === 1 ? "Middle" : "End"}`}
+                  className={`h-1.5 transition-all duration-300 rounded-full ${
+                    isActive
+                      ? "w-6 bg-rose-500 dark:bg-rose-400"
+                      : "w-1.5 bg-slate-300/80 hover:bg-slate-400 dark:bg-white/20 dark:hover:bg-white/30"
+                  }`}
+                />
               );
             })}
           </div>
         </div>
       </section>
 
+      {/* Continuous Approach Lifecycle */}
+      <section className="py-16 sm:py-20">
+        <div className="page-grid">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <p className="eyebrow justify-center">{copy.framework}</p>
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
+              {copy.lifecycleTitle} <span className="text-gradient">{copy.lifecycleAccent}</span>
+            </h2>
+            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.lifecycleIntro}</p>
+          </div>
+          <div className="grid gap-3.5 sm:grid-cols-2 md:grid-cols-5">
+            {copy.lifecycle.map((item, index) => (
+              <div
+                key={item}
+                className="motion-card group relative flex h-full flex-col justify-between rounded-2xl border border-rose-500/25 dark:border-rose-500/30 bg-white dark:bg-[#090d15] px-4 py-6 text-center shadow-sm dark:shadow-none hover:border-rose-500/60 transition-all"
+              >
+                <span className="mx-auto grid size-8 place-items-center rounded-full bg-rose-500/10 text-xs font-black text-rose-600 dark:text-rose-400 ring-1 ring-rose-500/25 group-hover:scale-110 transition-transform">
+                  0{index + 1}
+                </span>
+                <p className="mt-3 font-bold text-slate-900 dark:text-white flex-1 flex items-center justify-center">
+                  {item}
+                </p>
+                {index < copy.lifecycle.length - 1 && (
+                  <ArrowRight className="absolute -right-4 top-1/2 z-10 hidden size-5 -translate-y-1/2 text-rose-400/60 dark:text-rose-700 md:block" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DO/DON'T Symmetrical Comparison Infographic with Center Notches & Medallion */}
+      <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
+        <div className="page-grid">
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <p className="eyebrow justify-center">{copy.differentiator}</p>
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
+              {copy.whyTitle} <span className="text-gradient">CyberXatria?</span>
+            </h2>
+          </div>
+
+          <ApproachComparison
+            traditionalTitle={copy.traditional}
+            cyberxatriaTitle={copy.cyberxatria}
+            pairs={copy.comparisonPairs}
+          />
+        </div>
+      </section>
+
+      {/* Certifications and Ecosystem */}
       <section className="py-16 sm:py-20">
         <div className="page-grid grid items-center gap-10 lg:grid-cols-2">
           <div>
@@ -192,15 +394,17 @@ export function CompanyPageContent() {
         </div>
       </section>
 
+      {/* Final CTA Banner */}
       <section className="pb-16 sm:pb-20">
         <div className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 dark:bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,.22),transparent_35%),#080c14] px-6 py-14 text-center sm:px-12 shadow-lg dark:shadow-[0_0_50px_rgba(244,63,94,0.15)]">
           <h2 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.ctaTitle}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-slate-600 dark:text-slate-400">{copy.ctaText}</p>
-          <Link href="/request-demo" className="glow-button mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white">{copy.cta} <ArrowRight className="size-4" /></Link>
+          <Link href="/request-demo" className="glow-button mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white">
+            {copy.cta} <ArrowRight className="size-4" />
+          </Link>
         </div>
       </section>
       <SiteFooter />
     </main>
   );
 }
-

@@ -11,7 +11,7 @@ export function SiteFooter() {
   const { t } = usePublicPreferences();
 
   return (
-    <footer id="contact" className="border-t border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-[#02040a] py-12 transition-colors">
+    <footer id="contact" className="border-t border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-[#02040a] py-12 font-sans leading-6 transition-colors">
       <div className="page-grid grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <Image src={publicAsset("/images/cyberxatria-logo.png")} alt="CyberXatria" width={426} height={114} className="brand-logo mb-4 h-auto w-48" />
@@ -29,9 +29,9 @@ export function SiteFooter() {
         <div>
           <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white">{t({ id: "Solusi Kami", en: "Our Solutions" })}</h3>
           <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-            <Link className="block hover:text-rose-600 dark:hover:text-rose-400 transition" href="/solutions/soc">SOC as a Service</Link>
             <Link className="block hover:text-rose-600 dark:hover:text-rose-400 transition" href="/solutions/cyber-drill">Cyber Drill Exercise</Link>
             <Link className="block hover:text-rose-600 dark:hover:text-rose-400 transition" href="/solutions/tabletop">Tabletop Exercise</Link>
+            <span className="flex items-center gap-2 text-slate-500 dark:text-slate-500">SOC AI <span className="rounded-full border border-slate-300 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide dark:border-white/10">Coming Soon</span></span>
           </div>
         </div>
         <div>
