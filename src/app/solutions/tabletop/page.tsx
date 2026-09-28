@@ -1,48 +1,111 @@
 import type { Metadata } from "next";
-import { BookOpenCheck, ClipboardCheck, FileCheck2, Gavel, Landmark, Megaphone, MessageSquareText, Network, Scale, ShieldCheck, Siren, UsersRound } from "lucide-react";
 import { ServicePage } from "@/components/service-page";
 
 export const metadata: Metadata = { title: "Tabletop Exercise", description: "Simulasi krisis siber untuk menguji keputusan eksekutif, koordinasi, dan kesiapan organisasi." };
 
 export default function TabletopPage() {
-  return <ServicePage
-    eyebrow="Tabletop Exercise"
-    title="Prepare Your Leaders."
-    accent="Strengthen Response."
-    summary="Simulasi krisis tingkat eksekutif untuk menguji pengambilan keputusan, komunikasi, dan kesiapan organisasi menghadapi insiden siber."
-    image="/images/tabletop-hero.png"
-    imageAlt="Simulasi krisis siber untuk eksekutif"
-    aboutTitle="Apa itu Tabletop Exercise?"
-    about={["Tabletop Exercise adalah simulasi berbasis diskusi yang membantu pimpinan dan stakeholder menguji respons terhadap skenario krisis siber tanpa mengganggu sistem operasional.", "Peserta menghadapi perkembangan skenario secara bertahap, mengambil keputusan, berkoordinasi, dan mengevaluasi kesiapan prosedur organisasi."]}
-    challenges={[
-      { icon: Gavel, title: "Keputusan Belum Teruji", text: "Pimpinan belum memiliki pengalaman mengambil keputusan saat krisis siber." },
-      { icon: MessageSquareText, title: "Komunikasi Terfragmentasi", text: "Alur komunikasi internal dan eksternal belum terkoordinasi." },
-      { icon: Siren, title: "Eskalasi Tidak Jelas", text: "Trigger eskalasi serta pemilik keputusan belum terdefinisi dengan baik." },
-      { icon: Megaphone, title: "Risiko Reputasi", text: "Respons publik yang lambat dapat memperbesar dampak reputasi." },
-      { icon: Scale, title: "Kewajiban Regulasi", text: "Tim perlu memahami batas waktu dan tanggung jawab pelaporan." },
-      { icon: Network, title: "Ketergantungan Pihak Ketiga", text: "Peran vendor dan partner belum tervalidasi ketika krisis terjadi." },
-    ]}
-    features={[
-      { icon: BookOpenCheck, title: "Realistic Scenario", text: "Skenario krisis disusun berdasarkan profil risiko dan industri organisasi." },
-      { icon: UsersRound, title: "Executive Facilitation", text: "Diskusi terarah untuk manajemen, business owner, legal, dan tim teknis." },
-      { icon: Siren, title: "Crisis Simulation", text: "Inject skenario bertahap untuk menguji respons terhadap perubahan situasi." },
-      { icon: MessageSquareText, title: "Communication Review", text: "Evaluasi koordinasi, eskalasi, dan komunikasi dengan stakeholder." },
-      { icon: ClipboardCheck, title: "Readiness Assessment", text: "Penilaian keputusan, proses, peran, dan kontrol organisasi." },
-      { icon: FileCheck2, title: "Action Plan", text: "Gap analysis, lessons learned, dan roadmap peningkatan yang terukur." },
-    ]}
-    flow={["Preparation", "Scenario Design", "Exercise Session", "Decision & Response", "Evaluation", "Report", "Action Plan"]}
-    packages={[
-      { name: "Executive Readiness", description: "Latihan ringkas untuk memvalidasi pengambilan keputusan pimpinan.", items: ["Executive scenario", "Decision checkpoints", "Crisis communication", "Readiness summary", "Action items"] },
-      { name: "Enterprise Exercise", description: "Simulasi lintas fungsi dengan skenario krisis yang berkembang.", featured: true, items: ["Cross-functional exercise", "Multi-stage injects", "Facilitated discussion", "Comprehensive gap analysis", "Executive report"] },
-      { name: "Custom Crisis Scenario", description: "Simulasi yang dirancang khusus berdasarkan risiko dan regulasi.", items: ["Industry-specific scenario", "Third-party involvement", "Regulatory injects", "Custom assessment", "Improvement roadmap"] },
-    ]}
-    audience={["Board of Directors", "CEO / COO", "CISO dan IT Leadership", "Legal & Compliance", "Corporate Communication", "Business Continuity Team"]}
-    benefits={[
-      { icon: Gavel, title: "Executive Readiness", text: "Pimpinan memahami keputusan penting yang harus diambil saat krisis." },
-      { icon: Network, title: "Koordinasi Lebih Baik", text: "Selaraskan komunikasi dan tanggung jawab lintas fungsi." },
-      { icon: ShieldCheck, title: "Risk Awareness", text: "Pahami risiko bisnis serta dampak operasional dari insiden siber." },
-      { icon: Landmark, title: "Compliance Support", text: "Uji kesiapan memenuhi kewajiban regulasi dan pelaporan." },
-    ]}
-    ctaTitle="Persiapkan organisasi Anda menghadapi krisis siber berikutnya."
-  />;
+  return <ServicePage content={{
+    id: {
+      eyebrow: "Tabletop Exercise",
+      title: "Prepare Your Leaders.",
+      accent: "Strengthen Response.",
+      summary: "Simulasi berbasis skenario yang melibatkan berbagai fungsi dalam organisasi untuk menguji pengambilan keputusan, koordinasi, dan prosedur respons insiden siber.",
+      image: "/images/tabletop-hero.png",
+      imageAlt: "Simulasi krisis siber untuk eksekutif",
+      aboutEyebrow: "Tentang layanan",
+      aboutTitle: "Apa itu Tabletop Exercise?",
+      about: ["Tabletop Exercise adalah simulasi berbasis diskusi yang membantu pimpinan dan stakeholder menguji respons terhadap skenario krisis siber tanpa mengganggu sistem operasional.", "Peserta menghadapi perkembangan skenario secara bertahap, mengambil keputusan, berkoordinasi, dan mengevaluasi kesiapan prosedur organisasi."],
+      pillars: ["Keputusan", "Koordinasi", "Respons"],
+      challengesEyebrow: "Risiko operasional",
+      challengesTitle: "Tantangan yang Kami Bantu Atasi",
+      challengesText: "Kami membantu tim melihat risiko lebih dini dan memperkuat koordinasi sebelum dampaknya meluas.",
+      challenges: [
+        { icon: "Gavel", title: "Keputusan Belum Teruji", text: "Pimpinan belum memiliki pengalaman mengambil keputusan saat krisis siber." },
+        { icon: "MessageSquareText", title: "Komunikasi Terfragmentasi", text: "Alur komunikasi internal dan eksternal belum terkoordinasi." },
+        { icon: "Siren", title: "Eskalasi Tidak Jelas", text: "Trigger eskalasi serta pemilik keputusan belum terdefinisi dengan baik." },
+      ],
+      featuresEyebrow: "Kapabilitas",
+      featuresTitle: "Layanan & Fitur Utama",
+      features: [
+        { icon: "Siren", title: "Crisis Simulation", text: "Inject skenario bertahap untuk menguji respons terhadap perubahan situasi." },
+        { icon: "BookOpenCheck", title: "Real Scenario", text: "Skenario krisis disusun berdasarkan profil risiko dan industri organisasi." },
+        { icon: "UsersRound", title: "Executive Readiness", text: "Diskusi terarah untuk manajemen, business owner, legal, dan tim teknis." },
+        { icon: "MessageSquareText", title: "Stakeholder Coordination", text: "Evaluasi koordinasi, eskalasi, dan komunikasi dengan stakeholder." },
+      ],
+      flowEyebrow: "Alur terukur",
+      flowTitle: "Bagaimana Prosesnya Bekerja",
+      flow: ["Preparation", "Scenario Design", "Exercise Session", "Decision & Response", "Evaluation", "Report", "Action Plan"],
+      packagesEyebrow: "Pilihan layanan",
+      packagesTitle: "Service Packages",
+      packagesText: "Pilih paket awal yang paling sesuai. Hubungi tim kami untuk detail komersial dan ruang lingkup layanan.",
+      recommended: "Direkomendasikan",
+      packages: [
+        { name: "Executive Readiness", description: "Latihan ringkas untuk memvalidasi pengambilan keputusan pimpinan.", items: ["Executive scenario", "Decision checkpoints", "Crisis communication", "Readiness summary", "Action items"] },
+        { name: "Enterprise Exercise", description: "Simulasi lintas fungsi dengan skenario krisis yang berkembang.", featured: true, items: ["Cross-functional exercise", "Multi-stage injects", "Facilitated discussion", "Comprehensive gap analysis", "Executive report"] },
+        { name: "Custom Crisis Scenario", description: "Simulasi yang dirancang khusus berdasarkan risiko dan regulasi.", items: ["Industry-specific scenario", "Third-party involvement", "Regulatory injects", "Custom assessment", "Improvement roadmap"] },
+      ],
+      audienceEyebrow: "Cocok untuk siapa?",
+      audienceTitle: "Dibangun untuk Organisasi yang Serius dengan Kesiapan Siber",
+      audience: ["Board of Directors", "CEO / COO", "CISO dan IT Leadership", "Legal & Compliance"],
+      benefits: [
+        { icon: "Gavel", title: "Executive Readiness", text: "Pimpinan memahami keputusan penting yang harus diambil saat krisis." },
+        { icon: "Network", title: "Koordinasi Lebih Baik", text: "Selaraskan komunikasi dan tanggung jawab lintas fungsi." },
+        { icon: "ShieldCheck", title: "Risk Awareness", text: "Pahami risiko bisnis serta dampak operasional dari insiden siber." },
+      ],
+      ctaEyebrow: "Langkah berikutnya",
+      ctaTitle: "Persiapkan organisasi Anda menghadapi krisis siber berikutnya.",
+      ctaButton: "Request Consultation",
+    },
+    en: {
+      eyebrow: "Tabletop Exercise",
+      title: "Prepare Your Leaders.",
+      accent: "Strengthen Response.",
+      summary: "A scenario-based simulation involving various functions within an organization to test decision-making, coordination, and cyber incident response procedures.",
+      image: "/images/tabletop-hero.png",
+      imageAlt: "Cyber crisis simulation for executives",
+      aboutEyebrow: "About the service",
+      aboutTitle: "What is Tabletop Exercise?",
+      about: ["Tabletop Exercise is a discussion-based simulation that helps leaders and stakeholders test responses to cyber crisis scenarios without disrupting operational systems.", "Participants face staged scenario developments, make decisions, coordinate, and evaluate organizational procedure readiness."],
+      pillars: ["Decision", "Coordination", "Response"],
+      challengesEyebrow: "Operational risk",
+      challengesTitle: "Challenges We Help Address",
+      challengesText: "We help teams see risk earlier and strengthen coordination before impact expands.",
+      challenges: [
+        { icon: "Gavel", title: "Untested Decisions", text: "Leaders may not have experience making decisions during a cyber crisis." },
+        { icon: "MessageSquareText", title: "Fragmented Communication", text: "Internal and external communication flows are not yet coordinated." },
+        { icon: "Siren", title: "Unclear Escalation", text: "Escalation triggers and decision owners are not clearly defined." },
+      ],
+      featuresEyebrow: "Capabilities",
+      featuresTitle: "Core Services & Features",
+      features: [
+        { icon: "Siren", title: "Crisis Simulation", text: "Staged scenario injects to test response to changing situations." },
+        { icon: "BookOpenCheck", title: "Real Scenario", text: "Crisis scenarios built from the organization's risk profile and industry." },
+        { icon: "UsersRound", title: "Executive Readiness", text: "Guided discussion for management, business owners, legal, and technical teams." },
+        { icon: "MessageSquareText", title: "Stakeholder Coordination", text: "Evaluation of coordination, escalation, and stakeholder communication." },
+      ],
+      flowEyebrow: "Measured flow",
+      flowTitle: "How the Process Works",
+      flow: ["Preparation", "Scenario Design", "Exercise Session", "Decision & Response", "Evaluation", "Report", "Action Plan"],
+      packagesEyebrow: "Service options",
+      packagesTitle: "Service Packages",
+      packagesText: "Choose the most suitable starting package. Contact our team for commercial details and service scope.",
+      recommended: "Recommended",
+      packages: [
+        { name: "Executive Readiness", description: "A concise exercise to validate leadership decision-making.", items: ["Executive scenario", "Decision checkpoints", "Crisis communication", "Readiness summary", "Action items"] },
+        { name: "Enterprise Exercise", description: "Cross-functional simulation with an evolving crisis scenario.", featured: true, items: ["Cross-functional exercise", "Multi-stage injects", "Facilitated discussion", "Comprehensive gap analysis", "Executive report"] },
+        { name: "Custom Crisis Scenario", description: "Simulation designed specifically around risk and regulation.", items: ["Industry-specific scenario", "Third-party involvement", "Regulatory injects", "Custom assessment", "Improvement roadmap"] },
+      ],
+      audienceEyebrow: "Who is it for?",
+      audienceTitle: "Built for Organizations Serious About Cyber Readiness",
+      audience: ["Board of Directors", "CEO / COO", "CISO and IT Leadership", "Legal & Compliance"],
+      benefits: [
+        { icon: "Gavel", title: "Executive Readiness", text: "Leaders understand critical decisions that must be made during a crisis." },
+        { icon: "Network", title: "Better Coordination", text: "Align communication and responsibilities across functions." },
+        { icon: "ShieldCheck", title: "Risk Awareness", text: "Understand business risk and operational impact from cyber incidents." },
+      ],
+      ctaEyebrow: "Next step",
+      ctaTitle: "Prepare your organization for the next cyber crisis.",
+      ctaButton: "Request Consultation",
+    },
+  }} />;
 }

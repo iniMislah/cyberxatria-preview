@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PublicPreferencesProvider } from "@/lib/public-preferences";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -28,8 +29,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="id" className="dark h-full antialiased">
-      <body className="min-h-full">{children}</body>
+    <html lang="id" className="dark h-full antialiased" suppressHydrationWarning>
+      <body className="min-h-full">
+        <PublicPreferencesProvider>{children}</PublicPreferencesProvider>
+      </body>
     </html>
   );
 }

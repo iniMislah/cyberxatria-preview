@@ -1,48 +1,109 @@
 import type { Metadata } from "next";
-import { Activity, BrainCircuit, Crosshair, Gauge, Network, Radar, RotateCcw, ScanSearch, ShieldCheck, Timer, UsersRound, Workflow } from "lucide-react";
 import { ServicePage } from "@/components/service-page";
 
 export const metadata: Metadata = { title: "Cyber Drill Exercise", description: "Uji kesiapan teknis organisasi melalui simulasi serangan siber yang realistis dan terukur." };
 
 export default function CyberDrillPage() {
-  return <ServicePage
-    eyebrow="Cyber Drill Exercise"
-    title="Simulate. Respond."
-    accent="Improve."
-    summary="Uji kemampuan organisasi menghadapi serangan siber melalui simulasi serangan yang realistis, aman, dan terukur."
-    image="/images/cyber-drill-hero.png"
-    imageAlt="Simulasi serangan siber CyberXatria"
-    aboutTitle="Apa itu Cyber Drill?"
-    about={["Cyber Drill adalah latihan simulasi serangan siber yang dirancang untuk menguji kesiapan organisasi dalam mendeteksi, merespons, dan menangani serangan siber.", "Skenario yang menyerupai kondisi nyata membantu organisasi menemukan kelemahan pada proses, teknologi, koordinasi, dan kemampuan tim sebelum menghadapi insiden sebenarnya."]}
-    challenges={[
-      { icon: Gauge, title: "Kesiapan Belum Terukur", text: "Organisasi belum mengetahui seberapa siap menghadapi serangan nyata." },
-      { icon: Crosshair, title: "Minim Pengalaman", text: "Tim belum terbiasa menangani serangan dalam lingkungan terkontrol." },
-      { icon: Workflow, title: "Prosedur Belum Teruji", text: "Incident response plan belum pernah diuji dari awal hingga akhir." },
-      { icon: UsersRound, title: "Koordinasi Belum Optimal", text: "Peran dan komunikasi antartim belum tervalidasi saat tekanan tinggi." },
-      { icon: ScanSearch, title: "Gap Tidak Terlihat", text: "Kesenjangan detection dan response sulit ditemukan tanpa latihan." },
-      { icon: Timer, title: "Response Time", text: "Efektivitas waktu respons belum memiliki benchmark yang jelas." },
-    ]}
-    features={[
-      { icon: Crosshair, title: "Attack Simulation", text: "Simulasi serangan berdasarkan skenario yang telah ditentukan." },
-      { icon: ShieldCheck, title: "Blue Team Exercise", text: "Menguji kemampuan tim dalam mendeteksi dan merespons serangan." },
-      { icon: Radar, title: "Red Team Simulation", text: "Mensimulasikan aktivitas attacker untuk menguji kemampuan pertahanan." },
-      { icon: BrainCircuit, title: "Custom Scenario", text: "Skenario disesuaikan dengan tujuan dan kebutuhan organisasi." },
-      { icon: Activity, title: "Performance Assessment", text: "Mengukur performa tim selama exercise berlangsung." },
-      { icon: RotateCcw, title: "Post-Exercise Report", text: "Temuan, gap analysis, evaluasi respons, dan rekomendasi perbaikan." },
-    ]}
-    flow={["Identify", "Detect", "Respond", "Contain", "Recover", "Evaluate", "Improve"]}
-    packages={[
-      { name: "Regular Scenario", description: "Skenario terstruktur untuk mengukur kesiapan dasar tim pertahanan.", items: ["Standard attack scenario", "Blue Team exercise", "Detection assessment", "Readiness score", "Exercise report"] },
-      { name: "Cyber Drill Advanced", description: "Skenario serangan lanjutan dengan evaluasi Red & Blue Team.", featured: true, items: ["Advanced attack scenario", "Red & Blue Team", "Detection & response assessment", "Performance evaluation", "Detailed report"] },
-      { name: "Customized Scenario", description: "Skenario, attack path, dan lingkup exercise disesuaikan kebutuhan.", items: ["Customized scenario", "Customized attack path", "Cross-team exercise", "Comprehensive assessment", "Improvement recommendation"] },
-    ]}
-    audience={["IT & Security Team", "SOC / CSIRT", "Blue Team", "Network & Infrastructure Team", "Incident Response Team", "Management & Business Stakeholder"]}
-    benefits={[
-      { icon: Gauge, title: "Ukur Kesiapan", text: "Dapatkan benchmark readiness berbasis performa selama latihan." },
-      { icon: ScanSearch, title: "Temukan Gap", text: "Identifikasi kelemahan pada people, process, dan technology." },
-      { icon: Timer, title: "Percepat Respons", text: "Latih tim mengambil tindakan yang tepat dalam waktu terbatas." },
-      { icon: Network, title: "Perkuat Koordinasi", text: "Validasi alur komunikasi dan eskalasi lintas fungsi." },
-    ]}
-    ctaTitle="Uji kesiapan organisasi Anda sebelum penyerang sebenarnya melakukannya."
-  />;
+  return <ServicePage content={{
+    id: {
+      eyebrow: "Cyber Drill Exercise",
+      title: "Simulate. Respond.",
+      accent: "Improve.",
+      summary: "Simulasi serangan siber dari sisi teknis yang dirancang untuk menguji kemampuan organisasi dalam mendeteksi, merespons, dan menangani insiden keamanan secara nyata.",
+      image: "/images/cyber-drill-hero.png",
+      imageAlt: "Simulasi serangan siber CyberXatria",
+      aboutEyebrow: "Tentang layanan",
+      aboutTitle: "Apa itu Cyber Drill?",
+      about: ["Cyber Drill adalah latihan simulasi serangan siber yang dirancang untuk menguji kesiapan organisasi dalam mendeteksi, merespons, dan menangani serangan siber.", "Skenario yang menyerupai kondisi nyata membantu organisasi menemukan kelemahan pada proses, teknologi, koordinasi, dan kemampuan tim sebelum menghadapi insiden sebenarnya."],
+      pillars: ["Deteksi", "Respons", "Perbaikan"],
+      challengesEyebrow: "Risiko operasional",
+      challengesTitle: "Tantangan yang Kami Bantu Atasi",
+      challengesText: "Kami membantu tim melihat risiko lebih dini dan memperkuat koordinasi sebelum dampaknya meluas.",
+      challenges: [
+        { icon: "Gauge", title: "Kesiapan Belum Terukur", text: "Organisasi belum mengetahui seberapa siap menghadapi serangan nyata." },
+        { icon: "Crosshair", title: "Minim Pengalaman", text: "Tim belum terbiasa menangani serangan dalam lingkungan terkontrol." },
+        { icon: "Workflow", title: "Prosedur Belum Teruji", text: "Incident response plan belum pernah diuji dari awal hingga akhir." },
+      ],
+      featuresEyebrow: "Kapabilitas",
+      featuresTitle: "Layanan & Fitur Utama",
+      features: [
+        { icon: "Crosshair", title: "Simulated Attack Scenario", text: "Simulasi serangan berdasarkan skenario yang telah ditentukan." },
+        { icon: "ShieldCheck", title: "Blue Team Validation", text: "Menguji kemampuan tim dalam mendeteksi dan merespons serangan." },
+        { icon: "Radar", title: "Gap Assessment", text: "Mengidentifikasi kesenjangan pada proses, teknologi, dan kemampuan tim." },
+      ],
+      flowEyebrow: "Alur terukur",
+      flowTitle: "Bagaimana Prosesnya Bekerja",
+      flow: ["Identify", "Detect", "Respond", "Contain", "Recover", "Evaluate", "Improve"],
+      packagesEyebrow: "Pilihan layanan",
+      packagesTitle: "Service Packages",
+      packagesText: "Pilih paket awal yang paling sesuai. Hubungi tim kami untuk detail komersial dan ruang lingkup layanan.",
+      recommended: "Direkomendasikan",
+      packages: [
+        { name: "Regular Scenario", description: "Skenario terstruktur untuk mengukur kesiapan dasar tim pertahanan.", items: ["Standard attack scenario", "Blue Team exercise", "Detection assessment", "Readiness score", "Exercise report"] },
+        { name: "Cyber Drill Advanced", description: "Skenario serangan lanjutan dengan evaluasi Red & Blue Team.", featured: true, items: ["Advanced attack scenario", "Red & Blue Team", "Detection & response assessment", "Performance evaluation", "Detailed report"] },
+        { name: "Customized Scenario", description: "Skenario, attack path, dan lingkup exercise disesuaikan kebutuhan.", items: ["Customized scenario", "Customized attack path", "Cross-team exercise", "Comprehensive assessment", "Improvement recommendation"] },
+      ],
+      audienceEyebrow: "Cocok untuk siapa?",
+      audienceTitle: "Dibangun untuk Organisasi yang Serius dengan Kesiapan Siber",
+      audience: ["IT & Security Team", "SOC / CSIRT", "Blue Team", "Incident Response Team"],
+      benefits: [
+        { icon: "Gauge", title: "Ukur Kesiapan", text: "Dapatkan benchmark readiness berbasis performa selama latihan." },
+        { icon: "ScanSearch", title: "Temukan Gap", text: "Identifikasi kelemahan pada people, process, dan technology." },
+        { icon: "Timer", title: "Percepat Respons", text: "Latih tim mengambil tindakan yang tepat dalam waktu terbatas." },
+      ],
+      ctaEyebrow: "Langkah berikutnya",
+      ctaTitle: "Uji kesiapan organisasi Anda sebelum penyerang sebenarnya melakukannya.",
+      ctaButton: "Request Consultation",
+    },
+    en: {
+      eyebrow: "Cyber Drill Exercise",
+      title: "Simulate. Respond.",
+      accent: "Improve.",
+      summary: "A technical cyberattack simulation designed to test an organization's ability to detect, respond to, and handle real-world security incidents.",
+      image: "/images/cyber-drill-hero.png",
+      imageAlt: "CyberXatria cyberattack simulation",
+      aboutEyebrow: "About the service",
+      aboutTitle: "What is Cyber Drill?",
+      about: ["Cyber Drill is a cyberattack simulation exercise designed to test an organization's readiness to detect, respond to, and handle cyberattacks.", "Realistic scenarios help organizations find weaknesses in process, technology, coordination, and team capability before facing a real incident."],
+      pillars: ["Detection", "Response", "Improvement"],
+      challengesEyebrow: "Operational risk",
+      challengesTitle: "Challenges We Help Address",
+      challengesText: "We help teams see risk earlier and strengthen coordination before impact expands.",
+      challenges: [
+        { icon: "Gauge", title: "Readiness Is Not Measured", text: "Organizations may not know how ready they are to face real attacks." },
+        { icon: "Crosshair", title: "Limited Experience", text: "Teams are not used to handling attacks in a controlled environment." },
+        { icon: "Workflow", title: "Untested Procedures", text: "The incident response plan has not been tested end to end." },
+      ],
+      featuresEyebrow: "Capabilities",
+      featuresTitle: "Core Services & Features",
+      features: [
+        { icon: "Crosshair", title: "Simulated Attack Scenario", text: "Attack simulation based on a defined scenario." },
+        { icon: "ShieldCheck", title: "Blue Team Validation", text: "Testing team capability to detect and respond to attacks." },
+        { icon: "Radar", title: "Gap Assessment", text: "Identifying gaps in process, technology, and team capability." },
+      ],
+      flowEyebrow: "Measured flow",
+      flowTitle: "How the Process Works",
+      flow: ["Identify", "Detect", "Respond", "Contain", "Recover", "Evaluate", "Improve"],
+      packagesEyebrow: "Service options",
+      packagesTitle: "Service Packages",
+      packagesText: "Choose the most suitable starting package. Contact our team for commercial details and service scope.",
+      recommended: "Recommended",
+      packages: [
+        { name: "Regular Scenario", description: "Structured scenario to measure basic defense team readiness.", items: ["Standard attack scenario", "Blue Team exercise", "Detection assessment", "Readiness score", "Exercise report"] },
+        { name: "Cyber Drill Advanced", description: "Advanced attack scenario with Red & Blue Team evaluation.", featured: true, items: ["Advanced attack scenario", "Red & Blue Team", "Detection & response assessment", "Performance evaluation", "Detailed report"] },
+        { name: "Customized Scenario", description: "Scenario, attack path, and exercise scope tailored to needs.", items: ["Customized scenario", "Customized attack path", "Cross-team exercise", "Comprehensive assessment", "Improvement recommendation"] },
+      ],
+      audienceEyebrow: "Who is it for?",
+      audienceTitle: "Built for Organizations Serious About Cyber Readiness",
+      audience: ["IT & Security Team", "SOC / CSIRT", "Blue Team", "Incident Response Team"],
+      benefits: [
+        { icon: "Gauge", title: "Measure Readiness", text: "Get a performance-based readiness benchmark from the exercise." },
+        { icon: "ScanSearch", title: "Find Gaps", text: "Identify weaknesses in people, process, and technology." },
+        { icon: "Timer", title: "Accelerate Response", text: "Train teams to take the right actions under time pressure." },
+      ],
+      ctaEyebrow: "Next step",
+      ctaTitle: "Test your organization's readiness before real attackers do.",
+      ctaButton: "Request Consultation",
+    },
+  }} />;
 }
