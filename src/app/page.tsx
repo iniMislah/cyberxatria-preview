@@ -23,6 +23,7 @@ import { CountUpValue, Reveal } from "@/components/public-motion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { usePublicPreferences } from "@/lib/public-preferences";
+import { publicAsset } from "@/lib/asset-path";
 
 const threatIcons = [LockKeyhole, ShieldAlert, DatabaseZap, UsersRound];
 const impactIcons = [ShieldAlert, DatabaseZap, BadgeDollarSign, LockKeyhole, UsersRound];
@@ -153,26 +154,30 @@ export default function Home() {
   const [activeImpact, setActiveImpact] = useState(0);
 
   return (
-    <main className="site-shell min-h-screen bg-[#03060d] text-white">
+    <main className="site-shell min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      <section className="relative min-h-[720px] overflow-hidden border-b border-white/5">
-        <Image src="/images/cyber-shield-hero.png" alt={copy.heroAlt} fill priority sizes="100vw" className="hero-visual object-cover object-[66%_center] opacity-90" />
+      <section className="relative min-h-[720px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
+        <Image src={publicAsset("/images/cyber-shield-hero.png")} alt={copy.heroAlt} fill priority sizes="100vw" className="hero-visual object-cover object-[66%_center] opacity-90" />
         <div className="hero-vignette absolute inset-0" />
         <div className="hero-ambient" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#03060d] via-transparent to-transparent" />
-        <div className="page-grid relative z-10 flex min-h-[690px] items-center py-24">
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />
+        <div className="page-grid relative z-10 flex min-h-[690px] items-center py-20 sm:py-24">
           <Reveal className="max-w-[720px] pt-8">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-rose-500/25 bg-rose-500/8 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-rose-300">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-rose-500/25 bg-rose-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-rose-600 dark:text-rose-300">
               <ShieldCheck className="size-4" /> {copy.heroBadge}
             </div>
-            <h1 className="text-5xl font-bold leading-[1.06] tracking-[-0.04em] sm:text-6xl lg:text-[74px]">
+            <h1 className="text-5xl font-bold leading-[1.06] tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl lg:text-[74px]">
               {copy.headline[0]}<br />{copy.headline[1]}<br /><span className="text-gradient">{copy.headline[2]}</span>
             </h1>
-            <p className="mt-7 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">{copy.subheadline}</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/request-demo" className="glow-button inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 font-semibold"><ShieldCheck className="size-5" /> Request Demo</Link>
-              <Link href="#solutions" className="motion-link inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-white/20 bg-black/20 px-6 font-semibold backdrop-blur-sm transition hover:border-rose-500/60 hover:bg-rose-500/8">{copy.solutionsCta} <ArrowRight className="size-4" /></Link>
+            <p className="mt-7 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">{copy.subheadline}</p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Link href="/request-demo" className="glow-button inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white">
+                <ShieldCheck className="size-4" /> Request Demo
+              </Link>
+              <Link href="#solutions" className="secondary-button inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold">
+                {copy.solutionsCta} <ArrowRight className="size-4" />
+              </Link>
             </div>
           </Reveal>
         </div>
@@ -188,48 +193,59 @@ export default function Home() {
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.threatEyebrow}</p>
-            <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{copy.threatTitle} <span className="text-gradient">{copy.threatAccent}</span></h2>
-            <p className="mt-4 text-slate-400">{copy.threatIntro}</p>
+            <h2 className="mt-4 text-4xl font-bold text-slate-900 dark:text-white sm:text-5xl">{copy.threatTitle} <span className="text-gradient">{copy.threatAccent}</span></h2>
+            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.threatIntro}</p>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {copy.threats.map(([label, value, note], index) => {
               const Icon = threatIcons[index];
-              const tone = index === 3 ? "text-orange-400" : index === 2 ? "text-red-500" : "text-rose-500";
+              const tone = index === 3 ? "text-orange-500 dark:text-orange-400" : index === 2 ? "text-red-500" : "text-rose-500";
               return (
-                <Reveal key={label} delay={index * 90}>
-                  <div tabIndex={0} className="cyber-card motion-card group rounded-2xl p-6">
+                <Reveal key={label} delay={index * 90} className="h-full flex flex-col">
+                  <div tabIndex={0} className="cyber-card motion-card group flex h-full flex-1 flex-col rounded-2xl p-6">
                     <Icon className={`mb-7 size-9 ${tone}`} />
-                    <p className="text-xs font-bold uppercase tracking-widest text-slate-400">{label}</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{label}</p>
                     <p className={`mt-3 text-4xl font-black ${tone}`}><CountUpValue value={value} /></p>
-                    <p className="mt-2 text-sm text-slate-500">{note}</p>
-                    <div className="threat-meter" aria-hidden="true"><span style={{ "--meter": `${[49, 38, 72, 64][index]}%` } as React.CSSProperties} /></div>
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-500 flex-1">{note}</p>
+                    <div className="threat-meter mt-4" aria-hidden="true"><span style={{ "--meter": `${[49, 38, 72, 64][index]}%` } as React.CSSProperties} /></div>
                   </div>
                 </Reveal>
               );
             })}
           </div>
-          <Reveal delay={120} className="mt-4 flex items-start gap-3 rounded-xl border border-orange-500/25 bg-orange-500/5 px-5 py-4 text-sm text-slate-300">
-            <ShieldAlert className="mt-0.5 size-5 shrink-0 text-orange-400" /><p>{copy.threatNote}</p>
+          <Reveal delay={120} className="mt-4 flex items-start gap-3 rounded-xl border border-orange-500/30 bg-orange-500/10 px-5 py-4 text-sm text-slate-700 dark:text-slate-300">
+            <ShieldAlert className="mt-0.5 size-5 shrink-0 text-orange-500 dark:text-orange-400" /><p>{copy.threatNote}</p>
           </Reveal>
         </div>
       </section>
 
-      <section className="border-y border-white/5 bg-[#070a12] py-16 sm:py-20">
+      <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.readinessEyebrow}</p>
-            <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{copy.readinessTitle} <span className="text-gradient">{copy.readinessAccent}</span> {copy.readinessSuffix}</h2>
-            <p className="mt-4 text-slate-400">{copy.readinessIntro}</p>
+            <h2 className="mt-4 text-4xl font-bold text-slate-900 dark:text-white sm:text-5xl">{copy.readinessTitle} <span className="text-gradient">{copy.readinessAccent}</span> {copy.readinessSuffix}</h2>
+            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.readinessIntro}</p>
           </Reveal>
           <Reveal className="readiness-sequence grid gap-3 md:grid-cols-5">
             {copy.impacts.map(([title, text], index) => {
               const Icon = impactIcons[index];
               return (
-                <button key={title} type="button" onClick={() => setActiveImpact(index)} onFocus={() => setActiveImpact(index)} aria-expanded={activeImpact === index} className="readiness-card motion-card relative rounded-2xl border border-white/8 bg-[#0a0e17] p-5 text-center">
-                  <div className="mx-auto mb-4 grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/8 text-rose-400"><Icon className="size-6" /></div>
-                  <h3 className="text-sm font-bold uppercase text-rose-400">{title}</h3>
-                  <p className="mt-2 text-xs leading-5 text-slate-400">{text}</p>
-                  {index < copy.impacts.length - 1 && <ArrowRight className="absolute -right-5 top-1/2 z-10 hidden size-6 -translate-y-1/2 text-rose-700 md:block" />}
+                <button
+                  key={title}
+                  type="button"
+                  onClick={() => setActiveImpact(index)}
+                  onFocus={() => setActiveImpact(index)}
+                  aria-expanded={activeImpact === index}
+                  className={`readiness-card motion-card relative flex h-full flex-col rounded-2xl border p-5 text-center transition-all ${
+                    activeImpact === index
+                      ? "border-rose-500/80 bg-rose-50/80 dark:bg-rose-950/25 shadow-[0_8px_25px_rgba(244,63,94,0.12)] ring-1 ring-rose-500/30"
+                      : "border-slate-200/90 dark:border-white/8 bg-white dark:bg-[#0a0e17] shadow-sm dark:shadow-none hover:border-rose-500/40"
+                  }`}
+                >
+                  <div className="mx-auto mb-4 grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400"><Icon className="size-6" /></div>
+                  <h3 className="text-sm font-bold uppercase text-rose-600 dark:text-rose-400 min-h-[2.5rem] flex items-center justify-center">{title}</h3>
+                  <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400 flex-1">{text}</p>
+                  {index < copy.impacts.length - 1 && <ArrowRight className="absolute -right-5 top-1/2 z-10 hidden size-6 -translate-y-1/2 text-rose-400/60 dark:text-rose-700 md:block" />}
                 </button>
               );
             })}
@@ -242,21 +258,21 @@ export default function Home() {
         <div className="page-grid relative">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.solutionsEyebrow}</p>
-            <h2 className="mt-4 text-3xl font-bold sm:text-4xl">{copy.solutionsTitle} <span className="text-gradient">{copy.solutionsAccent}</span></h2>
-            <p className="mt-4 text-slate-400">{copy.solutionsIntro}</p>
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.solutionsTitle} <span className="text-gradient">{copy.solutionsAccent}</span></h2>
+            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.solutionsIntro}</p>
           </Reveal>
           <div className="grid gap-5 lg:grid-cols-3">
             {copy.services.map((service, index) => {
               const [title, href, text, points] = service as [string, string, string, string[]];
               const Icon = serviceIcons[index];
               return (
-                <Reveal key={title} delay={index * 90}>
-                  <article className="cyber-card motion-card flex min-h-[390px] flex-col rounded-2xl p-7">
-                    <div className="mb-6 grid size-12 place-items-center rounded-xl border border-rose-500/35 bg-rose-500/8 text-rose-400"><Icon className="size-6" /></div>
-                    <h3 className="text-xl font-bold">{title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
-                    <ul className="mt-6 space-y-3 text-sm text-slate-300">{points.map((point) => <li key={point} className="flex items-center gap-2"><Check className="size-4 text-rose-500" /> {point}</li>)}</ul>
-                    <Link href={href} className="motion-link mt-auto inline-flex items-center gap-2 pt-7 text-sm font-bold text-rose-400 hover:text-rose-300">{copy.learnMore} <ArrowRight className="size-4" /></Link>
+                <Reveal key={title} delay={index * 90} className="h-full flex flex-col">
+                  <article className="cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-7">
+                    <div className="mb-6 grid size-12 place-items-center rounded-xl border border-rose-500/35 bg-rose-500/10 text-rose-500 dark:text-rose-400"><Icon className="size-6" /></div>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400 min-h-[4.5rem]">{text}</p>
+                    <ul className="mt-6 space-y-3 text-sm text-slate-700 dark:text-slate-300 min-h-[7.5rem]">{points.map((point) => <li key={point} className="flex items-center gap-2"><Check className="size-4 shrink-0 text-rose-500" /> {point}</li>)}</ul>
+                    <Link href={href} className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300">{copy.learnMore} <ArrowRight className="size-4" /></Link>
                   </article>
                 </Reveal>
               );
@@ -265,20 +281,20 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-y border-white/5 bg-[#070a12] py-16 sm:py-20">
+      <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.approachEyebrow}</p>
-            <h2 className="mt-4 text-3xl font-bold sm:text-4xl">{copy.approachTitle} <span className="text-gradient">{copy.approachAccent}</span></h2>
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.approachTitle} <span className="text-gradient">{copy.approachAccent}</span></h2>
           </Reveal>
           <Reveal className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-2">
-            <div className="motion-card rounded-2xl border border-white/10 bg-[#090d15] p-7">
+            <div className="motion-card flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-7 shadow-sm dark:shadow-none">
               <h3 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-500">{copy.traditional}</h3>
-              <ul className="space-y-4 text-sm text-slate-400">{copy.traditionalPoints.map((item) => <li key={item} className="flex gap-3"><span className="text-slate-600">○</span>{item}</li>)}</ul>
+              <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400 flex-1">{copy.traditionalPoints.map((item) => <li key={item} className="flex gap-3"><span className="text-slate-400 dark:text-slate-600">○</span>{item}</li>)}</ul>
             </div>
-            <div className="cyber-card motion-card rounded-2xl p-7 shadow-[0_0_60px_rgba(244,63,94,0.08)]">
-              <h3 className="mb-6 text-sm font-bold uppercase tracking-widest text-rose-400">{copy.cyberxatria}</h3>
-              <ul className="space-y-4 text-sm text-slate-200">{copy.cyberxatriaPoints.map((item) => <li key={item} className="flex gap-3"><Check className="size-4 shrink-0 text-rose-500" />{item}</li>)}</ul>
+            <div className="cyber-card motion-card flex h-full flex-col rounded-2xl p-7 shadow-[0_0_50px_rgba(244,63,94,0.08)] dark:shadow-[0_0_60px_rgba(244,63,94,0.12)]">
+              <h3 className="mb-6 text-sm font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400">{copy.cyberxatria}</h3>
+              <ul className="space-y-4 text-sm text-slate-800 dark:text-slate-200 flex-1">{copy.cyberxatriaPoints.map((item) => <li key={item} className="flex gap-3"><Check className="size-4 shrink-0 text-rose-500" />{item}</li>)}</ul>
             </div>
           </Reveal>
         </div>
@@ -288,17 +304,17 @@ export default function Home() {
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.industriesEyebrow}</p>
-            <h2 className="mt-4 text-3xl font-bold sm:text-4xl">{copy.industriesHeading}</h2>
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.industriesHeading}</h2>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {copy.industries.map(([name, text], index) => {
               const Icon = industryIcons[index];
               return (
-                <Reveal key={name} delay={index * 70}>
-                  <div tabIndex={0} className="motion-card rounded-2xl border border-white/10 bg-[#080c14] p-6 text-center">
+                <Reveal key={name} delay={index * 70} className="h-full flex flex-col">
+                  <div tabIndex={0} className="motion-card flex h-full flex-1 flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#080c14] p-6 text-center shadow-sm dark:shadow-none">
                     <Icon className="mx-auto size-10 text-rose-500" />
-                    <h3 className="mt-5 font-bold uppercase">{name}</h3>
-                    <p className="mt-2 text-xs leading-5 text-slate-400">{text}</p>
+                    <h3 className="mt-5 font-bold uppercase text-slate-900 dark:text-white min-h-[2.5rem] flex items-center justify-center">{name}</h3>
+                    <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400 flex-1">{text}</p>
                   </div>
                 </Reveal>
               );
@@ -308,9 +324,9 @@ export default function Home() {
       </section>
 
       <section className="pb-16 sm:pb-20">
-        <Reveal className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,0.20),transparent_34%),linear-gradient(135deg,#0b0f19,#05070c)] px-6 py-12 text-center sm:px-12 lg:flex lg:items-center lg:justify-between lg:text-left">
-          <div className="relative"><p className="text-sm font-bold uppercase tracking-widest text-rose-400">{copy.finalEyebrow}</p><h2 className="mt-3 text-3xl font-bold">{copy.finalTitle}</h2></div>
-          <Link href="/request-demo" className="glow-button relative mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 font-semibold lg:mt-0">Request Demo <ArrowRight className="size-4" /></Link>
+        <Reveal className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 dark:bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,0.20),transparent_34%),linear-gradient(135deg,#0b0f19,#05070c)] px-6 py-12 text-center sm:px-12 lg:flex lg:items-center lg:justify-between lg:text-left shadow-lg dark:shadow-[0_0_50px_rgba(244,63,94,0.15)]">
+          <div className="relative"><p className="text-sm font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400">{copy.finalEyebrow}</p><h2 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">{copy.finalTitle}</h2></div>
+          <Link href="/request-demo" className="glow-button relative mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white lg:mt-0">Request Demo <ArrowRight className="size-4" /></Link>
         </Reveal>
       </section>
 

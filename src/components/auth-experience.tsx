@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { publicAsset } from "@/lib/asset-path";
 import {
   Check,
   ExternalLink,
@@ -85,7 +86,7 @@ function AuthCard({ mode }: { mode: Exclude<Mode, "success"> }) {
     <div className="grid overflow-hidden rounded-3xl border border-white/10 bg-[#070b13] shadow-2xl lg:grid-cols-[.9fr_1.1fr]">
       <div className="relative hidden min-h-[690px] overflow-hidden border-r border-white/10 lg:block">
         <Image
-          src="/images/cyber-shield-hero.png"
+          src={publicAsset("/images/cyber-shield-hero.png")}
           alt="CyberXatria secure access"
           fill
           sizes="45vw"

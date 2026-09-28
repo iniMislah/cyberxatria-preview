@@ -32,18 +32,18 @@ export function RequestDemoPageContent() {
   });
 
   return (
-    <main className="site-shell min-h-screen bg-[#03060d] text-white">
+    <main className="site-shell min-h-screen bg-background text-foreground">
       <SiteHeader />
-      <section className="py-20">
+      <section className="py-16 sm:py-20">
         <div className="page-grid grid items-start gap-12 lg:grid-cols-[.85fr_1.15fr]">
           <div className="lg:sticky lg:top-28">
             <p className="eyebrow">{copy.eyebrow}</p>
-            <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">{copy.title}</h1>
-            <p className="mt-6 leading-7 text-slate-400">{copy.description}</p>
-            <div className="mt-8 space-y-4">{copy.bullets.map((item) => <p key={item} className="flex items-center gap-3 text-sm text-slate-300"><Check className="size-5 text-rose-500" />{item}</p>)}</div>
+            <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl">{copy.title}</h1>
+            <p className="mt-6 leading-7 text-slate-600 dark:text-slate-400">{copy.description}</p>
+            <div className="mt-8 space-y-4">{copy.bullets.map((item) => <p key={item} className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300"><Check className="size-5 text-rose-500" />{item}</p>)}</div>
             <div className="mt-10 grid grid-cols-2 gap-4">
-              <div className="rounded-xl border border-white/10 bg-[#090d15] p-4"><Clock3 className="size-6 text-rose-400" /><p className="mt-3 font-semibold">{copy.responseTitle}</p><p className="mt-1 text-xs text-slate-500">{copy.responseText}</p></div>
-              <div className="rounded-xl border border-white/10 bg-[#090d15] p-4"><Headphones className="size-6 text-rose-400" /><p className="mt-3 font-semibold">{copy.expertTitle}</p><p className="mt-1 text-xs text-slate-500">{copy.expertText}</p></div>
+              <div className="motion-card rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none"><Clock3 className="size-6 text-rose-500 dark:text-rose-400" /><p className="mt-3 font-semibold text-slate-900 dark:text-white">{copy.responseTitle}</p><p className="mt-1 text-xs text-slate-500">{copy.responseText}</p></div>
+              <div className="motion-card rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none"><Headphones className="size-6 text-rose-500 dark:text-rose-400" /><p className="mt-3 font-semibold text-slate-900 dark:text-white">{copy.expertTitle}</p><p className="mt-1 text-xs text-slate-500">{copy.expertText}</p></div>
             </div>
           </div>
           <RequestDemoForm />
