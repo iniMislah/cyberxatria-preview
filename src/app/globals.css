@@ -386,7 +386,7 @@ html:not(.dark) .brand-logo {
 }
 
 .dark .premium-panel {
-  background-color: #080c16;
+  background: radial-gradient(circle at 80% 50%, rgba(244, 63, 94, 0.22), transparent 35%), #080c14;
 }
 
 .premium-panel::before {
