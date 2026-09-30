@@ -5,13 +5,12 @@ import Link from "next/link";
 import {
   ArrowRight,
   BadgeDollarSign,
-  Building2,
   Check,
   DatabaseZap,
-  Factory,
-  Landmark,
+  GraduationCap,
   LockKeyhole,
-  Network,
+  MonitorCog,
+  RotateCw,
   ShieldAlert,
   ShieldCheck,
   Target,
@@ -20,14 +19,64 @@ import {
 import { CountUpValue, Reveal } from "@/components/public-motion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { ApproachComparison } from "@/components/approach-comparison";
 import { usePublicPreferences } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
 
 const threatIcons = [LockKeyhole, ShieldAlert, DatabaseZap, UsersRound];
 const impactIcons = [ShieldAlert, DatabaseZap, BadgeDollarSign, LockKeyhole, UsersRound];
-const serviceIcons = [Target, UsersRound, ShieldCheck];
-const industryIcons = [Factory, Landmark, Building2, Network];
+const approachIdentityIcons = [ShieldCheck, UsersRound, GraduationCap, Target];
+const approachItemIcons = [
+  [ShieldAlert, ShieldCheck, BadgeDollarSign],
+  [UsersRound, RotateCw, MonitorCog],
+  [GraduationCap, Target],
+  [Check, Check, Check, Check],
+];
+const approachCards = [
+  {
+    number: "01",
+    image: "/images/No. 1.png",
+    title: "Platform Pembelajaran Keamanan Siber yang Komprehensif",
+    description: "CyberXatria menawarkan ekosistem pembelajaran yang mencakup domain utama keamanan siber:",
+    items: [
+      ["Keamanan Ofensif", "(Red Team, Pengujian Penetrasi, Eksploitasi)"],
+      ["Keamanan Defensif", "(SOC, Respons Insiden, Perburuan Ancaman)"],
+      ["Tata Kelola, Risiko, dan Kepatuhan (GRC)", ""],
+    ],
+  },
+  {
+    number: "02",
+    image: "/images/No. 2.png",
+    title: "Pendekatan Terstruktur: Orang – Proses – Teknologi",
+    description: "CyberXatria mengembangkan kapabilitas keamanan siber secara holistik melalui:",
+    items: [
+      ["Orang", "Meningkatkan kompetensi teknis dan pola pikir keamanan."],
+      ["Proses", "Meningkatkan pemahaman tentang alur kerja, kerangka kerja, dan praktik terbaik."],
+      ["Teknologi", "Memberikan pengalaman langsung dengan alat dan lingkungan dunia nyata."],
+    ],
+  },
+  {
+    number: "03",
+    image: "/images/No. 3.png",
+    title: "Cocok untuk Semua Tingkat Keahlian",
+    description: "",
+    items: [
+      ["Pemula", "Mempelajari dasar-dasar keamanan siber melalui lab yang dipandu."],
+      ["Profesional", "Meningkatkan keahlian mereka dengan skenario yang realistis dan kompleks."],
+    ],
+  },
+  {
+    number: "04",
+    image: "/images/No. 4.png",
+    title: "Fleksibel untuk Perusahaan dan Penyedia Pelatihan",
+    description: "CyberXatria mendukung kebutuhan perusahaan melalui:",
+    items: [
+      ["Pengembangan konten khusus (disesuaikan)", ""],
+      ["Penilaian dan evaluasi yang disesuaikan", ""],
+      ["Inisiatif pelatihan internal", ""],
+      ["Program peningkatan keterampilan tenaga kerja", ""],
+    ],
+  },
+];
 
 const content = {
   id: {
@@ -64,14 +113,15 @@ const content = {
     solutionsAccent: "Kami",
     solutionsIntro: "Layanan keamanan siber untuk memantau, menguji, dan memperkuat kesiapan organisasi.",
     services: [
-      ["Cyber Drill Exercise", "/solutions/cyber-drill", "Simulasi serangan siber dari sisi teknis yang dirancang untuk menguji kemampuan organisasi dalam mendeteksi, merespons, dan menangani insiden keamanan secara nyata.", ["Simulated Attack Scenario", "Blue Team Validation", "Gap Assessment"]],
-      ["Tabletop Exercise", "/solutions/tabletop", "Simulasi berbasis skenario yang melibatkan berbagai fungsi dalam organisasi untuk menguji pengambilan keputusan, koordinasi, dan prosedur respons insiden siber.", ["Crisis Simulation", "Real Scenario", "Executive Readiness", "Stakeholder Coordination"]],
-      ["SOC AI", "", "Coming Soon", []],
+      ["/images/cyber-drill-hero.png", "CYBER DRILL EXERCISE", "/solutions/cyber-drill", "Simulasi serangan dunia nyata untuk menguji tim, proses, dan teknologi Anda dalam lingkungan yang realistis.", ["Simulasi Serangan Realistis", "Penilaian Tim Blue Team", "Validasi Respons Insiden", "Analisis Kesenjangan", "Laporan Eksekutif"]],
+      ["/images/tabletop-hero.png", "TABLETOP EXERCISE", "/solutions/tabletop", "Simulasi berbasis diskusi dengan pemangku kepentingan untuk memperkuat pengambilan keputusan dan koordinasi.", ["Simulasi Skenario Eksekutif", "Manajemen Krisis", "Validasi Komunikasi", "Penilaian Pengambilan Keputusan", "Rencana Aksi & Rekomendasi"]],
+      ["/images/Solusi_SOC_AI.png", "SOC AI", "", "", []],
     ],
     learnMore: "Pelajari Lebih Lanjut",
-    approachEyebrow: "Pendekatan kami",
-    approachTitle: "Kenapa",
-    approachAccent: "Memilih Kami?",
+    approachEyebrow: "MENGAPA MEMILIH KAMI",
+    approachTitle: "Mengapa Memilih",
+    approachAccent: "CyberXatria?",
+    approachCards,
     traditional: "Pendekatan Tradisional",
     cyberxatria: "Pendekatan CyberXatria",
     comparisonPairs: [
@@ -84,13 +134,15 @@ const content = {
     ],
     traditionalPoints: ["Keamanan reaktif", "Penilaian pada satu titik waktu", "Manual dan terfragmentasi", "Merespons setelah insiden", "Pelaporan berfokus pada teknis", "Latihan dilakukan secara berkala"],
     cyberxatriaPoints: ["Keamanan proaktif", "Kesiapan berkelanjutan", "Pendekatan terintegrasi", "Bersiap sebelum insiden terjadi", "Insight bisnis yang dapat ditindaklanjuti", "Pengujian berbasis skenario"],
-    industriesEyebrow: "Dipercaya berbagai industri",
-    industriesHeading: "Dipercaya oleh Berbagai Industri",
+    industriesEyebrow: "DIPERCAYA OLEH",
+    industriesTitle: "Berbagai",
+    industriesAccent: "Industri",
+    industriesIntro: "CyberXatria dipercaya oleh organisasi dari berbagai sektor untuk memperkuat ketahanan siber mereka.",
     industries: [
-      ["Manufaktur", "Melindungi sistem produksi dan data operasional."],
-      ["Perbankan", "Menjaga transaksi, data nasabah, dan kepatuhan."],
-      ["Pemerintahan", "Memperkuat keamanan sistem dan data publik."],
-      ["Konstruksi & Infrastruktur", "Menjaga layanan dan sistem kritikal tetap tersedia."],
+      ["/images/Manufaktur.png", "MANUFAKTUR", "Melindungi sistem produksi, rantai pasok, dan data operasional dari berbagai ancaman siber."],
+      ["/images/Perbankan.png", "PERBANKAN", "Menjaga keamanan transaksi, data nasabah, dan kepatuhan terhadap regulasi."],
+      ["/images/Pemerintahan.png", "PEMERINTAHAN", "Memperkuat keamanan sistem dan data untuk mendukung layanan publik yang andal."],
+      ["/images/Konstruksi dan Infrastruktur.png", "KONSTRUKSI & INFRASTRUKTUR", "Melindungi proyek, aset kritikal, dan infrastruktur dari risiko serangan siber."],
     ],
     finalEyebrow: "Siap meningkatkan kesiapan?",
     finalTitle: "Bangun ketahanan siber sebelum insiden terjadi.",
@@ -129,14 +181,15 @@ const content = {
     solutionsAccent: "Solutions",
     solutionsIntro: "Cybersecurity services to monitor, test, and strengthen organizational readiness.",
     services: [
-      ["Cyber Drill Exercise", "/solutions/cyber-drill", "A technical cyberattack simulation designed to test an organization's ability to detect, respond to, and handle real-world security incidents.", ["Simulated Attack Scenario", "Blue Team Validation", "Gap Assessment"]],
-      ["Tabletop Exercise", "/solutions/tabletop", "A scenario-based simulation involving various functions within an organization to test decision-making, coordination, and cyber incident response procedures.", ["Crisis Simulation", "Real Scenario", "Executive Readiness", "Stakeholder Coordination"]],
-      ["SOC AI", "", "Coming Soon", []],
+      ["/images/cyber-drill-hero.png", "CYBER DRILL EXERCISE", "/solutions/cyber-drill", "Simulasi serangan dunia nyata untuk menguji tim, proses, dan teknologi Anda dalam lingkungan yang realistis.", ["Simulasi Serangan Realistis", "Penilaian Tim Blue Team", "Validasi Respons Insiden", "Analisis Kesenjangan", "Laporan Eksekutif"]],
+      ["/images/tabletop-hero.png", "TABLETOP EXERCISE", "/solutions/tabletop", "Simulasi berbasis diskusi dengan pemangku kepentingan untuk memperkuat pengambilan keputusan dan koordinasi.", ["Simulasi Skenario Eksekutif", "Manajemen Krisis", "Validasi Komunikasi", "Penilaian Pengambilan Keputusan", "Rencana Aksi & Rekomendasi"]],
+      ["/images/Solusi_SOC_AI.png", "SOC AI", "", "", []],
     ],
-    learnMore: "Learn More",
-    approachEyebrow: "Our approach",
-    approachTitle: "Why",
-    approachAccent: "Choose Us?",
+    learnMore: "Pelajari Lebih Lanjut",
+    approachEyebrow: "MENGAPA MEMILIH KAMI",
+    approachTitle: "Mengapa Memilih",
+    approachAccent: "CyberXatria?",
+    approachCards,
     traditional: "Traditional Approach",
     cyberxatria: "CyberXatria Approach",
     comparisonPairs: [
@@ -149,13 +202,15 @@ const content = {
     ],
     traditionalPoints: ["Reactive security", "Point-in-time assessment", "Manual and fragmented", "Responding after incidents", "Technical-focused reporting", "Periodic exercises"],
     cyberxatriaPoints: ["Proactive security", "Continuous readiness", "Integrated approach", "Prepared before incidents occur", "Actionable business insight", "Scenario-based testing"],
-    industriesEyebrow: "Trusted across industries",
-    industriesHeading: "Trusted by Various Industries",
+    industriesEyebrow: "DIPERCAYA OLEH",
+    industriesTitle: "Berbagai",
+    industriesAccent: "Industri",
+    industriesIntro: "CyberXatria dipercaya oleh organisasi dari berbagai sektor untuk memperkuat ketahanan siber mereka.",
     industries: [
-      ["Manufacturing", "Protecting production systems and operational data."],
-      ["Banking", "Safeguarding transactions, customer data, and compliance."],
-      ["Government", "Strengthening public systems and data security."],
-      ["Construction & Infrastructure", "Keeping critical services and systems available."],
+      ["/images/Manufaktur.png", "MANUFAKTUR", "Melindungi sistem produksi, rantai pasok, dan data operasional dari berbagai ancaman siber."],
+      ["/images/Perbankan.png", "PERBANKAN", "Menjaga keamanan transaksi, data nasabah, dan kepatuhan terhadap regulasi."],
+      ["/images/Pemerintahan.png", "PEMERINTAHAN", "Memperkuat keamanan sistem dan data untuk mendukung layanan publik yang andal."],
+      ["/images/Konstruksi dan Infrastruktur.png", "KONSTRUKSI & INFRASTRUKTUR", "Melindungi proyek, aset kritikal, dan infrastruktur dari risiko serangan siber."],
     ],
     finalEyebrow: "Ready to improve readiness?",
     finalTitle: "Build cyber resilience before incidents happen.",
@@ -171,7 +226,9 @@ export default function Home() {
       <SiteHeader />
 
       <section className="relative min-h-[720px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
-        <Image src={publicAsset("/images/cyber-shield-hero.png")} alt={copy.heroAlt} fill priority sizes="100vw" className="hero-visual object-cover object-[66%_center] opacity-90" />
+        <div className="home-hero-artwork absolute inset-y-0 right-0">
+          <Image src={publicAsset("/images/cyber-shield-hero.png")} alt={copy.heroAlt} fill priority sizes="(max-width: 640px) 115vw, (max-width: 1024px) 86vw, 68vw" className="hero-visual object-cover object-[58%_center] opacity-90" />
+        </div>
         <div className="hero-vignette absolute inset-0" />
         <div className="hero-ambient" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />
@@ -200,7 +257,7 @@ export default function Home() {
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.threatEyebrow}</p>
-            <h2 className="mt-4 text-4xl font-bold text-slate-900 dark:text-white sm:text-5xl">{copy.threatTitle} <span className="text-gradient">{copy.threatAccent}</span></h2>
+            <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">{copy.threatTitle} <span className="text-gradient">{copy.threatAccent}</span></h2>
             <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.threatIntro}</p>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -229,7 +286,7 @@ export default function Home() {
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.readinessEyebrow}</p>
-            <h2 className="mt-4 text-4xl font-bold text-slate-900 dark:text-white sm:text-5xl">{copy.readinessTitle} <span className="text-gradient">{copy.readinessAccent}</span> {copy.readinessSuffix}</h2>
+            <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">{copy.readinessTitle} <span className="text-gradient">{copy.readinessAccent}</span> {copy.readinessSuffix}</h2>
             <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.readinessIntro}</p>
           </Reveal>
           <Reveal className="grid gap-3 md:grid-cols-5">
@@ -256,29 +313,33 @@ export default function Home() {
         <div className="page-grid relative">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.solutionsEyebrow}</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.solutionsTitle} <span className="text-gradient">{copy.solutionsAccent}</span></h2>
+            <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">{copy.solutionsTitle} <span className="text-gradient">{copy.solutionsAccent}</span></h2>
             <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.solutionsIntro}</p>
           </Reveal>
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {copy.services.map((service, index) => {
-              const [title, href, text, points] = service as [string, string, string, string[]];
-              const Icon = serviceIcons[index];
+              const [image, title, href, text, points] = service as [string, string, string, string, string[]];
               const comingSoon = !href;
               return (
                 <Reveal key={title} delay={index * 90} className="h-full flex flex-col">
-                  <article className={`cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-7 ${comingSoon ? "opacity-80" : ""}`}>
-                    <div className="mb-6 grid size-12 place-items-center rounded-xl border border-rose-500/35 bg-rose-500/10 text-rose-500 dark:text-rose-400"><Icon className="size-6" /></div>
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
-                      {comingSoon && <span className="rounded-full border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-white/10 dark:text-slate-400">Coming Soon</span>}
+                  <article className={`cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-4 ${comingSoon ? "opacity-80" : ""}`}>
+                    <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
+                      <Image src={publicAsset(image)} alt={title} fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover" />
                     </div>
-                    <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400 min-h-[4.5rem]">{text}</p>
-                    <ul className="mt-6 space-y-3 text-sm text-slate-700 dark:text-slate-300 min-h-[7.5rem]">{points.map((point) => <li key={point} className="flex items-center gap-2"><Check className="size-4 shrink-0 text-rose-500" /> {point}</li>)}</ul>
-                    {comingSoon ? (
-                      <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-slate-500 dark:text-slate-500">Coming Soon</span>
-                    ) : (
-                      <Link href={href} className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300">{copy.learnMore} <ArrowRight className="size-4" /></Link>
-                    )}
+                    <div className="flex flex-1 flex-col p-3 pt-5">
+                      <div className="flex items-center gap-3">
+                        <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-rose-500/35 bg-rose-500/10 text-rose-500 dark:text-rose-400"><ShieldCheck className="size-5" /></span>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
+                        {comingSoon && <span className="ml-auto rounded-full border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-white/10 dark:text-slate-400">Coming Soon</span>}
+                      </div>
+                      {text && <p className="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-400">{text}</p>}
+                      {points.length > 0 && <ul className="mt-6 space-y-3 text-sm text-slate-700 dark:text-slate-300">{points.map((point) => <li key={point} className="flex items-center gap-2"><Check className="size-4 shrink-0 text-rose-500" /> {point}</li>)}</ul>}
+                      {comingSoon ? (
+                        <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-slate-500 dark:text-slate-500">Coming Soon</span>
+                      ) : (
+                        <Link href={href} className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300">{copy.learnMore} <ArrowRight className="size-4" /></Link>
+                      )}
+                    </div>
                   </article>
                 </Reveal>
               );
@@ -291,15 +352,52 @@ export default function Home() {
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.approachEyebrow}</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.approachTitle} <span className="text-gradient">{copy.approachAccent}</span></h2>
+            <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">{copy.approachTitle} <span className="text-gradient">{copy.approachAccent}</span></h2>
           </Reveal>
-          <ApproachComparison
-            traditionalTitle={copy.traditional}
-            cyberxatriaTitle={copy.cyberxatria}
-            pairs={copy.comparisonPairs}
-          />
-
-
+          <div className="grid gap-5 md:grid-cols-2">
+            {copy.approachCards.map((card, index) => {
+              const typedCard = card as {
+                number: string;
+                image: string;
+                title: string;
+                description: string;
+                items: [string, string][];
+              };
+              const IdentityIcon = approachIdentityIcons[index];
+              const itemIcons = approachItemIcons[index];
+              return (
+                <Reveal key={typedCard.number} delay={index * 80} className="h-full flex flex-col">
+                  <article className={`approach-feature-card approach-feature-card-${typedCard.number} motion-card relative h-full flex-1 overflow-hidden rounded-2xl border p-6`}>
+                    <div className="approach-card-copy relative z-10 flex min-w-0 flex-1 flex-col">
+                      <div className="flex items-center gap-3">
+                        <span className="approach-number">{typedCard.number}</span>
+                        <span className="approach-icon"><IdentityIcon className="size-5" /></span>
+                      </div>
+                      <h3 className="mt-4 text-xl font-bold leading-snug text-slate-900 dark:text-white">{typedCard.title}</h3>
+                      {typedCard.description && <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">{typedCard.description}</p>}
+                      <ul className="approach-items mt-5 grid gap-3 text-sm text-slate-700 dark:text-slate-300">
+                        {typedCard.items.map(([label, detail], itemIndex) => {
+                          const ItemIcon = itemIcons[itemIndex] ?? Check;
+                          return (
+                            <li key={label} className="approach-item flex gap-3">
+                              <span className="approach-item-icon"><ItemIcon className="size-4" /></span>
+                              <span>
+                                <span className="font-bold text-slate-900 dark:text-white">{label}</span>
+                                {detail && <span className="block text-slate-600 dark:text-slate-400">{detail}</span>}
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                    <div className={`approach-card-visual approach-card-visual-${typedCard.number}`}>
+                      <Image src={publicAsset(typedCard.image)} alt="" fill sizes="(max-width: 768px) 90vw, 28vw" className="object-contain object-center" />
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -307,16 +405,19 @@ export default function Home() {
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.industriesEyebrow}</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.industriesHeading}</h2>
+            <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">{copy.industriesTitle} <span className="text-gradient">{copy.industriesAccent}</span></h2>
+            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.industriesIntro}</p>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {copy.industries.map(([name, text], index) => {
-              const Icon = industryIcons[index];
+            {copy.industries.map(([image, name, text], index) => {
               return (
                 <Reveal key={name} delay={index * 70} className="h-full flex flex-col">
-                  <div tabIndex={0} className="motion-card flex h-full flex-1 flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#080c14] p-6 text-center shadow-sm dark:shadow-none">
-                    <Icon className="mx-auto size-10 text-rose-500" />
-                    <h3 className="mt-5 font-bold uppercase text-slate-900 dark:text-white min-h-[2.5rem] flex items-center justify-center">{name}</h3>
+                  <div tabIndex={0} className="motion-card flex h-full flex-1 flex-col items-center rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#080c14] p-6 text-center shadow-sm dark:shadow-none">
+                    <div className={`industry-artwork industry-artwork-${index + 1} relative`}>
+                      <Image src={publicAsset(image)} alt={name} fill sizes="120px" className="object-contain" />
+                    </div>
+                    <h3 className="mt-5 flex min-h-[2.5rem] items-center justify-center font-bold uppercase text-slate-900 dark:text-white">{name}</h3>
+                    <span className="mt-2 h-0.5 w-8 rounded-full bg-rose-500" />
                     <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400 flex-1">{text}</p>
                   </div>
                 </Reveal>
@@ -328,7 +429,7 @@ export default function Home() {
 
       <section className="pb-16 sm:pb-20">
         <Reveal className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 dark:bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,0.20),transparent_34%),linear-gradient(135deg,#0b0f19,#05070c)] px-6 py-12 text-center sm:px-12 lg:flex lg:items-center lg:justify-between lg:text-left shadow-lg dark:shadow-[0_0_50px_rgba(244,63,94,0.15)]">
-          <div className="relative"><p className="text-sm font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400">{copy.finalEyebrow}</p><h2 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">{copy.finalTitle}</h2></div>
+          <div className="relative"><p className="text-sm font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400">{copy.finalEyebrow}</p><h2 className="mt-3 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">{copy.finalTitle}</h2></div>
           <Link href="/request-demo" className="glow-button relative mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white lg:mt-0">Request Demo <ArrowRight className="size-4" /></Link>
         </Reveal>
       </section>
