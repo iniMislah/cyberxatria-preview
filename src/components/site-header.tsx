@@ -115,9 +115,9 @@ export function SiteHeader() {
   }, []);
 
   const nav = {
-    home: t({ id: "Beranda", en: "Home" }),
-    solutions: t({ id: "Solusi", en: "Solutions" }),
-    company: t({ id: "Perusahaan", en: "Company" }),
+    home: t({ id: "Beranda", en: "Home Page" }),
+    solutions: t({ id: "Solusi", en: "Solution" }),
+    company: t({ id: "Tentang Kami", en: "About Us" }),
     contact: t({ id: "Kontak", en: "Contact" }),
     openMenu: t({ id: "Buka menu", en: "Open menu" }),
     closeMenu: t({ id: "Tutup menu", en: "Close menu" }),

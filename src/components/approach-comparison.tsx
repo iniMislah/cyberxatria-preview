@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 
 export interface ComparisonPair {
   traditional: string;
@@ -15,6 +15,23 @@ interface ApproachComparisonProps {
 }
 
 const NOTCH_RADIUS = 36;
+
+function VsMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <div
+      className={`relative grid place-items-center rounded-full bg-gradient-to-br from-fuchsia-400/60 via-rose-500 to-orange-400 p-[2px] shadow-[0_14px_34px_rgba(244,63,94,0.18)] ring-4 ring-rose-500/10 dark:shadow-[0_0_34px_rgba(244,63,94,0.22)] dark:ring-rose-500/20 ${
+        compact ? "size-12" : "size-16"
+      }`}
+    >
+      <div className="grid size-full place-items-center rounded-full bg-white/95 dark:bg-[#090d15]/95">
+        <span className={`font-black tracking-[-0.08em] ${compact ? "text-lg" : "text-2xl"}`}>
+          <span className="inline-block -translate-y-0.5 -rotate-3 text-rose-600 dark:text-rose-300">V</span>
+          <span className="inline-block translate-y-1 skew-x-[-8deg] text-orange-500 dark:text-orange-300">S</span>
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export function ApproachComparison({
   traditionalTitle,
@@ -40,7 +57,7 @@ export function ApproachComparison({
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-6">
                 {traditionalTitle}
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {pairs.map((pair, index) => {
                   const isHovered = hoveredIndex === index;
                   const isOtherHovered = hoveredIndex !== null && !isHovered;
@@ -52,7 +69,7 @@ export function ApproachComparison({
                       onMouseLeave={() => setHoveredIndex(null)}
                       onFocus={() => setHoveredIndex(index)}
                       onBlur={() => setHoveredIndex(null)}
-                      className={`flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition-all duration-150 cursor-default ${
+                      className={`flex min-h-12 items-center gap-3.5 px-3 py-2.5 rounded-xl transition-all duration-150 cursor-default ${
                         isHovered
                           ? "bg-slate-100/90 dark:bg-white/[0.06] text-slate-900 dark:text-white"
                           : isOtherHovered
@@ -69,7 +86,7 @@ export function ApproachComparison({
                       >
                         <span className="size-1.5 rounded-full bg-slate-400 dark:bg-slate-400" />
                       </span>
-                      <span className={`text-sm ${isHovered ? "font-semibold" : ""}`}>
+                      <span className={`text-sm leading-5 ${isHovered ? "font-semibold" : ""}`}>
                         {pair.traditional}
                       </span>
                     </div>
@@ -109,7 +126,7 @@ export function ApproachComparison({
               <h3 className="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-6">
                 {cyberxatriaTitle}
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {pairs.map((pair, index) => {
                   const isHovered = hoveredIndex === index;
                   const isOtherHovered = hoveredIndex !== null && !isHovered;
@@ -121,7 +138,7 @@ export function ApproachComparison({
                       onMouseLeave={() => setHoveredIndex(null)}
                       onFocus={() => setHoveredIndex(index)}
                       onBlur={() => setHoveredIndex(null)}
-                      className={`flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition-all duration-150 cursor-default ${
+                      className={`flex min-h-12 items-center gap-3.5 px-3 py-2.5 rounded-xl transition-all duration-150 cursor-default ${
                         isHovered
                           ? "bg-rose-500/10 dark:bg-rose-500/15 text-rose-600 dark:text-rose-300 ring-1 ring-rose-500/25"
                           : isOtherHovered
@@ -138,7 +155,7 @@ export function ApproachComparison({
                       >
                         <Check className="size-3.5 stroke-[2.5]" />
                       </span>
-                      <span className={`text-sm ${isHovered ? "font-bold text-rose-600 dark:text-rose-300" : "font-medium"}`}>
+                      <span className={`text-sm leading-5 ${isHovered ? "font-bold text-rose-600 dark:text-rose-300" : "font-medium"}`}>
                         {pair.cyberxatria}
                       </span>
                     </div>
@@ -170,14 +187,15 @@ export function ApproachComparison({
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none select-none"
           aria-hidden="true"
         >
-          <div className="grid size-12 place-items-center rounded-full border-2 border-rose-500 bg-white text-rose-600 shadow-md ring-4 ring-rose-500/15 dark:bg-[#090d15] dark:text-rose-400 dark:border-rose-500 dark:ring-rose-500/25">
-            <ArrowRight className="size-5 stroke-[2.25]" />
-          </div>
+          <VsMark />
         </div>
       </div>
 
       {/* Mobile View: Paired Vertical Stack Cards */}
       <div className="space-y-3.5 md:hidden">
+        <div className="mb-4 flex justify-center" aria-hidden="true">
+          <VsMark compact />
+        </div>
         {pairs.map((pair, index) => {
           const isHovered = hoveredIndex === index;
           return (

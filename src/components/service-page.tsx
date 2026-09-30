@@ -35,6 +35,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/public-motion";
+import { RequestDemoCta } from "@/components/request-demo-cta";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { publicAsset } from "@/lib/asset-path";
@@ -141,7 +142,7 @@ export function ServicePage({ content }: ServicePageProps) {
             <h1 className="text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl">{props.title}<br /><span className="text-gradient">{props.accent}</span></h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">{props.summary}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/request-demo" className="glow-button inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white">Request Demo <ArrowRight className="size-4" /></Link>
+              <RequestDemoCta />
             </div>
           </Reveal>
         </div>
@@ -205,9 +206,7 @@ export function ServicePage({ content }: ServicePageProps) {
           <p className="eyebrow justify-center">{props.ctaEyebrow}</p>
           <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{props.ctaTitle}</h2>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link href="/request-demo" className="glow-button inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white">
-              {props.ctaButton} <ArrowRight className="size-4" />
-            </Link>
+            <RequestDemoCta>{props.ctaButton}</RequestDemoCta>
           </div>
         </div>
       </section>

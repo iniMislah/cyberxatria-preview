@@ -19,6 +19,7 @@ import {
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ApproachComparison } from "@/components/approach-comparison";
+import { RequestDemoCta } from "@/components/request-demo-cta";
 import { usePublicPreferences } from "@/lib/public-preferences";
 
 const badgeIcons = [Award, ShieldCheck, Handshake, Network];
@@ -132,11 +133,13 @@ export function CompanyPageContent() {
       cyberxatria: "Pendekatan CyberXatria",
       comparisonPairs: [
         { traditional: "Keamanan reaktif", cyberxatria: "Keamanan proaktif" },
-        { traditional: "Penilaian pada satu titik waktu", cyberxatria: "Kesiapan berkelanjutan" },
-        { traditional: "Manual dan terfragmentasi", cyberxatria: "Pendekatan terintegrasi" },
-        { traditional: "Merespons setelah insiden", cyberxatria: "Bersiap sebelum insiden terjadi" },
-        { traditional: "Pelaporan berfokus pada teknis", cyberxatria: "Insight bisnis yang dapat ditindaklanjuti" },
-        { traditional: "Latihan dilakukan secara berkala", cyberxatria: "Pengujian berbasis skenario" },
+        { traditional: "Penilaian pada titik waktu tertentu", cyberxatria: "Kesiapsiagaan berkelanjutan" },
+        { traditional: "Manual & terfragmentasi", cyberxatria: "Pendekatan terintegrasi" },
+        { traditional: "Menanggapi setelah insiden terjadi", cyberxatria: "Persiapan sebelum insiden" },
+        { traditional: "Pelaporan yang berfokus pada aspek teknis", cyberxatria: "Wawasan bisnis yang dapat ditindaklanjuti" },
+        { traditional: "Latihan berkala", cyberxatria: "Pengujian berbasis skenario" },
+        { traditional: "Mengidentifikasi celah", cyberxatria: "Identifikasi → Prioritaskan → Perbaiki" },
+        { traditional: "Keamanan sebagai fungsi", cyberxatria: "Keamanan sebagai ketahanan bisnis" },
       ],
       ecosystem: "Ekosistem terpercaya",
       certTitle: "Sertifikasi & Kemitraan",
@@ -184,10 +187,12 @@ export function CompanyPageContent() {
       comparisonPairs: [
         { traditional: "Reactive security", cyberxatria: "Proactive security" },
         { traditional: "Point-in-time assessment", cyberxatria: "Continuous readiness" },
-        { traditional: "Manual and fragmented", cyberxatria: "Integrated approach" },
-        { traditional: "Responding after incidents", cyberxatria: "Prepared before incidents occur" },
-        { traditional: "Technical-focused reporting", cyberxatria: "Actionable business insight" },
+        { traditional: "Manual & fragmented", cyberxatria: "Integrated approach" },
+        { traditional: "Respond after incidents", cyberxatria: "Prepare before incidents" },
+        { traditional: "Technical-focused reporting", cyberxatria: "Actionable business insights" },
         { traditional: "Periodic exercises", cyberxatria: "Scenario-based testing" },
+        { traditional: "Identify gaps", cyberxatria: "Identify → Prioritize → Improve" },
+        { traditional: "Security as a function", cyberxatria: "Security as business resilience" },
       ],
       ecosystem: "Trusted ecosystem",
       certTitle: "Certifications & Partnerships",
@@ -399,9 +404,7 @@ export function CompanyPageContent() {
         <div className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 dark:bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,.22),transparent_35%),#080c14] px-6 py-14 text-center sm:px-12 shadow-lg dark:shadow-[0_0_50px_rgba(244,63,94,0.15)]">
           <h2 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.ctaTitle}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-slate-600 dark:text-slate-400">{copy.ctaText}</p>
-          <Link href="/request-demo" className="glow-button mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold text-white">
-            {copy.cta} <ArrowRight className="size-4" />
-          </Link>
+          <RequestDemoCta className="mt-8">{copy.cta}</RequestDemoCta>
         </div>
       </section>
       <SiteFooter />
