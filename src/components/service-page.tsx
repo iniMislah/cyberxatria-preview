@@ -81,6 +81,7 @@ export type ServicePageCopy = {
   accent: string;
   summary: string;
   image: string;
+  imageLight?: string;
   imageAlt: string;
   aboutEyebrow: string;
   aboutTitle: string;
@@ -132,7 +133,10 @@ export function ServicePage({ content }: ServicePageProps) {
     <main className="site-shell min-h-screen bg-background text-foreground">
       <SiteHeader />
       <section className="relative min-h-[610px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
-        <Image src={publicAsset(props.image)} alt={props.imageAlt} fill priority sizes="100vw" className="hero-visual object-cover object-[66%_center] opacity-90" />
+        {props.imageLight && (
+          <Image src={publicAsset(props.imageLight)} alt={props.imageAlt} fill priority sizes="100vw" className="hero-visual object-cover object-[66%_center] opacity-90 dark:hidden" />
+        )}
+        <Image src={publicAsset(props.image)} alt={props.imageAlt} fill priority sizes="100vw" className={`hero-visual object-cover object-[66%_center] opacity-90 ${props.imageLight ? "hidden dark:block" : ""}`} />
         <div className="hero-vignette absolute inset-0" />
         <div className="hero-ambient" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />

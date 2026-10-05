@@ -6,9 +6,7 @@ import {
   ArrowRight,
   BadgeDollarSign,
   Check,
-  DatabaseZap,
   GraduationCap,
-  LockKeyhole,
   MonitorCog,
   RotateCw,
   ShieldAlert,
@@ -23,20 +21,25 @@ import { SiteHeader } from "@/components/site-header";
 import { usePublicPreferences } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
 
-const threatIcons = [LockKeyhole, ShieldAlert, DatabaseZap, UsersRound];
+const threatImages = [
+  { light: "/images/Ransomware Trend_Light.png", dark: "/images/Ransomware Trend.png" },
+  { light: "/images/Phishing Trend_Light.png", dark: "/images/Phishing Trend.png" },
+  { light: "/images/Data Breach Trend_Light.png", dark: "/images/Data Breach Trend.png" },
+  { light: "/images/Insider Threat Trend_Light.png", dark: "/images/Insider Threat Trend.png" },
+];
 
 const readinessImpactImages = [
-  "/images/Serangan Siber.png",
-  "/images/Kebocoran Data.png",
-  "/images/Dampak Finansial.png",
-  "/images/Dampak Kepatuhan.png",
-  "/images/Dampak Reputasi.png",
+  { light: "/images/Serangan Siber Light.png", dark: "/images/Serangan Siber Dark.png" },
+  { light: "/images/Kebocoran Data_Light.png", dark: "/images/Kebocoran Data Dark.png" },
+  { light: "/images/Dampak Finansial_Light.png", dark: "/images/Dampak Finansial Dark.png" },
+  { light: "/images/Dampak Kepatuhan Light.png", dark: "/images/Dampak Kepatuhan Dark.png" },
+  { light: "/images/Dampak Reputasi Light.png", dark: "/images/Dampak Reputasi Dark.png" },
 ];
 
 const solutionServiceMeta = [
-  { image: "/images/cyber-drill-hero.png", href: "/solutions/cyber-drill" },
-  { image: "/images/tabletop-hero.png", href: "/solutions/tabletop" },
-  { image: "/images/Solusi_SOC_AI.png", href: "" },
+  { image: "/images/cyber-drill-hero.png", imageLight: "/images/Solusi_Cyberdrill_Light.png", href: "/solutions/cyber-drill" },
+  { image: "/images/tabletop-hero.png", imageLight: "/images/Solusi_TTX_Light.png", href: "/solutions/tabletop" },
+  { image: "/images/Solusi_SOC_AI.png", imageLight: "/images/Solusi_SOC_Light.png", href: "" },
 ];
 
 const approachCardMeta = [
@@ -184,9 +187,9 @@ const content = {
       ],
     },
     industries: {
-      eyebrow: "Trusted by",
-      title: "Various",
-      accent: "Industries",
+      eyebrow: "Dipercaya oleh",
+      title: "Berbagai",
+      accent: "Industri",
       intro: "CyberXatria dipercaya oleh organisasi dari berbagai sektor untuk memperkuat ketahanan siber mereka.",
       items: [
         {
@@ -363,12 +366,20 @@ export default function Home() {
       <section className="relative min-h-[720px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
         <div className="home-hero-artwork absolute inset-y-0 right-0">
           <Image
+            src={publicAsset("/images/Hero banner Pict_Light.png")}
+            alt={copy.hero.alt}
+            fill
+            priority
+            sizes="(max-width: 640px) 115vw, (max-width: 1024px) 86vw, 68vw"
+            className="hero-visual object-cover object-[58%_center] opacity-90 dark:hidden"
+          />
+          <Image
             src={publicAsset("/images/cyber-shield-hero.png")}
             alt={copy.hero.alt}
             fill
             priority
             sizes="(max-width: 640px) 115vw, (max-width: 1024px) 86vw, 68vw"
-            className="hero-visual object-cover object-[58%_center] opacity-90"
+            className="hero-visual hidden object-cover object-[58%_center] opacity-90 dark:block"
           />
         </div>
         <div className="hero-vignette absolute inset-0" />
@@ -413,7 +424,7 @@ export default function Home() {
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {copy.threats.items.map(([label, value, note], index) => {
-              const Icon = threatIcons[index];
+              const image = threatImages[index];
               const tone =
                 index === 3
                   ? "text-orange-500 dark:text-orange-400"
@@ -422,13 +433,29 @@ export default function Home() {
                   : "text-rose-500";
               return (
                 <Reveal key={label} delay={index * 90} className="h-full flex flex-col">
-                  <div tabIndex={0} className="cyber-card motion-card group flex h-full flex-1 flex-col rounded-2xl p-6">
-                    <Icon className={`mb-7 size-9 ${tone}`} />
+                  <div tabIndex={0} className="cyber-card motion-card group flex h-full min-h-[390px] flex-1 flex-col items-center rounded-2xl p-6 text-center">
+                    <div className="relative mb-6 h-40 w-full">
+                      <Image
+                        src={publicAsset(image.light)}
+                        alt=""
+                        fill
+                        sizes="(max-width: 1024px) 50vw, 25vw"
+                        className="object-contain dark:hidden"
+                      />
+                      <Image
+                        src={publicAsset(image.dark)}
+                        alt=""
+                        fill
+                        sizes="(max-width: 1024px) 50vw, 25vw"
+                        className="hidden object-contain dark:block"
+                      />
+                    </div>
                     <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{label}</p>
-                    <p className={`mt-3 text-4xl font-black ${tone}`}>
+                    <span className="mt-4 h-0.5 w-10 rounded-full bg-rose-500" />
+                    <p className={`mt-5 text-4xl font-black ${tone}`}>
                       <CountUpValue value={value} />
                     </p>
-                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-500 flex-1">{note}</p>
+                    <p className="mt-3 text-sm text-slate-600 dark:text-slate-500 flex-1">{note}</p>
                   </div>
                 </Reveal>
               );
@@ -462,13 +489,20 @@ export default function Home() {
                   tabIndex={0}
                   className="motion-card relative flex h-full min-h-[360px] flex-col rounded-2xl border border-slate-200/90 bg-white p-5 text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/8 dark:bg-[#0a0e17] dark:shadow-none"
                 >
-                  <div className="relative mx-auto mb-5 h-32 w-full max-w-[170px] lg:h-36">
+                  <div className="relative mx-auto mb-5 size-32 lg:size-36">
                     <Image
-                      src={publicAsset(image)}
+                      src={publicAsset(image.light)}
                       alt=""
                       fill
-                      sizes="(max-width: 640px) 170px, (max-width: 1024px) 160px, 13vw"
-                      className="object-contain"
+                      sizes="(max-width: 1024px) 128px, 144px"
+                      className="object-contain dark:hidden"
+                    />
+                    <Image
+                      src={publicAsset(image.dark)}
+                      alt=""
+                      fill
+                      sizes="(max-width: 1024px) 128px, 144px"
+                      className="hidden object-contain dark:block"
                     />
                   </div>
                   <h3 className="text-sm font-bold uppercase text-rose-600 dark:text-rose-400 min-h-[2.5rem] flex items-center justify-center">
@@ -502,11 +536,18 @@ export default function Home() {
                   <article className={`cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-4 ${comingSoon ? "opacity-80" : ""}`}>
                     <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
                       <Image
+                        src={publicAsset(meta.imageLight)}
+                        alt={service.title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 33vw"
+                        className="object-cover dark:hidden"
+                      />
+                      <Image
                         src={publicAsset(meta.image)}
                         alt={service.title}
                         fill
                         sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="object-cover"
+                        className="hidden object-cover dark:block"
                       />
                     </div>
                     <div className="flex flex-1 flex-col p-3 pt-5">

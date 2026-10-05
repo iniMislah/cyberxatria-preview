@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import {
@@ -20,6 +21,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ApproachComparison } from "@/components/approach-comparison";
 import { RequestDemoCta } from "@/components/request-demo-cta";
+import { publicAsset } from "@/lib/asset-path";
 import { usePublicPreferences } from "@/lib/public-preferences";
 
 const badgeIcons = [Award, ShieldCheck, Handshake, Network];
@@ -97,10 +99,19 @@ export function CompanyPageContent() {
 
   const copy = t({
     id: {
-      eyebrow: "Tentang CyberXatria",
-      title: "Membangun Organisasi yang",
-      accent: "Lebih Tangguh dan Aman",
-      intro: "CyberXatria membantu organisasi memperkuat ketahanan siber melalui monitoring, assessment, simulasi, pelatihan, dan latihan cybersecurity secara langsung.",
+      heroEyebrow: "TENTANG CYBERXATRIA",
+      heroTitle: ["Membangun Kesiapan Siber", "melalui Pengalaman Nyata"],
+      heroParagraphs: [
+        "CyberXatria merupakan platform cybersecurity yang dirancang untuk membantu organisasi memperkuat ketahanan siber melalui layanan monitoring keamanan, assessment, simulasi, pelatihan, dan latihan cybersecurity secara langsung.",
+        "Kami menggabungkan cybersecurity knowledge, hands-on practice, dan realistic simulation untuk membantu tim membangun kemampuan teknis, koordinasi, dan pengambilan keputusan saat menghadapi insiden keamanan siber.",
+      ],
+      learningEyebrow: "SIAPA KAMI",
+      learningTitle: ["Dari Pembelajaran hingga Simulasi,", "CyberXatria Membantu Membangun Kesiapan Siber"],
+      learningParagraphs: [
+        "CyberXatria merupakan ekosistem pembelajaran dan exercise keamanan siber yang dirancang untuk membantu individu maupun organisasi mengembangkan kompetensi dan kesiapan menghadapi ancaman siber.",
+        "Program kami mencakup berbagai area keamanan siber, mulai dari Offensive Security, Defensive Security, Security Operations, hingga Governance, Risk & Compliance.",
+        "Melalui pendekatan Manusia, Proses, dan Teknologi, CyberXatria menghubungkan pembelajaran dengan praktik sehingga kemampuan yang dibangun dapat diterapkan dalam situasi yang lebih realistis.",
+      ],
       visionTitle: "Visi Kami",
       vision: "Memberdayakan organisasi dengan kemampuan cybersecurity yang lebih kuat serta membangun ekosistem digital yang lebih tangguh dan aman.",
       missionTitle: "Misi Kami",
@@ -150,10 +161,19 @@ export function CompanyPageContent() {
       cta: "Request Demo",
     },
     en: {
-      eyebrow: "About CyberXatria",
-      title: "Building Organizations That Are",
-      accent: "More Resilient and Secure",
-      intro: "CyberXatria helps organizations strengthen cyber resilience through monitoring, assessment, simulation, training, and hands-on cybersecurity exercises.",
+      heroEyebrow: "ABOUT CYBERXATRIA",
+      heroTitle: ["Building Cyber Resilience", "Through Real-World Experience"],
+      heroParagraphs: [
+        "CyberXatria is a cybersecurity platform designed to help organizations strengthen cyber resilience through security monitoring, assessments, simulations, training, and hands-on cybersecurity exercises.",
+        "We combine cybersecurity knowledge, hands-on practice, and realistic simulation to help teams build technical capabilities, coordination, and decision-making skills when responding to cybersecurity incidents.",
+      ],
+      learningEyebrow: "WHO WE ARE",
+      learningTitle: ["From Learning to Simulation,", "CyberXatria Helps Build Cyber Readiness"],
+      learningParagraphs: [
+        "CyberXatria is a cybersecurity learning and exercise ecosystem designed to help individuals and organizations develop their competencies and readiness to face cyber threats.",
+        "Our programs cover various areas of cybersecurity, including Offensive Security, Defensive Security, Security Operations, and Governance, Risk & Compliance.",
+        "Through a People, Process, and Technology approach, CyberXatria connects learning with practice so that the capabilities developed can be applied in more realistic situations.",
+      ],
       visionTitle: "Our Vision",
       vision: "Empower organizations with stronger cybersecurity capabilities and build a more resilient and secure digital ecosystem.",
       missionTitle: "Our Mission",
@@ -207,17 +227,78 @@ export function CompanyPageContent() {
   return (
     <main className="site-shell min-h-screen bg-background text-foreground">
       <SiteHeader />
-      <section className="relative overflow-hidden border-b border-slate-200/80 dark:border-white/5 py-16 sm:py-20">
+      <section className="relative min-h-[680px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
+        <div className="home-hero-artwork absolute inset-y-0 right-0">
+          <Image
+            src={publicAsset("/images/Tentang Kami Light.png")}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 640px) 115vw, (max-width: 1024px) 86vw, 68vw"
+            className="hero-visual object-cover object-[58%_center] opacity-90 dark:hidden"
+          />
+          <Image
+            src={publicAsset("/images/Tentang Kami.png")}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 640px) 115vw, (max-width: 1024px) 86vw, 68vw"
+            className="hero-visual hidden object-cover object-[58%_center] opacity-90 dark:block"
+          />
+        </div>
         <div className="dot-field absolute inset-0 opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_68%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(244,63,94,.14),transparent_36%)]" />
-        <div className="page-grid relative text-center">
-          <p className="eyebrow justify-center">{copy.eyebrow}</p>
-          <h1 className="mx-auto mt-6 max-w-4xl text-5xl font-bold tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl">
-            {copy.title} <span className="text-gradient">{copy.accent}</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
-            {copy.intro}
-          </p>
+        <div className="hero-vignette absolute inset-0" />
+        <div className="hero-ambient" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />
+        <div className="page-grid relative z-10 flex min-h-[650px] items-center py-20 sm:py-24">
+          <div className="max-w-[720px] pt-8">
+            <p className="eyebrow">{copy.heroEyebrow}</p>
+            <h1 className="mt-6 max-w-4xl text-5xl font-bold tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl">
+              {copy.heroTitle[0]}
+              <br />
+              <span className="text-gradient">{copy.heroTitle[1]}</span>
+            </h1>
+            <div className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-slate-600 dark:text-slate-300">
+              {copy.heroParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
+        <div className="page-grid grid items-center gap-10 lg:grid-cols-2">
+          <div className="relative min-h-[260px] overflow-hidden sm:min-h-[320px]">
+            <Image
+              src={publicAsset("/images/Siapa Kami Light.png")}
+              alt={`${copy.learningTitle[0]} ${copy.learningTitle[1]}`}
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
+              className="object-contain dark:hidden"
+            />
+            <Image
+              src={publicAsset("/images/Siapa Kami Dark.png")}
+              alt={`${copy.learningTitle[0]} ${copy.learningTitle[1]}`}
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
+              className="hidden object-contain dark:block"
+            />
+          </div>
+          <div>
+            <p className="eyebrow">{copy.learningEyebrow}</p>
+            <h2 className="mt-5 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
+              {copy.learningTitle[0]}
+              <br />
+              <span className="text-gradient">{copy.learningTitle[1]}</span>
+            </h2>
+            <div className="mt-6 space-y-4 leading-7 text-slate-600 dark:text-slate-400">
+              {copy.learningParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
