@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { APP_VERSION } from "@/lib/app-version";
 import { publicAsset } from "@/lib/asset-path";
-import { usePublicPreferences } from "@/lib/public-preferences";
+import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 
 const footerIconClass =
   "grid size-12 shrink-0 place-items-center rounded-[13px] border border-rose-500/15 bg-white/45 text-rose-600 shadow-[0_4px_14px_rgba(15,23,42,0.04)] backdrop-blur-[2px] transition group-hover:border-rose-500/25 group-hover:bg-white/55 dark:border-rose-200/10 dark:bg-white/[0.045] dark:text-rose-400 dark:group-hover:border-rose-300/20 dark:group-hover:bg-white/[0.07]";
@@ -92,7 +92,8 @@ function FooterHeading({ children }: { children: ReactNode }) {
 }
 
 export function SiteFooter() {
-  const { t } = usePublicPreferences();
+  const { language, t } = usePublicPreferences();
+  const href = (path: string) => localePath(path, language);
   const comingSoon = t({ id: "Coming Soon", en: "Coming Soon" });
 
   return (
@@ -118,12 +119,12 @@ export function SiteFooter() {
         <div>
           <FooterHeading>{t({ id: "Solusi", en: "Solution" })}</FooterHeading>
           <div className="space-y-2">
-            <Link className={footerRowClass} href="/solutions/cyber-drill">
+            <Link className={footerRowClass} href={href("/solutions/cyber-drill")}>
               <FooterIcon Icon={ShieldCheck} />
               <span className="min-w-0 flex-1">Cyber Drill Exercise</span>
               <ChevronRight className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-rose-500 dark:text-slate-500" />
             </Link>
-            <Link className={footerRowClass} href="/solutions/tabletop">
+            <Link className={footerRowClass} href={href("/solutions/tabletop")}>
               <FooterIcon Icon={UsersRound} />
               <span className="min-w-0 flex-1">Tabletop Exercise</span>
               <ChevronRight className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-rose-500 dark:text-slate-500" />
@@ -135,7 +136,7 @@ export function SiteFooter() {
                 </span>
               </span>
               <span className="flex min-w-0 flex-wrap items-center gap-2">
-                <span className="whitespace-nowrap">SOC AI</span>
+                <span className="whitespace-nowrap">AI for SOC</span>
                 <span className="rounded-md border border-rose-500/25 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-rose-600 dark:border-white/10 dark:text-rose-400">
                   {comingSoon}
                 </span>
@@ -147,11 +148,11 @@ export function SiteFooter() {
         <div>
           <FooterHeading>{t({ id: "Company", en: "Company" })}</FooterHeading>
           <div className="space-y-2">
-            <Link className={footerRowClass} href="/company">
+            <Link className={footerRowClass} href={href("/company")}>
               <FooterIcon Icon={Building2} />
               <span className="min-w-0 flex-1">{t({ id: "Tentang Kami", en: "About Us" })}</span>
             </Link>
-            <Link className={footerRowClass} href="/request-demo">
+            <Link className={footerRowClass} href={href("/request-demo")}>
               <FooterIcon Icon={MessageSquareText} />
               <span className="min-w-0 flex-1">Request Demo</span>
             </Link>

@@ -414,6 +414,13 @@ html:not(.dark) .brand-logo {
 .industry-artwork {
   width: 132px;
   height: 132px;
+  margin-inline: auto;
+}
+
+.industry-artwork img {
+  object-fit: contain;
+  object-position: center;
+  transform: none;
 }
 
 .approach-feature-card {
@@ -554,22 +561,6 @@ html:not(.dark) .brand-logo {
 .approach-card-visual-04 img {
   object-position: 58% center;
   transform: scale(1.2);
-}
-
-.industry-artwork-1 img {
-  transform: scale(1);
-}
-
-.industry-artwork-2 img {
-  transform: scale(1.38);
-}
-
-.industry-artwork-3 img {
-  transform: scale(1.36);
-}
-
-.industry-artwork-4 img {
-  transform: scale(1);
 }
 
 .premium-panel {

@@ -18,7 +18,7 @@ import { CountUpValue, Reveal } from "@/components/public-motion";
 import { RequestDemoCta } from "@/components/request-demo-cta";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { usePublicPreferences } from "@/lib/public-preferences";
+import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
 
 const threatImages = [
@@ -46,24 +46,28 @@ const approachCardMeta = [
   {
     number: "01",
     image: "/images/No. 1.png",
+    imageDark: "/images/No. 1 dark mode.png",
     identityIcon: ShieldCheck,
     itemIcons: [ShieldAlert, ShieldCheck, BadgeDollarSign],
   },
   {
     number: "02",
-    image: "/images/No. 4.png",
+    image: "/images/No. 2.png",
+    imageDark: "/images/No. 2 dark mode.png",
     identityIcon: Target,
     itemIcons: [Check, Check, Check, Check],
   },
   {
     number: "03",
     image: "/images/No. 3.png",
+    imageDark: "/images/No. 3 dark mode.png",
     identityIcon: GraduationCap,
     itemIcons: [GraduationCap, Target],
   },
   {
     number: "04",
-    image: "/images/No. 2.png",
+    image: "/images/No. 4.png",
+    imageDark: "/images/No. 4 dark mode.png",
     identityIcon: UsersRound,
     itemIcons: [UsersRound, RotateCw, MonitorCog],
   },
@@ -104,16 +108,19 @@ const content = {
     },
     readiness: {
       eyebrow: "Cyber resilience",
-      title: "Mengapa",
-      accent: "Kesiapan Siber",
-      suffix: "Penting?",
-      intro: "Kesiapan siber membantu organisasi menghadapi rangkaian dampak sebelum sebuah ancaman berkembang menjadi krisis.",
+      title: "MENGAPA",
+      accent: "KESIAPAN SIBER",
+      suffix: "PENTING?",
+      intro: [
+        "Ancaman siber semakin canggih dan berdampak nyata bagi organisasi.",
+        "Kesiapan Siber siap membantu Anda mengurangi risiko dan menjaga keberlangsungan bisnis.",
+      ],
       impacts: [
-        ["Serangan Siber", "Serangan memanfaatkan kerentanan sistem, jaringan, aplikasi, atau pengguna untuk memperoleh akses dan mengganggu operasi."],
-        ["Kebocoran Data", "Akses tidak sah dapat menyebabkan data pelanggan, kredensial, informasi bisnis, atau data internal terekspos."],
-        ["Dampak Finansial", "Insiden dapat menimbulkan biaya pemulihan, kehilangan pendapatan, downtime, serta kebutuhan investasi tambahan untuk mitigasi."],
-        ["Dampak Kepatuhan", "Kegagalan memenuhi persyaratan regulasi dan standar dapat memicu sanksi, kewajiban pelaporan, atau tindakan korektif."],
-        ["Dampak Reputasi", "Publikasi insiden dapat memengaruhi kepercayaan pelanggan, mitra, investor, dan persepsi terhadap organisasi."],
+        ["SERANGAN SIBER", "Kerentanan dieksploitasi oleh penyerang."],
+        ["KEBOCORAN DATA", "Data sensitif dikompromikan."],
+        ["DAMPAK FINANSIAL", "Kerugian dan gangguan operasional."],
+        ["DAMPAK KEPATUHAN", "Denda, sanksi, dan kewajiban hukum."],
+        ["DAMPAK REPUTASI", "Kepercayaan pelanggan dan citra perusahaan menurun."],
       ],
     },
     solutions: {
@@ -137,14 +144,14 @@ const content = {
           points: ["Crisis Simulation", "Real Scenario", "Executive Readiness", "Stakeholder Coordination"],
         },
         {
-          title: "SOC AI",
+          title: "AI for SOC",
           description: "",
           points: [],
         },
       ],
     },
     whyCyberXatria: {
-      eyebrow: "MENGAPA MEMILIH",
+      eyebrow: "Kenapa Memilih Kami",
       title: "Mengapa Memilih",
       accent: "CyberXatria?",
       cards: [
@@ -241,16 +248,19 @@ const content = {
     },
     readiness: {
       eyebrow: "Cyber resilience",
-      title: "Why",
-      accent: "Cyber Readiness",
-      suffix: "Matters",
-      intro: "Cyber readiness helps organizations address cascading impact before a threat becomes a crisis.",
+      title: "WHY IS",
+      accent: "CYBER READINESS",
+      suffix: "IMPORTANT?",
+      intro: [
+        "Cyber threats are becoming increasingly sophisticated and have a real impact on organizations.",
+        "Cyber Readiness helps you reduce risks and maintain business continuity.",
+      ],
       impacts: [
-        ["Cyber Attack", "Attacks exploit vulnerabilities in systems, networks, applications, or users to gain access and disrupt operations."],
-        ["Data Breach", "Unauthorized access can expose customer data, credentials, business information, or internal data."],
-        ["Financial Impact", "Incidents can result in recovery costs, lost revenue, downtime, and additional investment required for mitigation."],
-        ["Compliance Impact", "Failure to meet regulatory and standards requirements can lead to penalties, reporting obligations, or corrective actions."],
-        ["Reputation Impact", "Public disclosure of an incident can affect the trust of customers, partners, investors, and overall perception of the organization."],
+        ["CYBER ATTACK", "Vulnerabilities are exploited by attackers."],
+        ["DATA BREACH", "Sensitive data is compromised."],
+        ["FINANCIAL IMPACT", "Financial losses and operational disruptions."],
+        ["COMPLIANCE IMPACT", "Fines, penalties, and legal obligations."],
+        ["REPUTATIONAL IMPACT", "Declining customer trust and corporate reputation."],
       ],
     },
     solutions: {
@@ -274,14 +284,14 @@ const content = {
           points: ["Crisis Simulation", "Real Scenario", "Executive Readiness", "Stakeholder Coordination"],
         },
         {
-          title: "SOC AI",
+          title: "AI for SOC",
           description: "",
           points: [],
         },
       ],
     },
     whyCyberXatria: {
-      eyebrow: "WHY CHOOSE",
+      eyebrow: "WHY CHOOSE US",
       title: "Why Choose",
       accent: "CyberXatria?",
       cards: [
@@ -356,7 +366,8 @@ const content = {
 };
 
 export default function Home() {
-  const { t } = usePublicPreferences();
+  const { language, t } = usePublicPreferences();
+  const href = (path: string) => localePath(path, language);
   const copy = t(content);
 
   return (
@@ -478,7 +489,11 @@ export default function Home() {
             <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">
               {copy.readiness.title} <span className="text-gradient">{copy.readiness.accent}</span> {copy.readiness.suffix}
             </h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.readiness.intro}</p>
+            <div className="mt-4 space-y-2 text-slate-600 dark:text-slate-400">
+              {copy.readiness.intro.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
           </Reveal>
           <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {copy.readiness.impacts.map(([title, text], index) => {
@@ -580,7 +595,7 @@ export default function Home() {
                         </span>
                       ) : (
                         <Link
-                          href={meta.href}
+                          href={href(meta.href)}
                           className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300"
                         >
                           {copy.solutions.learnMore} <ArrowRight className="size-4" />
@@ -649,7 +664,14 @@ export default function Home() {
                         alt=""
                         fill
                         sizes="(max-width: 768px) 90vw, 28vw"
-                        className="object-contain object-center"
+                        className="object-contain object-center dark:hidden"
+                      />
+                      <Image
+                        src={publicAsset(meta.imageDark)}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 90vw, 28vw"
+                        className="hidden object-contain object-center dark:block"
                       />
                     </div>
                   </article>

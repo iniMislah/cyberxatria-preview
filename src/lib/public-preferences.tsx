@@ -26,6 +26,7 @@ export function PublicPreferencesProvider({ children }: { children: React.ReactN
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    const urlLanguage = getLocaleFromPath(window.location.pathname);
     const savedLanguage = readPreference(LANGUAGE_KEY);
     const savedTheme = readPreference(THEME_KEY);
 
@@ -35,7 +36,7 @@ export function PublicPreferencesProvider({ children }: { children: React.ReactN
     const browserLanguage: Language = userLangs.some((lang) => lang.toLowerCase().startsWith("id")) ? "id" : "en";
 
     queueMicrotask(() => {
-      setLanguageState(savedLanguage === "id" || savedLanguage === "en" ? savedLanguage : browserLanguage);
+      setLanguageState(urlLanguage ?? (savedLanguage === "id" || savedLanguage === "en" ? savedLanguage : browserLanguage));
       if (savedTheme === "dark" || savedTheme === "light") setThemeState(savedTheme);
       setReady(true);
     });
@@ -98,4 +99,24 @@ function writePreference(key: string, value: string) {
   } catch {
     // Storage can be unavailable in restricted browsers; language/theme still work in-session.
   }
+}
+
+export function getLocaleFromPath(pathname: string): Language | null {
+  const segment = pathname.split("/").filter(Boolean)[0];
+  return segment === "id" || segment === "en" ? segment : null;
+}
+
+export function stripLocalePrefix(pathname: string) {
+  const [pathPart = "/", suffix = ""] = pathname.split(/([?#].*)/, 2);
+  const parts = pathPart.split("/").filter(Boolean);
+  if (parts[0] === "id" || parts[0] === "en") parts.shift();
+  const normalized = `/${parts.join("/")}`;
+  return `${normalized === "/" ? "/" : normalized}${suffix}`;
+}
+
+export function localePath(pathname: string, language: Language) {
+  if (!pathname || pathname.startsWith("#") || /^[a-z][a-z0-9+.-]*:/i.test(pathname)) return pathname;
+  const [pathPart = "/", suffix = ""] = pathname.split(/([?#].*)/, 2);
+  const cleanPath = stripLocalePrefix(pathPart);
+  return `/${language}${cleanPath === "/" ? "/" : cleanPath}${suffix}`;
 }

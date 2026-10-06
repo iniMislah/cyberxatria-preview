@@ -33,7 +33,6 @@ import {
   Workflow,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { Reveal } from "@/components/public-motion";
 import { RequestDemoCta } from "@/components/request-demo-cta";
 import { SiteFooter } from "@/components/site-footer";
@@ -201,7 +200,7 @@ export function ServicePage({ content }: ServicePageProps) {
       <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
         <div className="page-grid grid gap-10 lg:grid-cols-2">
           <div><p className="eyebrow">{props.audienceEyebrow}</p><h2 className="mt-5 text-3xl font-bold text-slate-900 dark:text-white">{props.audienceTitle}</h2><ul className="mt-7 space-y-4 text-sm text-slate-700 dark:text-slate-300">{props.audience.map((item) => <li key={item} className="flex gap-3"><Check className="size-5 shrink-0 text-rose-500" />{item}</li>)}</ul></div>
-          <div className="grid gap-4 sm:grid-cols-2">{props.benefits.map((item) => { const Icon = icons[item.icon]; return <div key={item.title} className="motion-card flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none"><Icon className="size-7 text-emerald-500 dark:text-emerald-400" /><h3 className="mt-4 font-bold text-slate-900 dark:text-white min-h-[2.5rem] flex items-center">{item.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 flex-1">{item.text}</p></div>; })}</div>
+          <div className="grid gap-4 sm:grid-cols-2">{props.benefits.map((item) => { const Icon = icons[item.icon]; return <div key={item.title} className="motion-card flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none"><Icon className="size-7 text-rose-500 dark:text-orange-300" /><h3 className="mt-4 font-bold text-slate-900 dark:text-white min-h-[2.5rem] flex items-center">{item.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 flex-1">{item.text}</p></div>; })}</div>
         </div>
       </section>
 

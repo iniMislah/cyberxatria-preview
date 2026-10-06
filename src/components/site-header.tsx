@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, Menu, Moon, Sun, X } from "lucide-react";
 import { useEffect, useId, useState } from "react";
-import { usePublicPreferences, type Language } from "@/lib/public-preferences";
+import { localePath, stripLocalePrefix, usePublicPreferences, type Language } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
 
 type SolutionItem =
@@ -15,7 +15,7 @@ type SolutionItem =
 const solutions: SolutionItem[] = [
   { href: "/solutions/cyber-drill", label: "Cyber Drill Exercise" },
   { href: "/solutions/tabletop", label: "Tabletop Exercise" },
-  { label: "SOC AI", comingSoon: true },
+  { label: "AI for SOC", comingSoon: true },
 ];
 
 function IndonesiaFlag() {
@@ -64,6 +64,8 @@ const languageOptions: { code: Language; label: string; Flag: () => React.JSX.El
 
 function LanguageSwitcher() {
   const { language, setLanguage } = usePublicPreferences();
+  const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <div className="flex rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100/50 dark:bg-white/[0.03] p-1">
@@ -73,7 +75,10 @@ function LanguageSwitcher() {
           <button
             key={code}
             type="button"
-            onClick={() => setLanguage(code)}
+            onClick={() => {
+              setLanguage(code);
+              router.push(localePath(pathname || "/", code));
+            }}
             className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-bold transition ${
               active
                 ? "bg-rose-500 text-white shadow-sm"
@@ -94,13 +99,14 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, setTheme, t } = usePublicPreferences();
+  const { language, theme, setTheme, t } = usePublicPreferences();
 
   const normalizedPath = pathname
     ? pathname.length > 1 && pathname.endsWith("/")
-      ? pathname.slice(0, -1)
-      : pathname
+      ? stripLocalePrefix(pathname.slice(0, -1))
+      : stripLocalePrefix(pathname)
     : "/";
+  const href = (path: string) => localePath(path, language);
 
   const isHome = normalizedPath === "/" || normalizedPath === "";
   const isSolutions = normalizedPath.startsWith("/solutions");
@@ -115,7 +121,7 @@ export function SiteHeader() {
   }, []);
 
   const nav = {
-    home: t({ id: "Beranda", en: "Home Page" }),
+    home: t({ id: "Beranda", en: "Home" }),
     solutions: t({ id: "Solusi", en: "Solution" }),
     company: t({ id: "Tentang Kami", en: "About Us" }),
     contact: t({ id: "Kontak", en: "Contact" }),
@@ -127,14 +133,14 @@ export function SiteHeader() {
   return (
     <header className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-all duration-300 ${scrolled ? "border-slate-200/90 dark:border-rose-500/25 bg-background/95 shadow-[0_10px_35px_rgba(15,23,42,0.06)] dark:shadow-[0_10px_40px_rgba(2,6,23,0.25)]" : "border-slate-200/70 dark:border-rose-500/15 bg-background/85"}`}>
       <div className="page-grid flex h-[76px] items-center justify-between gap-6">
-        <Link href="/" aria-label={`CyberXatria ${nav.home}`} className="shrink-0">
+        <Link href={href("/")} aria-label={`CyberXatria ${nav.home}`} className="shrink-0">
           <Image src={publicAsset("/images/cyberxatria-logo.png")} alt="CyberXatria" width={426} height={114} className="brand-logo h-auto w-[190px] sm:w-[214px]" priority />
         </Link>
 
         <nav className="hidden items-center gap-8 font-sans text-sm font-medium leading-6 lg:flex">
           {/* Home Link */}
           <Link
-            href="/"
+            href={href("/")}
             className={`relative py-1 transition duration-150 ${
               isHome
                 ? "text-rose-600 dark:text-white font-semibold [text-shadow:0_0_10px_rgba(225,29,72,0.35)] dark:[text-shadow:0_0_12px_rgba(244,63,94,0.65)]"
@@ -177,7 +183,7 @@ export function SiteHeader() {
               ) : (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={href(item.href)}
                   className={`block rounded-lg px-4 py-3 transition ${
                     normalizedPath === item.href
                       ? "bg-rose-500/10 text-rose-600 dark:text-rose-400 font-semibold"
@@ -192,7 +198,7 @@ export function SiteHeader() {
 
           {/* Company Link */}
           <Link
-            href="/company"
+            href={href("/company")}
             className={`relative py-1 transition duration-150 ${
               isCompany
                 ? "text-rose-600 dark:text-white font-semibold [text-shadow:0_0_10px_rgba(225,29,72,0.35)] dark:[text-shadow:0_0_12px_rgba(244,63,94,0.65)]"
@@ -210,7 +216,7 @@ export function SiteHeader() {
 
           {/* Contact Link */}
           <Link
-            href="/request-demo"
+            href={href("/request-demo")}
             className={`relative py-1 transition duration-150 ${
               isContact
                 ? "text-rose-600 dark:text-white font-semibold [text-shadow:0_0_10px_rgba(225,29,72,0.35)] dark:[text-shadow:0_0_12px_rgba(244,63,94,0.65)]"
@@ -249,7 +255,7 @@ export function SiteHeader() {
           <div className="mx-auto flex max-w-xl flex-col">
             <Link
               onClick={() => setOpen(false)}
-              href="/"
+              href={href("/")}
               className={`border-b py-3 font-medium transition-colors ${
                 isHome
                   ? "border-rose-500/30 text-rose-600 dark:text-rose-400 font-semibold pl-3 border-l-2 border-l-rose-500 bg-rose-500/[0.04] dark:bg-rose-500/10 rounded-r-lg"
@@ -270,7 +276,7 @@ export function SiteHeader() {
               <Link
                 onClick={() => setOpen(false)}
                 key={item.href}
-                href={item.href}
+                href={href(item.href)}
                 className={`border-b py-3 pl-3 transition-colors ${
                   normalizedPath === item.href
                     ? "border-rose-500/30 text-rose-600 dark:text-rose-400 font-semibold border-l-2 border-l-rose-500 bg-rose-500/[0.04] dark:bg-rose-500/10 rounded-r-lg"
@@ -282,7 +288,7 @@ export function SiteHeader() {
             ))}
             <Link
               onClick={() => setOpen(false)}
-              href="/company"
+              href={href("/company")}
               className={`border-b py-3 font-medium transition-colors ${
                 isCompany
                   ? "border-rose-500/30 text-rose-600 dark:text-rose-400 font-semibold pl-3 border-l-2 border-l-rose-500 bg-rose-500/[0.04] dark:bg-rose-500/10 rounded-r-lg"
@@ -293,7 +299,7 @@ export function SiteHeader() {
             </Link>
             <Link
               onClick={() => setOpen(false)}
-              href="/request-demo"
+              href={href("/request-demo")}
               className={`border-b py-3 font-medium transition-colors ${
                 isContact
                   ? "border-rose-500/30 text-rose-600 dark:text-rose-400 font-semibold pl-3 border-l-2 border-l-rose-500 bg-rose-500/[0.04] dark:bg-rose-500/10 rounded-r-lg"
