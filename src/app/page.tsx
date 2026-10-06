@@ -22,10 +22,10 @@ import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
 
 const threatImages = [
-  { light: "/images/Ransomware Trend_Light.png", dark: "/images/Ransomware Trend.png" },
-  { light: "/images/Phishing Trend_Light.png", dark: "/images/Phishing Trend.png" },
-  { light: "/images/Data Breach Trend_Light.png", dark: "/images/Data Breach Trend.png" },
-  { light: "/images/Insider Threat Trend_Light.png", dark: "/images/Insider Threat Trend.png" },
+  { light: "/images/Ransomware Trend_Light.png", dark: "/images/Ransomware Trend.png", lightScale: 1.14, darkScale: 1.03 },
+  { light: "/images/Phishing Trend_Light.png", dark: "/images/Phishing Trend.png", lightScale: 1.05, darkScale: 0.8 },
+  { light: "/images/Data Breach Trend_Light.png", dark: "/images/Data Breach Trend.png", lightScale: 1.1, darkScale: 0.85 },
+  { light: "/images/Insider Threat Trend_Light.png", dark: "/images/Insider Threat Trend.png", lightScale: 1.14, darkScale: 0.84 },
 ];
 
 const readinessImpactImages = [
@@ -145,8 +145,16 @@ const content = {
         },
         {
           title: "AI for SOC",
-          description: "",
-          points: [],
+          description:
+            "Solusi berbasis kecerdasan buatan yang membantu tim SOC menganalisis peringatan, mengidentifikasi potensi ancaman, memprioritaskan risiko, serta mempercepat penyelidikan dan respons keamanan.",
+          points: [
+            "Analisis Peringatan Berbantuan AI",
+            "Prioritisasi Ancaman",
+            "Korelasi Peristiwa Keamanan",
+            "Bantuan Penyelidikan",
+            "Konteks & Intelijen Ancaman",
+            "Respons Berbantuan AI",
+          ],
         },
       ],
     },
@@ -285,8 +293,16 @@ const content = {
         },
         {
           title: "AI for SOC",
-          description: "",
-          points: [],
+          description:
+            "An artificial intelligence-based solution that helps SOC teams analyze alerts, identify potential threats, prioritize risks, and accelerate security investigations and responses.",
+          points: [
+            "AI-Assisted Alert Analysis",
+            "Threat Prioritization",
+            "Security Event Correlation",
+            "Investigation Assistance",
+            "Threat Context & Intelligence",
+            "AI-Assisted Response",
+          ],
         },
       ],
     },
@@ -445,21 +461,25 @@ export default function Home() {
               return (
                 <Reveal key={label} delay={index * 90} className="h-full flex flex-col">
                   <div tabIndex={0} className="cyber-card motion-card group flex h-full min-h-[390px] flex-1 flex-col items-center rounded-2xl p-6 text-center">
-                    <div className="relative mb-6 h-40 w-full">
-                      <Image
-                        src={publicAsset(image.light)}
-                        alt=""
-                        fill
-                        sizes="(max-width: 1024px) 50vw, 25vw"
-                        className="object-contain dark:hidden"
-                      />
-                      <Image
-                        src={publicAsset(image.dark)}
-                        alt=""
-                        fill
-                        sizes="(max-width: 1024px) 50vw, 25vw"
-                        className="hidden object-contain dark:block"
-                      />
+                    <div className="mb-6 grid h-40 w-full place-items-center">
+                      <div className="relative h-40 w-full max-w-[234px] overflow-visible">
+                        <Image
+                          src={publicAsset(image.light)}
+                          alt=""
+                          fill
+                          sizes="234px"
+                          className="object-contain object-center dark:hidden"
+                          style={{ transform: `scale(${image.lightScale})` }}
+                        />
+                        <Image
+                          src={publicAsset(image.dark)}
+                          alt=""
+                          fill
+                          sizes="234px"
+                          className="hidden object-contain object-center dark:block"
+                          style={{ transform: `scale(${image.darkScale})` }}
+                        />
+                      </div>
                     </div>
                     <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{label}</p>
                     <span className="mt-4 h-0.5 w-10 rounded-full bg-rose-500" />
