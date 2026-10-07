@@ -23,10 +23,10 @@ import { publicAsset } from "@/lib/asset-path";
 import { solutionServiceMeta } from "@/lib/solution-services";
 
 const threatImages = [
-  { light: "/images/Ransomware Trend_Light.png", dark: "/images/Ransomware Trend.png", lightScale: 1.14, darkScale: 1.03 },
-  { light: "/images/Phishing Trend_Light.png", dark: "/images/Phishing Trend.png", lightScale: 1.05, darkScale: 0.8 },
-  { light: "/images/Data Breach Trend_Light.png", dark: "/images/Data Breach Trend.png", lightScale: 1.1, darkScale: 0.85 },
-  { light: "/images/Insider Threat Trend_Light.png", dark: "/images/Insider Threat Trend.png", lightScale: 1.14, darkScale: 0.84 },
+  { image: "/images/Ransomware Trend.png", scale: 1.03 },
+  { image: "/images/Phishing Trend.png", scale: 0.8 },
+  { image: "/images/Data Breach Trend.png", scale: 0.85 },
+  { image: "/images/Insider Threat Trend.png", scale: 0.84 },
 ];
 
 const readinessImpactImages = [
@@ -84,7 +84,7 @@ const content = {
       badge: "Cyber readiness platform",
       headline: ["Deteksi Lebih Cepat.", "Respons Lebih Tepat.", "Tetap Terlindungi."],
       subheadline:
-        "Lindungi organisasi Anda dengan 24/7 Security Operations Center (SOC), realistis Cyber Drill Exercises, dan Tabletop Exercises strategis yang dirancang untuk meningkatkan kesiapan keamanan, kemampuan penanggulangan insiden, dan ketahanan siber.",
+        "Lindungi organisasi Anda melalui Cyber Drill Exercises yang realistis, Tabletop Exercises yang strategis, serta AI for Security Operations Center (SOC) 24/7 yang dirancang untuk meningkatkan kesiapan keamanan, kemampuan penanggulangan insiden, dan ketahanan siber.",
       requestDemoCta: "Request Demo",
       solutionsCta: "Lihat Solusi",
     },
@@ -232,7 +232,7 @@ const content = {
       badge: "Cyber readiness platform",
       headline: ["Faster Detection.", "More Precise Response.", "Stay Protected."],
       subheadline:
-        "Protect your organization with a 24/7 Security Operations Center (SOC), realistic cyber drill exercises, and strategic tabletop exercises designed to enhance security readiness, incident response capabilities, and cyber resilience.",
+        "Protect your organization with realistic Cyber Drill Exercises, strategic Tabletop Exercises, and AI for Security Operations Center (SOC) 24/7 designed to enhance security readiness, incident response capabilities, and cyber resilience.",
       requestDemoCta: "Request Demo",
       solutionsCta: "View Solutions",
     },
@@ -459,20 +459,12 @@ export default function Home() {
                     <div className="mb-6 grid h-40 w-full place-items-center">
                       <div className="relative h-40 w-full max-w-[234px] overflow-visible">
                         <Image
-                          src={publicAsset(image.light)}
+                          src={publicAsset(image.image)}
                           alt=""
                           fill
                           sizes="234px"
-                          className="object-contain object-center dark:hidden"
-                          style={{ transform: `scale(${image.lightScale})` }}
-                        />
-                        <Image
-                          src={publicAsset(image.dark)}
-                          alt=""
-                          fill
-                          sizes="234px"
-                          className="hidden object-contain object-center dark:block"
-                          style={{ transform: `scale(${image.darkScale})` }}
+                          className="object-contain object-center"
+                          style={{ transform: `scale(${image.scale})` }}
                         />
                       </div>
                     </div>

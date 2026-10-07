@@ -97,6 +97,12 @@ export type ServicePageCopy = {
   flowTitle: string;
   flow: string[];
   flowImages?: string[];
+  assessmentEyebrow?: string;
+  assessmentTitle?: string;
+  assessment?: ServiceItem[];
+  deliverablesEyebrow?: string;
+  deliverablesTitle?: string;
+  deliverables?: ServiceItem[];
   packagesEyebrow: string;
   packagesTitle: string;
   packagesText: string;
@@ -190,8 +196,8 @@ export function ServicePage({ content }: ServicePageProps) {
       <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
         <div className="page-grid"><SectionHeading eyebrow={props.flowEyebrow} title={props.flowTitle} />
           {flowImages ? (
-            <div className="grid gap-3.5 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">{props.flow.map((step, index) => (
-              <div key={step} className="motion-card group relative flex h-full min-h-[190px] flex-col rounded-xl border border-rose-500/25 bg-white p-3 text-center shadow-sm transition-all hover:border-rose-500/60 hover:shadow-md dark:border-rose-500/30 dark:bg-[#090d15] dark:shadow-none">
+            <div className={`mx-auto grid justify-center gap-3.5 sm:grid-cols-2 md:grid-cols-3 ${props.flow.length === 6 ? "max-w-5xl lg:grid-cols-6" : "lg:grid-cols-7"}`}>{props.flow.map((step, index) => (
+              <div key={step} className="motion-card group relative flex h-full min-h-[190px] flex-col items-center rounded-xl border border-rose-500/25 bg-white p-3 text-center shadow-sm transition-all hover:border-rose-500/60 hover:shadow-md dark:border-rose-500/30 dark:bg-[#090d15] dark:shadow-none">
                 <span className="text-xs font-black text-rose-600 dark:text-rose-400">{String(index + 1).padStart(2, "0")}</span>
                 <div className="relative mx-auto mt-2 aspect-square w-full max-w-[104px] flex-1">
                   <Image
@@ -211,6 +217,48 @@ export function ServicePage({ content }: ServicePageProps) {
           )}
         </div>
       </section>
+
+      {props.assessment && (
+        <section className="py-16 sm:py-20">
+          <div className="page-grid">
+            <SectionHeading eyebrow={props.assessmentEyebrow ?? ""} title={props.assessmentTitle ?? ""} />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {props.assessment.map((item) => {
+                const Icon = icons[item.icon];
+                return (
+                  <article key={item.title} className="motion-card flex h-full min-h-[152px] flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none">
+                    <span className="mb-3 grid size-10 place-items-center rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-300">
+                      <Icon className="size-5" />
+                    </span>
+                    <h3 className="flex flex-1 items-center justify-center text-[15px] font-bold leading-6 text-slate-900 dark:text-white sm:text-base">{item.title}</h3>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {props.deliverables && (
+        <section className="border-y border-slate-200/80 bg-slate-50/70 py-16 transition-colors dark:border-white/5 dark:bg-[#070a12] sm:py-20">
+          <div className="page-grid">
+            <SectionHeading eyebrow={props.deliverablesEyebrow ?? ""} title={props.deliverablesTitle ?? ""} />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {props.deliverables.map((item) => {
+                const Icon = icons[item.icon];
+                return (
+                  <article key={item.title} className="motion-card flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none">
+                    <span className="mb-4 grid size-10 place-items-center rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-300">
+                      <Icon className="size-5" />
+                    </span>
+                    <h3 className="text-sm font-bold leading-6 text-slate-900 dark:text-white">{item.title}</h3>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="py-16 sm:py-20">
         <div className="page-grid"><SectionHeading eyebrow={props.packagesEyebrow} title={props.packagesTitle} text={props.packagesText} />

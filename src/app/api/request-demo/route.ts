@@ -10,17 +10,18 @@ type DemoRequest = {
   phone: string;
   country: string;
   interest: string;
+  requestType: string;
   message: string;
   language: "id" | "en";
 };
 
-const requiredFields: Array<keyof Omit<DemoRequest, "message" | "language">> = [
+const requiredFields: Array<keyof Omit<DemoRequest, "message" | "phone" | "language">> = [
   "name",
   "company",
   "email",
-  "phone",
   "country",
   "interest",
+  "requestType",
 ];
 
 export async function POST(request: Request) {
@@ -56,7 +57,7 @@ export async function POST(request: Request) {
       from: `"CyberXatria Website" <${config.from}>`,
       to: config.to,
       replyTo: parsed.email,
-      subject: `New Request Demo - ${parsed.name} / ${parsed.company}`,
+      subject: buildAdminSubject(parsed),
       text: buildAdminText(parsed),
       html: buildAdminHtml(parsed),
     });
@@ -69,10 +70,7 @@ export async function POST(request: Request) {
     await transporter.sendMail({
       from: `"CyberXatria" <${config.from}>`,
       to: parsed.email,
-      subject:
-        parsed.language === "id"
-          ? "Permintaan Demo CyberXatria Telah Diterima"
-          : "Your CyberXatria Demo Request Has Been Received",
+      subject: `${buildAdminSubject(parsed)} Received`,
       text: buildAutoReplyText(parsed),
       html: buildAutoReplyHtml(parsed),
     });
@@ -93,6 +91,7 @@ function parseDemoRequest(value: unknown): DemoRequest | null {
     phone: readText(record.phone),
     country: readText(record.country),
     interest: readText(record.interest),
+    requestType: readText(record.requestType),
     message: readText(record.message, 2000),
     language: record.language === "id" ? "id" : "en",
   };
@@ -127,33 +126,34 @@ function getSmtpConfig() {
 }
 
 function buildAdminText(data: DemoRequest) {
+  const subject = buildAdminSubject(data);
   return [
-    "New Request Demo",
+    subject,
     "",
-    `Name: ${data.name}`,
+    `Full Name: ${data.name}`,
     `Company / Organization: ${data.company}`,
     `Business Email: ${data.email}`,
-    `Phone Number: ${data.phone}`,
-    `HQ Country: ${data.country}`,
-    `Solution of Interest: ${data.interest}`,
-    `Message: ${data.message || "-"}`,
+    `Phone Number: ${data.phone || "-"}`,
+    `Product / Solution: ${data.interest}`,
+    `Request Type: ${data.requestType}`,
+    `Message / Requirements: ${data.message || "-"}`,
   ].join("\n");
 }
 
 function buildAdminHtml(data: DemoRequest) {
   const rows = [
-    ["Name", data.name],
+    ["Full Name", data.name],
     ["Company / Organization", data.company],
     ["Business Email", data.email],
-    ["Phone Number", data.phone],
-    ["HQ Country", data.country],
-    ["Solution of Interest", data.interest],
-    ["Message", data.message || "-"],
+    ["Phone Number", data.phone || "-"],
+    ["Product / Solution", data.interest],
+    ["Request Type", data.requestType],
+    ["Message / Requirements", data.message || "-"],
   ];
 
   return `
     <div style="font-family:Arial,sans-serif;color:#0f172a;line-height:1.6">
-      <h2 style="margin:0 0 16px">New Request Demo</h2>
+      <h2 style="margin:0 0 16px">${escapeHtml(buildAdminSubject(data))}</h2>
       <table style="border-collapse:collapse;width:100%;max-width:640px">
         <tbody>
           ${rows
@@ -172,14 +172,23 @@ function buildAdminHtml(data: DemoRequest) {
   `;
 }
 
+function buildAdminSubject(data: DemoRequest) {
+  return `[CyberXatria] ${data.requestType} - ${data.interest}`;
+}
+
 function buildAutoReplyText(data: DemoRequest) {
+  const summary = buildSubmissionSummaryText(data, data.language);
   if (data.language === "id") {
     return [
       `Halo ${data.name},`,
       "",
       "Terima kasih telah menghubungi CyberXatria.",
       "",
-      "Permintaan demo Anda telah kami terima dan akan ditindaklanjuti oleh tim CyberXatria.",
+      "Permintaan Anda telah kami terima dengan detail berikut:",
+      "",
+      summary,
+      "",
+      "Tim CyberXatria akan menindaklanjuti permintaan ini.",
       "",
       "Salam,",
       "Tim CyberXatria",
@@ -193,7 +202,11 @@ function buildAutoReplyText(data: DemoRequest) {
     "",
     "Thank you for contacting CyberXatria.",
     "",
-    "We have received your demo request and the CyberXatria team will follow up on your request.",
+    "We have received your request with the following details:",
+    "",
+    summary,
+    "",
+    "The CyberXatria team will follow up on this request.",
     "",
     "Regards,",
     "CyberXatria Team",
@@ -203,28 +216,89 @@ function buildAutoReplyText(data: DemoRequest) {
 }
 
 function buildAutoReplyHtml(data: DemoRequest) {
+  const rows = buildSubmissionRows(data);
   const lines =
     data.language === "id"
       ? [
           `Halo ${data.name},`,
           "Terima kasih telah menghubungi CyberXatria.",
-          "Permintaan demo Anda telah kami terima dan akan ditindaklanjuti oleh tim CyberXatria.",
+          "Permintaan Anda telah kami terima dengan detail berikut:",
           "Salam,<br>Tim CyberXatria",
           "Email ini dikirim secara otomatis. Mohon tidak membalas email ini.",
         ]
       : [
           `Hello ${data.name},`,
           "Thank you for contacting CyberXatria.",
-          "We have received your demo request and the CyberXatria team will follow up on your request.",
+          "We have received your request with the following details:",
           "Regards,<br>CyberXatria Team",
           "This is an automated email. Please do not reply to this message.",
         ];
 
   return `
     <div style="font-family:Arial,sans-serif;color:#0f172a;line-height:1.6">
-      ${lines.map((line) => `<p>${escapeHtml(line).replace(/&lt;br&gt;/g, "<br>")}</p>`).join("")}
+      ${lines.slice(0, 3).map((line) => `<p>${escapeHtml(line).replace(/&lt;br&gt;/g, "<br>")}</p>`).join("")}
+      <table style="border-collapse:collapse;width:100%;max-width:640px;margin:16px 0">
+        <tbody>
+          ${rows
+            .map(
+              ([label, value]) => `
+                <tr>
+                  <td style="border:1px solid #e2e8f0;padding:8px 10px;font-weight:700;width:190px">${escapeHtml(label)}</td>
+                  <td style="border:1px solid #e2e8f0;padding:8px 10px">${escapeHtml(value).replace(/\n/g, "<br>")}</td>
+                </tr>
+              `,
+            )
+            .join("")}
+        </tbody>
+      </table>
+      ${lines.slice(3).map((line) => `<p>${escapeHtml(line).replace(/&lt;br&gt;/g, "<br>")}</p>`).join("")}
     </div>
   `;
+}
+
+function buildSubmissionRows(data: DemoRequest): Array<[string, string]> {
+  return [
+    ["Full Name", data.name],
+    ["Company / Organization", data.company],
+    ["Business Email", data.email],
+    ["Phone Number", data.phone || "-"],
+    ["Product / Solution", data.interest],
+    ["Request Type", data.requestType],
+    ["Message / Requirements", data.message || "-"],
+  ];
+}
+
+function buildSubmissionSummaryText(data: DemoRequest, language: DemoRequest["language"]) {
+  const labels =
+    language === "id"
+      ? {
+          name: "Nama Lengkap",
+          company: "Perusahaan / Organisasi",
+          email: "Email Bisnis",
+          phone: "Nomor Telepon",
+          interest: "Produk / Solusi",
+          requestType: "Tipe Permintaan",
+          message: "Pesan / Kebutuhan",
+        }
+      : {
+          name: "Full Name",
+          company: "Company / Organization",
+          email: "Business Email",
+          phone: "Phone Number",
+          interest: "Product / Solution",
+          requestType: "Request Type",
+          message: "Message / Requirements",
+        };
+
+  return [
+    `${labels.name}: ${data.name}`,
+    `${labels.company}: ${data.company}`,
+    `${labels.email}: ${data.email}`,
+    `${labels.phone}: ${data.phone || "-"}`,
+    `${labels.interest}: ${data.interest}`,
+    `${labels.requestType}: ${data.requestType}`,
+    `${labels.message}: ${data.message || "-"}`,
+  ].join("\n");
 }
 
 function escapeHtml(value: string) {
