@@ -20,6 +20,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
+import { solutionServiceMeta } from "@/lib/solution-services";
 
 const threatImages = [
   { light: "/images/Ransomware Trend_Light.png", dark: "/images/Ransomware Trend.png", lightScale: 1.14, darkScale: 1.03 },
@@ -29,17 +30,11 @@ const threatImages = [
 ];
 
 const readinessImpactImages = [
-  { light: "/images/Serangan Siber Light.png", dark: "/images/Serangan Siber Dark.png" },
-  { light: "/images/Kebocoran Data_Light.png", dark: "/images/Kebocoran Data Dark.png" },
-  { light: "/images/Dampak Finansial_Light.png", dark: "/images/Dampak Finansial Dark.png" },
-  { light: "/images/Dampak Kepatuhan Light.png", dark: "/images/Dampak Kepatuhan Dark.png" },
-  { light: "/images/Dampak Reputasi Light.png", dark: "/images/Dampak Reputasi Dark.png" },
-];
-
-const solutionServiceMeta = [
-  { image: "/images/cyber-drill-hero.png", imageLight: "/images/Solusi_Cyberdrill_Light.png", href: "/solutions/cyber-drill" },
-  { image: "/images/tabletop-hero.png", imageLight: "/images/Solusi_TTX_Light.png", href: "/solutions/tabletop" },
-  { image: "/images/Solusi_SOC_AI.png", imageLight: "/images/Solusi_SOC_Light.png", href: "" },
+  { image: "/images/Serangan Siber.png", scale: 0.96 },
+  { image: "/images/Kebocoran Data.png", scale: 1.07 },
+  { image: "/images/Dampak Finansial.png", scale: 1.04 },
+  { image: "/images/Dampak Kepatuhan.png", scale: 1.19 },
+  { image: "/images/Dampak Reputasi.png", scale: 0.94 },
 ];
 
 const approachCardMeta = [
@@ -526,18 +521,12 @@ export default function Home() {
                 >
                   <div className="relative mx-auto mb-5 size-32 lg:size-36">
                     <Image
-                      src={publicAsset(image.light)}
+                      src={publicAsset(image.image)}
                       alt=""
                       fill
                       sizes="(max-width: 1024px) 128px, 144px"
-                      className="object-contain dark:hidden"
-                    />
-                    <Image
-                      src={publicAsset(image.dark)}
-                      alt=""
-                      fill
-                      sizes="(max-width: 1024px) 128px, 144px"
-                      className="hidden object-contain dark:block"
+                      className="object-contain"
+                      style={{ transform: `scale(${image.scale})` }}
                     />
                   </div>
                   <h3 className="text-sm font-bold uppercase text-rose-600 dark:text-rose-400 min-h-[2.5rem] flex items-center justify-center">

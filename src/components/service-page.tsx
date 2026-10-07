@@ -96,6 +96,7 @@ export type ServicePageCopy = {
   flowEyebrow: string;
   flowTitle: string;
   flow: string[];
+  flowImages?: string[];
   packagesEyebrow: string;
   packagesTitle: string;
   packagesText: string;
@@ -127,6 +128,7 @@ function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: stri
 export function ServicePage({ content }: ServicePageProps) {
   const { t } = usePublicPreferences();
   const props = t(content);
+  const flowImages = props.flowImages;
 
   return (
     <main className="site-shell min-h-screen bg-background text-foreground">
@@ -187,7 +189,26 @@ export function ServicePage({ content }: ServicePageProps) {
 
       <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
         <div className="page-grid"><SectionHeading eyebrow={props.flowEyebrow} title={props.flowTitle} />
-          <div className="grid gap-3.5 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">{props.flow.map((step, index) => <div key={step} className="motion-card group relative rounded-xl border border-rose-500/25 dark:border-rose-500/30 bg-white dark:bg-[#090d15] p-4 text-center shadow-sm dark:shadow-none hover:border-rose-500/60 transition-all"><span className="mx-auto grid size-8 place-items-center rounded-full bg-rose-500/10 text-xs font-black text-rose-600 dark:text-rose-400 ring-1 ring-rose-500/25 group-hover:scale-110 transition-transform">{String(index + 1).padStart(2, "0")}</span><p className="mt-3 text-xs font-bold uppercase leading-5 text-slate-800 dark:text-slate-200">{step}</p>{index < props.flow.length - 1 && <ArrowRight className="absolute -right-3.5 top-1/2 z-10 hidden size-4 -translate-y-1/2 text-rose-400/60 dark:text-rose-600 lg:block" />}</div>)}</div>
+          {flowImages ? (
+            <div className="grid gap-3.5 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">{props.flow.map((step, index) => (
+              <div key={step} className="motion-card group relative flex h-full min-h-[190px] flex-col rounded-xl border border-rose-500/25 bg-white p-3 text-center shadow-sm transition-all hover:border-rose-500/60 hover:shadow-md dark:border-rose-500/30 dark:bg-[#090d15] dark:shadow-none">
+                <span className="text-xs font-black text-rose-600 dark:text-rose-400">{String(index + 1).padStart(2, "0")}</span>
+                <div className="relative mx-auto mt-2 aspect-square w-full max-w-[104px] flex-1">
+                  <Image
+                    src={publicAsset(flowImages[index])}
+                    alt={step}
+                    fill
+                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 25vw, 9vw"
+                    className="object-contain"
+                  />
+                </div>
+                <p className="mt-3 text-xs font-bold uppercase leading-5 text-slate-800 dark:text-slate-200">{step}</p>
+                {index < props.flow.length - 1 && <ArrowRight className="absolute -right-3.5 top-1/2 z-10 hidden size-4 -translate-y-1/2 text-rose-400/60 dark:text-rose-600 lg:block" />}
+              </div>
+            ))}</div>
+          ) : (
+            <div className="grid gap-3.5 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">{props.flow.map((step, index) => <div key={step} className="motion-card group relative rounded-xl border border-rose-500/25 dark:border-rose-500/30 bg-white dark:bg-[#090d15] p-4 text-center shadow-sm dark:shadow-none hover:border-rose-500/60 transition-all"><span className="mx-auto grid size-8 place-items-center rounded-full bg-rose-500/10 text-xs font-black text-rose-600 dark:text-rose-400 ring-1 ring-rose-500/25 group-hover:scale-110 transition-transform">{String(index + 1).padStart(2, "0")}</span><p className="mt-3 text-xs font-bold uppercase leading-5 text-slate-800 dark:text-slate-200">{step}</p>{index < props.flow.length - 1 && <ArrowRight className="absolute -right-3.5 top-1/2 z-10 hidden size-4 -translate-y-1/2 text-rose-400/60 dark:text-rose-600 lg:block" />}</div>)}</div>
+          )}
         </div>
       </section>
 

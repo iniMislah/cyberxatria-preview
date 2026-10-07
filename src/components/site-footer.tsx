@@ -162,13 +162,13 @@ export function SiteFooter() {
         <div>
           <FooterHeading>{t({ id: "Contact", en: "Contact" })}</FooterHeading>
           <div className="divide-y divide-slate-200/70 dark:divide-white/8">
-            <a className={footerRowClass} href="mailto:cyberxatria@snc.id">
+            <a className={footerRowClass} href="mailto:admin@cyberxatria.id">
               <FooterIcon Icon={Mail} />
-              <span className="break-all">cyberxatria@snc.id</span>
+              <span className="break-all">admin@cyberxatria.id</span>
             </a>
             <a className={footerRowClass} href="tel:+628575365051">
               <FooterIcon Icon={Phone} />
-              <span>+62 857-536-5051</span>
+              <span>+62 857-0536-5051</span>
             </a>
             <p className="flex items-center gap-3 py-2.5 text-sm text-slate-700 dark:text-slate-300">
               <span className={footerIconClass}>
