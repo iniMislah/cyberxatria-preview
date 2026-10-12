@@ -377,7 +377,11 @@ html:not(.dark) .brand-logo {
 }
 
 .home-hero-artwork {
+  height: 100%;
   width: clamp(54rem, 66vw, 72rem);
+  max-height: 45rem;
+  overflow: hidden;
+  contain: layout paint;
   transform: translateX(clamp(3.5rem, 5vw, 7rem));
 }
 
@@ -404,7 +408,17 @@ html:not(.dark) .brand-logo {
 }
 
 .hero-visual {
+  --hero-scale-start: 1;
+  --hero-scale-end: 1.018;
   animation: hero-float 10s ease-in-out infinite alternate;
+}
+
+.home-hero-visual {
+  height: 100%;
+  width: 100%;
+  max-width: none;
+  object-position: 58% center;
+  transform-origin: 58% center;
 }
 
 .solution-card-image {
@@ -705,8 +719,8 @@ html:not(.dark) .brand-logo {
 }
 
 @keyframes hero-float {
-  from { transform: scale(1) translate3d(0, 0, 0); }
-  to { transform: scale(1.018) translate3d(1%, -0.8%, 0); }
+  from { transform: scale(var(--hero-scale-start)) translate3d(0, 0, 0); }
+  to { transform: scale(var(--hero-scale-end)) translate3d(1%, -0.8%, 0); }
 }
 
 .dark body {
@@ -868,7 +882,7 @@ html:not(.dark) .hero-ambient {
 
   .home-hero-artwork {
     inset-block: 0 auto;
-    height: 58%;
+    height: min(32rem, 58vh);
     width: 126vw;
     transform: translateX(28vw);
   }

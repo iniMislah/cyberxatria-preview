@@ -393,7 +393,7 @@ export default function Home() {
             fill
             priority
             sizes="(max-width: 640px) 115vw, (max-width: 1024px) 86vw, 68vw"
-            className="hero-visual object-cover object-[58%_center] opacity-90 dark:hidden"
+            className="hero-visual home-hero-visual object-cover opacity-90 dark:hidden"
           />
           <Image
             src={publicAsset("/images/cyber-shield-hero.png")}
@@ -401,7 +401,7 @@ export default function Home() {
             fill
             priority
             sizes="(max-width: 640px) 115vw, (max-width: 1024px) 86vw, 68vw"
-            className="hero-visual hidden object-cover object-[58%_center] opacity-90 dark:block"
+            className="hero-visual home-hero-visual hidden object-cover opacity-90 dark:block"
           />
         </div>
         <div className="hero-vignette absolute inset-0" />
