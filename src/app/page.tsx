@@ -85,8 +85,8 @@ const content = {
       headline: ["Deteksi Lebih Cepat.", "Respons Lebih Tepat.", "Tetap Terlindungi."],
       subheadline:
         "Lindungi organisasi Anda melalui Cyber Drill Exercises yang realistis, Tabletop Exercises yang strategis, serta AI for Security Operations Center (SOC) 24/7 yang dirancang untuk meningkatkan kesiapan keamanan, kemampuan penanggulangan insiden, dan ketahanan siber.",
-      requestDemoCta: "Request Demo",
-      solutionsCta: "Lihat Solusi",
+      requestDemoCta: "Ajukan Demo",
+      solutionsCta: "Lihat Layanan",
     },
     threats: {
       eyebrow: "Tren ancaman siber",
@@ -120,7 +120,7 @@ const content = {
     },
     solutions: {
       eyebrow: "Perlindungan terintegrasi",
-      title: "Solusi",
+      title: "Layanan",
       accent: "Kami",
       intro: "Layanan keamanan siber untuk memantau, menguji, dan memperkuat kesiapan organisasi.",
       learnMore: "Pelajari Lebih Lanjut",
@@ -223,7 +223,7 @@ const content = {
     cta: {
       eyebrow: "Siap meningkatkan kesiapan?",
       title: "Bangun ketahanan siber sebelum insiden terjadi.",
-      button: "Request Demo",
+      button: "Ajukan Demo",
     },
   },
   en: {
@@ -234,7 +234,7 @@ const content = {
       subheadline:
         "Protect your organization with realistic Cyber Drill Exercises, strategic Tabletop Exercises, and AI for Security Operations Center (SOC) 24/7 designed to enhance security readiness, incident response capabilities, and cyber resilience.",
       requestDemoCta: "Request Demo",
-      solutionsCta: "View Solutions",
+      solutionsCta: "View Services",
     },
     threats: {
       eyebrow: "Cyber threat trends",
@@ -269,7 +269,7 @@ const content = {
     solutions: {
       eyebrow: "Integrated protection",
       title: "Our",
-      accent: "Solutions",
+      accent: "Services",
       intro: "Cybersecurity services to monitor, test, and strengthen organizational readiness.",
       learnMore: "Learn More",
       comingSoon: "Coming Soon",
@@ -419,7 +419,7 @@ export default function Home() {
               <br />
               <span className="text-gradient">{copy.hero.headline[2]}</span>
             </h1>
-            <p className="mt-7 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300 sm:text-xl">
               {copy.hero.subheadline}
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -442,7 +442,7 @@ export default function Home() {
             <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">
               {copy.threats.title} <span className="text-gradient">{copy.threats.accent}</span>
             </h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.threats.intro}</p>
+            <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.threats.intro}</p>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {copy.threats.items.map(([label, value, note], index) => {
@@ -473,7 +473,7 @@ export default function Home() {
                     <p className={`mt-5 text-4xl font-black ${tone}`}>
                       <CountUpValue value={value} />
                     </p>
-                    <p className="mt-3 text-sm text-slate-600 dark:text-slate-500 flex-1">{note}</p>
+                    <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-500 flex-1">{note}</p>
                   </div>
                 </Reveal>
               );
@@ -481,7 +481,7 @@ export default function Home() {
           </div>
           <Reveal
             delay={120}
-            className="mt-6 flex items-start gap-4 rounded-2xl border border-orange-500/35 bg-orange-500/10 px-6 py-5 text-base font-semibold leading-7 text-slate-800 shadow-sm dark:text-slate-200"
+            className="mt-6 flex items-start gap-4 rounded-2xl border border-orange-500/35 bg-orange-500/10 px-6 py-5 text-lg font-semibold leading-8 text-slate-800 shadow-sm dark:text-slate-200"
           >
             <ShieldAlert className="mt-1 size-6 shrink-0 text-orange-500 dark:text-orange-400" />
             <p>{copy.threats.note}</p>
@@ -496,7 +496,7 @@ export default function Home() {
             <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">
               {copy.readiness.title} <span className="text-gradient">{copy.readiness.accent}</span> {copy.readiness.suffix}
             </h2>
-            <div className="mt-4 space-y-2 text-slate-600 dark:text-slate-400">
+            <div className="mt-4 space-y-2 text-lg leading-8 text-slate-600 dark:text-slate-400">
               {copy.readiness.intro.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -524,7 +524,7 @@ export default function Home() {
                   <h3 className="text-sm font-bold uppercase text-rose-600 dark:text-rose-400 min-h-[2.5rem] flex items-center justify-center">
                     {title}
                   </h3>
-                  <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400 flex-1">{text}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 flex-1">{text}</p>
                   <span className="mx-auto mt-5 h-0.5 w-10 rounded-full bg-rose-500" />
                 </article>
               );
@@ -541,7 +541,7 @@ export default function Home() {
             <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">
               {copy.solutions.title} <span className="text-gradient">{copy.solutions.accent}</span>
             </h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.solutions.intro}</p>
+            <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.solutions.intro}</p>
           </Reveal>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {copy.solutions.services.map((service, index) => {
@@ -579,10 +579,10 @@ export default function Home() {
                         )}
                       </div>
                       {service.description && (
-                        <p className="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-400">{service.description}</p>
+                        <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-400">{service.description}</p>
                       )}
                       {service.points.length > 0 && (
-                        <ul className="mt-6 space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                        <ul className="mt-6 space-y-3 text-base text-slate-700 dark:text-slate-300">
                           {service.points.map((point) => (
                             <li key={point} className="flex items-center gap-2">
                               <Check className="size-4 shrink-0 text-rose-500" /> {point}
@@ -640,9 +640,9 @@ export default function Home() {
                         {card.title}
                       </h3>
                       {card.description && (
-                        <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">{card.description}</p>
+                        <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">{card.description}</p>
                       )}
-                      <ul className="approach-items mt-5 grid gap-3 text-sm text-slate-700 dark:text-slate-300">
+                      <ul className="approach-items mt-5 grid gap-3 text-base text-slate-700 dark:text-slate-300">
                         {card.items.map(([label, detail], itemIndex) => {
                           const ItemIcon = itemIcons[itemIndex] ?? Check;
                           return (
@@ -690,7 +690,7 @@ export default function Home() {
             <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">
               {copy.industries.title} <span className="text-gradient">{copy.industries.accent}</span>
             </h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.industries.intro}</p>
+            <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.industries.intro}</p>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {copy.industries.items.map((industry, index) => {
@@ -708,7 +708,7 @@ export default function Home() {
                       {industry.name}
                     </h3>
                     <span className="mt-2 h-0.5 w-8 rounded-full bg-rose-500" />
-                    <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400 flex-1">{industry.text}</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 flex-1">{industry.text}</p>
                   </div>
                 </Reveal>
               );

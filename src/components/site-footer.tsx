@@ -24,7 +24,7 @@ const footerIconClass =
 const footerIconInnerClass =
   "grid size-full place-items-center rounded-[12px] transition";
 const footerRowClass =
-  "group flex items-center gap-3 py-2.5 text-sm text-slate-700 transition hover:text-slate-950 dark:text-slate-300 dark:hover:text-white";
+  "group flex items-center gap-3 py-2.5 text-base text-slate-700 transition hover:text-slate-950 dark:text-slate-300 dark:hover:text-white";
 const socialIconClass =
   "grid size-11 place-items-center rounded-[13px] border border-rose-500/15 bg-white/45 text-rose-600 shadow-[0_4px_14px_rgba(15,23,42,0.04)] backdrop-blur-[2px] transition hover:border-rose-500/25 hover:bg-white/55 hover:text-orange-500 dark:border-rose-200/10 dark:bg-white/[0.045] dark:text-rose-400 dark:hover:border-rose-300/20 dark:hover:bg-white/[0.07] dark:hover:text-orange-300";
 
@@ -104,7 +104,7 @@ export function SiteFooter() {
       <div className="page-grid relative grid gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1.25fr] lg:gap-12 xl:gap-14">
         <div>
           <Image src={publicAsset("/images/cyberxatria-logo.png")} alt="CyberXatria" width={426} height={114} className="brand-logo mb-5 h-auto w-48" />
-          <p className="max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
+          <p className="max-w-sm text-base leading-7 text-slate-600 dark:text-slate-400">
             {t({
               id: "Platform cybersecurity terintegrasi untuk membantu organisasi mempersiapkan diri, mendeteksi ancaman, dan merespons insiden.",
               en: "An integrated cybersecurity platform that helps organizations prepare, detect threats, and respond to incidents.",
@@ -117,7 +117,7 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <FooterHeading>{t({ id: "Solusi", en: "Solution" })}</FooterHeading>
+          <FooterHeading>{t({ id: "Layanan", en: "Services" })}</FooterHeading>
           <div className="space-y-2">
             <Link className={footerRowClass} href={href("/solutions/cyber-drill")}>
               <FooterIcon Icon={ShieldCheck} />
@@ -129,7 +129,7 @@ export function SiteFooter() {
               <span className="min-w-0 flex-1">Tabletop Exercise</span>
               <ChevronRight className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-rose-500 dark:text-slate-500" />
             </Link>
-            <span className="flex cursor-not-allowed items-center gap-3 py-2.5 text-sm text-slate-500 dark:text-slate-500">
+            <span className="flex cursor-not-allowed items-center gap-3 py-2.5 text-base text-slate-500 dark:text-slate-500">
               <span className={footerIconClass}>
                 <span className={footerIconInnerClass}>
                   <Clock3 className="size-5" />
@@ -154,7 +154,7 @@ export function SiteFooter() {
             </Link>
             <Link className={footerRowClass} href={href("/request-demo")}>
               <FooterIcon Icon={MessageSquareText} />
-              <span className="min-w-0 flex-1">Request Demo</span>
+              <span className="min-w-0 flex-1">{t({ id: "Ajukan Demo", en: "Request Demo" })}</span>
             </Link>
           </div>
         </div>
@@ -170,7 +170,7 @@ export function SiteFooter() {
               <FooterIcon Icon={Phone} />
               <span>+62 857-0536-5051</span>
             </a>
-            <p className="flex items-center gap-3 py-2.5 text-sm text-slate-700 dark:text-slate-300">
+            <p className="flex items-center gap-3 py-2.5 text-base text-slate-700 dark:text-slate-300">
               <span className={footerIconClass}>
                 <span className={footerIconInnerClass}>
                   <MapPin className="size-5" />
@@ -182,7 +182,7 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="page-grid relative mt-10 flex flex-col gap-3 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-white/8">
+      <div className="page-grid relative mt-10 flex flex-col gap-3 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-white/8">
         <p>&copy; 2026 CyberXatria. {t({ id: "Semua hak dilindungi.", en: "All rights reserved." })} &middot; v{APP_VERSION}</p>
         <div className="flex gap-5">
           <a href="#" className="transition hover:text-rose-600 dark:hover:text-rose-400">{t({ id: "Kebijakan Privasi", en: "Privacy Policy" })}</a>

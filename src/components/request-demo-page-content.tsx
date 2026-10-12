@@ -35,11 +35,11 @@ export function RequestDemoPageContent() {
           <div className="lg:sticky lg:top-28">
             <p className="eyebrow">{copy.eyebrow}</p>
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl"><span className="text-gradient">{copy.title}</span></h1>
-            <p className="mt-6 leading-7 text-slate-600 dark:text-slate-400">{copy.description}</p>
-            <div className="mt-8 space-y-4">{copy.bullets.map((item) => <p key={item} className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300"><Check className="size-5 text-rose-500" />{item}</p>)}</div>
+            <p className="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.description}</p>
+            <div className="mt-8 space-y-4">{copy.bullets.map((item) => <p key={item} className="flex items-center gap-3 text-base text-slate-700 dark:text-slate-300"><Check className="size-5 text-rose-500" />{item}</p>)}</div>
             <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#090d15] dark:shadow-none">
               <p className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white"><MapPin className="size-5 text-rose-500" />{copy.mapTitle}</p>
-              <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{copy.mapAddress}</p>
+              <p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400">{copy.mapAddress}</p>
             </div>
           </div>
           <RequestDemoForm />

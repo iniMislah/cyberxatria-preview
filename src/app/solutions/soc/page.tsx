@@ -10,6 +10,7 @@ export default function SocPage() {
   const pathname = usePathname();
   const language = getLocaleFromPath(pathname || "/") ?? "id";
   const solutionsHref = localePath("/#solutions", language);
+  const backLabel = language === "id" ? "Kembali ke layanan" : "Back to services";
 
   useEffect(() => {
     window.location.replace(publicAsset(solutionsHref));
@@ -22,7 +23,7 @@ export default function SocPage() {
         <p className="text-sm font-bold uppercase tracking-widest text-rose-500">AI for SOC</p>
         <h1 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white">Coming Soon</h1>
         <Link href={solutionsHref} className="mt-6 inline-flex text-sm font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300">
-          Back to solutions
+          {backLabel}
         </Link>
       </div>
     </main>

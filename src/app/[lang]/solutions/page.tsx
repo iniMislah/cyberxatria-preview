@@ -9,6 +9,8 @@ export default function LocaleSolutionsPage() {
   const pathname = usePathname();
   const language = getLocaleFromPath(pathname || "/") ?? "id";
   const href = localePath("/#solutions", language);
+  const title = language === "id" ? "Layanan" : "Services";
+  const backLabel = language === "id" ? "Kembali ke layanan" : "Back to services";
 
   useEffect(() => {
     window.location.replace(href);
@@ -18,9 +20,9 @@ export default function LocaleSolutionsPage() {
     <main className="site-shell grid min-h-screen place-items-center bg-background px-6 text-center text-foreground">
       <div>
         <p className="text-sm font-bold uppercase tracking-widest text-rose-500">CyberXatria</p>
-        <h1 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white">Solutions</h1>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white">{title}</h1>
         <Link href={href} className="mt-6 inline-flex text-sm font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300">
-          Back to solutions
+          {backLabel}
         </Link>
       </div>
     </main>

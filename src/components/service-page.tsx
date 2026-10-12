@@ -146,7 +146,7 @@ function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: stri
     <div className="mx-auto mb-12 max-w-2xl text-center">
       <p className="eyebrow justify-center">{eyebrow}</p>
       <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{title}</h2>
-      {text && <p className="mt-4 leading-7 text-slate-600 dark:text-slate-400">{text}</p>}
+      {text && <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{text}</p>}
     </div>
   );
 }
@@ -174,7 +174,7 @@ export function ServicePage({ content }: ServicePageProps) {
           <Reveal className="max-w-2xl">
             <p className="mb-5 text-sm font-bold uppercase tracking-[0.2em] text-rose-500 dark:text-rose-400">{props.eyebrow}</p>
             <h1 className="text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl">{props.title}<br /><span className="text-gradient">{props.accent}</span></h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">{props.summary}</p>
+            <p className="mt-6 max-w-xl text-xl leading-9 text-slate-600 dark:text-slate-300">{props.summary}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <RequestDemoCta>{props.heroCtaButton}</RequestDemoCta>
               {props.heroSecondaryCtaButton && <a href="#exercise-flow" className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-300 bg-white/70 px-6 text-sm font-semibold text-slate-800 transition hover:border-rose-500/50 hover:text-rose-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:border-rose-400/50 dark:hover:text-rose-300">{props.heroSecondaryCtaButton}</a>}
@@ -206,7 +206,7 @@ export function ServicePage({ content }: ServicePageProps) {
           <div>
             <p className="eyebrow">{props.aboutEyebrow}</p>
             <h2 className="mt-5 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{props.aboutTitle}</h2>
-            <div className="mt-6 space-y-4 text-base leading-7 text-slate-600 dark:text-slate-400">{props.about.map((text) => <p key={text}>{text}</p>)}</div>
+            <div className="mt-6 space-y-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{props.about.map((text) => <p key={text}>{text}</p>)}</div>
           </div>
           <div className="cyber-card relative overflow-hidden rounded-2xl p-7">
             <div className="dot-field absolute inset-0 opacity-20" />
@@ -254,7 +254,7 @@ export function ServicePage({ content }: ServicePageProps) {
                     </span>
                   )}
                   <h3 className={`mt-5 min-h-[3rem] font-bold text-slate-900 dark:text-white ${isCenteredChallenge ? "flex items-center justify-center" : "flex items-center"}`}>{item.title}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{item.text}</p>
+                  <p className="mt-2 flex-1 text-base leading-7 text-slate-600 dark:text-slate-400">{item.text}</p>
                 </article>
               );
             })}
@@ -275,7 +275,7 @@ export function ServicePage({ content }: ServicePageProps) {
                   </div>
                   <div className={`flex flex-1 flex-col ${isCenteredFeature ? "items-center" : ""}`}>
                     <h3 className="font-bold text-lg text-slate-900 dark:text-white">{item.title}</h3>
-                    <p className="mt-2.5 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{item.text}</p>
+                    <p className="mt-2.5 flex-1 text-base leading-7 text-slate-600 dark:text-slate-400">{item.text}</p>
                   </div>
                 </article>
               );
@@ -300,7 +300,7 @@ export function ServicePage({ content }: ServicePageProps) {
                     />
                   </div>
                   <h3 className="mt-5 min-h-12 text-center text-base font-bold leading-6 text-slate-900 dark:text-white">{step}</h3>
-                  {props.flowDescriptions?.[index] && <p className="mt-3 flex-1 text-center text-sm leading-6 text-slate-600 dark:text-slate-400">{props.flowDescriptions[index]}</p>}
+                  {props.flowDescriptions?.[index] && <p className="mt-3 flex-1 text-center text-base leading-7 text-slate-600 dark:text-slate-400">{props.flowDescriptions[index]}</p>}
                 </article>
               ))}
             </div>
@@ -318,12 +318,12 @@ export function ServicePage({ content }: ServicePageProps) {
                   />
                 </div>
                 <p className="mt-3 text-xs font-bold uppercase leading-5 text-slate-800 dark:text-slate-200">{step}</p>
-                {props.flowDescriptions?.[index] && <p className="mt-2 text-[11px] leading-5 text-slate-600 dark:text-slate-400">{props.flowDescriptions[index]}</p>}
+                {props.flowDescriptions?.[index] && <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{props.flowDescriptions[index]}</p>}
                 {index < props.flow.length - 1 && <ArrowRight className="absolute -right-3.5 top-1/2 z-10 hidden size-4 -translate-y-1/2 text-rose-400/60 dark:text-rose-600 lg:block" />}
               </div>
             ))}</div>
           ) : (
-            <div className="grid gap-3.5 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">{props.flow.map((step, index) => <div key={`${index}-${step}`} className="motion-card group relative rounded-xl border border-rose-500/25 dark:border-rose-500/30 bg-white dark:bg-[#090d15] p-4 text-center shadow-sm dark:shadow-none hover:border-rose-500/60 transition-all"><span className="mx-auto grid size-8 place-items-center rounded-full bg-rose-500/10 text-xs font-black text-rose-600 dark:text-rose-400 ring-1 ring-rose-500/25 group-hover:scale-110 transition-transform">{String(index + 1).padStart(2, "0")}</span><p className="mt-3 text-xs font-bold uppercase leading-5 text-slate-800 dark:text-slate-200">{step}</p>{props.flowDescriptions?.[index] && <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{props.flowDescriptions[index]}</p>}{index < props.flow.length - 1 && <ArrowRight className="absolute -right-3.5 top-1/2 z-10 hidden size-4 -translate-y-1/2 text-rose-400/60 dark:text-rose-600 lg:block" />}</div>)}</div>
+            <div className="grid gap-3.5 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">{props.flow.map((step, index) => <div key={`${index}-${step}`} className="motion-card group relative rounded-xl border border-rose-500/25 dark:border-rose-500/30 bg-white dark:bg-[#090d15] p-4 text-center shadow-sm dark:shadow-none hover:border-rose-500/60 transition-all"><span className="mx-auto grid size-8 place-items-center rounded-full bg-rose-500/10 text-xs font-black text-rose-600 dark:text-rose-400 ring-1 ring-rose-500/25 group-hover:scale-110 transition-transform">{String(index + 1).padStart(2, "0")}</span><p className="mt-3 text-xs font-bold uppercase leading-5 text-slate-800 dark:text-slate-200">{step}</p>{props.flowDescriptions?.[index] && <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{props.flowDescriptions[index]}</p>}{index < props.flow.length - 1 && <ArrowRight className="absolute -right-3.5 top-1/2 z-10 hidden size-4 -translate-y-1/2 text-rose-400/60 dark:text-rose-600 lg:block" />}</div>)}</div>
           )}
         </div>
       </section>
@@ -338,25 +338,25 @@ export function ServicePage({ content }: ServicePageProps) {
                 const iconImage = props.assessmentIconImages?.[index];
                 const isCompactAssessment = props.assessmentVariant === "compact";
                 return (
-                  <article key={item.title} className={`motion-card flex flex-col items-center rounded-2xl border border-slate-200 bg-white text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none lg:col-span-2 ${isCompactAssessment ? "h-[190px] justify-center p-4" : "h-[280px] p-5"} ${props.assessment?.length === 8 && index === 6 ? "lg:col-start-2" : ""}`}>
-                    <span className={`grid place-items-center text-rose-600 dark:text-rose-300 ${isCompactAssessment ? "mb-3 size-12" : "mb-3 size-16"}`}>
+                  <article key={item.title} className={`motion-card flex flex-col items-center rounded-2xl border border-slate-200 bg-white text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none lg:col-span-2 ${isCompactAssessment ? "h-[200px] justify-center px-5 py-8" : "h-[280px] p-5"} ${props.assessment?.length === 8 && index === 6 ? "lg:col-start-2" : ""}`}>
+                    <span className={`grid place-items-center text-rose-600 dark:text-rose-300 ${isCompactAssessment ? "mb-4 size-11" : "mb-3 size-16"}`}>
                       {iconImage ? (
                         <Image
                           src={publicAsset(iconImage)}
                           alt=""
                           width={64}
                           height={64}
-                          sizes="64px"
+                          sizes={isCompactAssessment ? "44px" : "64px"}
                           className="h-full w-full object-contain"
                         />
                       ) : (
                         <span className={`grid place-items-center rounded-lg bg-rose-500/10 ${isCompactAssessment ? "size-12" : "size-10"}`}>
-                          <Icon className={isCompactAssessment ? "size-6" : "size-5"} />
+                          <Icon className={isCompactAssessment ? "size-5" : "size-5"} />
                         </span>
                       )}
                     </span>
                     <h3 className={`flex items-center justify-center font-bold text-slate-900 dark:text-white ${isCompactAssessment ? "min-h-10 text-sm leading-5 sm:text-[15px]" : "min-h-12 text-[15px] leading-6 sm:text-base"}`}>{item.title}</h3>
-                    {item.text && <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{item.text}</p>}
+                    {item.text && <p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400">{item.text}</p>}
                   </article>
                 );
               })}
@@ -408,8 +408,8 @@ export function ServicePage({ content }: ServicePageProps) {
                         <Icon className="size-5" />
                       </span>
                     )}
-                    <h3 className="flex min-h-12 items-center justify-center text-sm font-bold leading-6 text-slate-900 dark:text-white">{item.title}</h3>
-                    {item.text && <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{item.text}</p>}
+                    <h3 className="flex min-h-12 items-center justify-center font-bold text-slate-900 dark:text-white text-[15px] leading-6 sm:text-base">{item.title}</h3>
+                    {item.text && <p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400">{item.text}</p>}
                   </article>
                 );
               })}
@@ -431,8 +431,8 @@ export function ServicePage({ content }: ServicePageProps) {
                   </span>
                 )}
                 <h3 className={isBalanced ? "pr-28 text-xl font-bold text-slate-900 dark:text-white" : `text-center text-xl font-bold ${pkg.featured && !isHighlighted ? "mt-5 text-rose-600 dark:text-rose-300" : pkg.featured || isHighlighted ? "text-rose-600 dark:text-rose-300" : "text-slate-900 dark:text-white"}`}>{pkg.name}</h3>
-                <p className={isBalanced ? "mt-3 min-h-12 text-sm leading-6 text-slate-600 dark:text-slate-400" : "mt-3 min-h-12 text-center text-sm leading-6 text-slate-600 dark:text-slate-400"}>{pkg.description}</p>
-                <ul className="mt-7 flex-1 space-y-3 text-sm text-slate-700 dark:text-slate-300">{pkg.items.map((item) => <li key={item} className="flex gap-2"><Check className="mt-0.5 size-4 shrink-0 text-rose-500" />{item}</li>)}</ul>
+                <p className={isBalanced ? "mt-3 min-h-12 text-base leading-7 text-slate-600 dark:text-slate-400" : "mt-3 min-h-12 text-center text-base leading-7 text-slate-600 dark:text-slate-400"}>{pkg.description}</p>
+                <ul className="mt-7 flex-1 space-y-3 text-base text-slate-700 dark:text-slate-300">{pkg.items.map((item) => <li key={item} className="flex gap-2"><Check className="mt-0.5 size-4 shrink-0 text-rose-500" />{item}</li>)}</ul>
               </article>
             );
           })}</div>
@@ -441,8 +441,8 @@ export function ServicePage({ content }: ServicePageProps) {
 
       {hasAudience && <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
         <div className="page-grid grid gap-10 lg:grid-cols-2">
-          <div><p className="eyebrow">{props.audienceEyebrow}</p><h2 className="mt-5 text-3xl font-bold text-slate-900 dark:text-white">{props.audienceTitle}</h2><ul className="mt-7 space-y-4 text-sm text-slate-700 dark:text-slate-300">{props.audience.map((item) => <li key={item} className="flex gap-3"><Check className="size-5 shrink-0 text-rose-500" />{item}</li>)}</ul></div>
-          <div className="grid gap-4 sm:grid-cols-2">{props.benefits.map((item) => { const Icon = icons[item.icon]; return <div key={item.title} className="motion-card flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none"><Icon className="size-7 text-rose-500 dark:text-orange-300" /><h3 className="mt-4 font-bold text-slate-900 dark:text-white min-h-[2.5rem] flex items-center">{item.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 flex-1">{item.text}</p></div>; })}</div>
+          <div><p className="eyebrow">{props.audienceEyebrow}</p><h2 className="mt-5 text-3xl font-bold text-slate-900 dark:text-white">{props.audienceTitle}</h2><ul className="mt-7 space-y-4 text-base text-slate-700 dark:text-slate-300">{props.audience.map((item) => <li key={item} className="flex gap-3"><Check className="size-5 shrink-0 text-rose-500" />{item}</li>)}</ul></div>
+          <div className="grid gap-4 sm:grid-cols-2">{props.benefits.map((item) => { const Icon = icons[item.icon]; return <div key={item.title} className="motion-card flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none"><Icon className="size-7 text-rose-500 dark:text-orange-300" /><h3 className="mt-4 font-bold text-slate-900 dark:text-white min-h-[2.5rem] flex items-center">{item.title}</h3><p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400 flex-1">{item.text}</p></div>; })}</div>
         </div>
       </section>}
 

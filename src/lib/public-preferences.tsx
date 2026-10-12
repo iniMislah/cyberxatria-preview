@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export type Language = "id" | "en";
 export type Theme = "dark" | "light";
@@ -21,12 +22,14 @@ type PublicPreferences = {
 const PublicPreferencesContext = createContext<PublicPreferences | null>(null);
 
 export function PublicPreferencesProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const [language, setLanguageState] = useState<Language>("en");
   const [theme, setThemeState] = useState<Theme>("dark");
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const urlLanguage = getLocaleFromPath(window.location.pathname);
+    const currentPath = typeof window !== "undefined" ? window.location.pathname : pathname || "/";
+    const urlLanguage = getLocaleFromPath(currentPath);
     const savedLanguage = readPreference(LANGUAGE_KEY);
     const savedTheme = readPreference(THEME_KEY);
 
@@ -36,11 +39,13 @@ export function PublicPreferencesProvider({ children }: { children: React.ReactN
     const browserLanguage: Language = userLangs.some((lang) => lang.toLowerCase().startsWith("id")) ? "id" : "en";
 
     queueMicrotask(() => {
-      setLanguageState(urlLanguage ?? (savedLanguage === "id" || savedLanguage === "en" ? savedLanguage : browserLanguage));
+      const nextLanguage = urlLanguage ?? (savedLanguage === "id" || savedLanguage === "en" ? savedLanguage : browserLanguage);
+      setLanguageState(nextLanguage);
+      if (urlLanguage) writePreference(LANGUAGE_KEY, urlLanguage);
       if (savedTheme === "dark" || savedTheme === "light") setThemeState(savedTheme);
       setReady(true);
     });
-  }, []);
+  }, [pathname]);
 
   useLayoutEffect(() => {
     document.documentElement.setAttribute("lang", language);

@@ -122,7 +122,7 @@ export function SiteHeader() {
 
   const nav = {
     home: t({ id: "Beranda", en: "Home" }),
-    solutions: t({ id: "Solusi", en: "Solution" }),
+    solutions: t({ id: "Layanan", en: "Services" }),
     company: t({ id: "Tentang Kami", en: "About Us" }),
     contact: t({ id: "Kontak", en: "Contact" }),
     openMenu: t({ id: "Buka menu", en: "Open menu" }),

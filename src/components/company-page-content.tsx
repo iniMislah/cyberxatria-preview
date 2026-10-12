@@ -86,7 +86,7 @@ export function CompanyPageContent() {
       ],
       ctaTitle: "Siap Memperkuat Ketahanan Siber Organisasi Anda?",
       ctaText: "Temukan bagaimana CyberXatria membantu organisasi mempersiapkan diri, mendeteksi, dan merespons ancaman siber.",
-      cta: "Request Demo",
+      cta: "Ajukan Demo",
     },
     en: {
       heroEyebrow: "ABOUT US",
@@ -186,7 +186,7 @@ export function CompanyPageContent() {
               <br />
               <span className="text-gradient">{copy.heroTitle[1]}</span>
             </h1>
-            <div className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-slate-600 dark:text-slate-300">
+            <div className="mt-6 max-w-2xl space-y-4 text-xl leading-9 text-slate-600 dark:text-slate-300">
               {copy.heroParagraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -205,7 +205,7 @@ export function CompanyPageContent() {
       <section className="py-16 sm:py-20">
         <div className="page-grid">
           <div className="cyber-card grid items-center gap-5 rounded-3xl border-slate-200/80 p-5 shadow-sm dark:border-white/10 dark:shadow-none sm:p-6 lg:grid-cols-[0.48fr_0.52fr] lg:gap-6">
-            <div className="space-y-5 text-base leading-7 text-slate-600 dark:text-slate-400">
+            <div className="space-y-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
               {copy.aboutParagraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -228,7 +228,7 @@ export function CompanyPageContent() {
           <div className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.servicesEyebrow}</p>
             <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.servicesTitle}</h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.servicesDescription}</p>
+            <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.servicesDescription}</p>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {copy.services.map((service, index) => {
@@ -253,7 +253,7 @@ export function CompanyPageContent() {
                   </div>
                   <div className="flex flex-1 flex-col p-3 pt-5">
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white">{service.title}</h3>
-                    <p className="mt-4 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{service.description}</p>
+                    <p className="mt-4 flex-1 text-base leading-7 text-slate-600 dark:text-slate-400">{service.description}</p>
                     {meta.href ? (
                       <Link
                         href={localePath(meta.href, language)}
@@ -282,7 +282,7 @@ export function CompanyPageContent() {
           <div className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.experienceEyebrow}</p>
             <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.experienceTitle}</h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400">{copy.experienceDescription}</p>
+            <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.experienceDescription}</p>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {copy.experiences.map((experience, index) => {
@@ -311,8 +311,8 @@ export function CompanyPageContent() {
                   </div>
                   <div className="flex flex-1 flex-col p-3 pt-5">
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white">{experience.title}</h3>
-                    <p className="mt-2 text-sm font-semibold text-rose-600 dark:text-rose-400">{experience.subtitle}</p>
-                    <p className="mt-4 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{experience.description}</p>
+                    <p className="mt-2 text-base font-semibold text-rose-600 dark:text-rose-400">{experience.subtitle}</p>
+                    <p className="mt-4 flex-1 text-base leading-7 text-slate-600 dark:text-slate-400">{experience.description}</p>
                   </div>
                 </article>
               );
@@ -324,7 +324,7 @@ export function CompanyPageContent() {
       <section className="pb-16 sm:pb-20">
         <div className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 px-6 py-14 text-center shadow-lg dark:bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,.22),transparent_35%),#080c14] dark:shadow-[0_0_50px_rgba(244,63,94,0.15)] sm:px-12">
           <h2 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.ctaTitle}</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-slate-600 dark:text-slate-400">{copy.ctaText}</p>
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.ctaText}</p>
           <RequestDemoCta className="mt-8">{copy.cta}</RequestDemoCta>
         </div>
       </section>

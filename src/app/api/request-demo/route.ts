@@ -134,7 +134,7 @@ function buildAdminText(data: DemoRequest) {
     `Company / Organization: ${data.company}`,
     `Business Email: ${data.email}`,
     `Phone Number: ${data.phone || "-"}`,
-    `Product / Solution: ${data.interest}`,
+    `Product / Service: ${data.interest}`,
     `Request Type: ${data.requestType}`,
     `Message / Requirements: ${data.message || "-"}`,
   ].join("\n");
@@ -146,7 +146,7 @@ function buildAdminHtml(data: DemoRequest) {
     ["Company / Organization", data.company],
     ["Business Email", data.email],
     ["Phone Number", data.phone || "-"],
-    ["Product / Solution", data.interest],
+    ["Product / Service", data.interest],
     ["Request Type", data.requestType],
     ["Message / Requirements", data.message || "-"],
   ];
@@ -262,7 +262,7 @@ function buildSubmissionRows(data: DemoRequest): Array<[string, string]> {
     ["Company / Organization", data.company],
     ["Business Email", data.email],
     ["Phone Number", data.phone || "-"],
-    ["Product / Solution", data.interest],
+    ["Product / Service", data.interest],
     ["Request Type", data.requestType],
     ["Message / Requirements", data.message || "-"],
   ];
@@ -276,7 +276,7 @@ function buildSubmissionSummaryText(data: DemoRequest, language: DemoRequest["la
           company: "Perusahaan / Organisasi",
           email: "Email Bisnis",
           phone: "Nomor Telepon",
-          interest: "Produk / Solusi",
+          interest: "Produk / Layanan",
           requestType: "Tipe Permintaan",
           message: "Pesan / Kebutuhan",
         }
@@ -285,7 +285,7 @@ function buildSubmissionSummaryText(data: DemoRequest, language: DemoRequest["la
           company: "Company / Organization",
           email: "Business Email",
           phone: "Phone Number",
-          interest: "Product / Solution",
+          interest: "Product / Service",
           requestType: "Request Type",
           message: "Message / Requirements",
         };
