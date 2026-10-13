@@ -295,7 +295,7 @@ html:not(.dark) .brand-logo {
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, #f43f5e, #ff5137, #ff9f2f);
+  background: linear-gradient(90deg, #8E235E 0%, #EA4036 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

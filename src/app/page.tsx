@@ -107,8 +107,8 @@ const content = {
       accent: "KESIAPAN SIBER",
       suffix: "PENTING?",
       intro: [
-        "Ancaman siber semakin canggih dan berdampak nyata bagi organisasi.",
-        "Kesiapan Siber siap membantu Anda mengurangi risiko dan menjaga keberlangsungan bisnis.",
+        "Ancaman siber semakin canggih dan memberikan dampak nyata bagi organisasi.",
+        "Cyber Readiness membantu organisasi mengurangi risiko serta menjaga keberlangsungan bisnis.",
       ],
       impacts: [
         ["SERANGAN SIBER", "Kerentanan dieksploitasi oleh penyerang."],
@@ -255,8 +255,8 @@ const content = {
       accent: "CYBER READINESS",
       suffix: "IMPORTANT?",
       intro: [
-        "Cyber threats are becoming increasingly sophisticated and have a real impact on organizations.",
-        "Cyber Readiness helps you reduce risks and maintain business continuity.",
+        "Cyber threats are becoming increasingly sophisticated and having a real impact on organizations.",
+        "Cyber Readiness helps organizations reduce risk and maintain business continuity.",
       ],
       impacts: [
         ["CYBER ATTACK", "Vulnerabilities are exploited by attackers."],
@@ -536,7 +536,7 @@ export default function Home() {
       <section id="solutions" className="relative py-16 sm:py-20">
         <div className="dot-field absolute inset-x-0 top-0 h-52 opacity-25 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
         <div className="page-grid relative">
-          <Reveal className="mx-auto mb-10 max-w-2xl text-center">
+          <Reveal className="mx-auto mb-10 max-w-3xl text-center">
             <p className="eyebrow justify-center">{copy.solutions.eyebrow}</p>
             <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">
               {copy.solutions.title} <span className="text-gradient">{copy.solutions.accent}</span>
