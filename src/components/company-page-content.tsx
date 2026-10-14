@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ClipboardCheck, Flag, GraduationCap } from "lucide-react";
@@ -23,6 +24,84 @@ const experienceMeta = [
 ];
 
 const heroImageClass = "hero-visual object-contain object-center opacity-95 scale-110";
+
+type AboutHighlight = {
+  phrase: string;
+  className: string;
+};
+
+const aboutHighlights = {
+  id: [
+    [
+      { phrase: "CyberXatria", className: "company-about-emphasis" },
+      { phrase: "ekosistem pembelajaran dan exercise keamanan siber", className: "company-about-emphasis" },
+      { phrase: "kompetensi", className: "company-about-emphasis" },
+      { phrase: "kesiapan", className: "company-about-emphasis" },
+      { phrase: "ancaman siber", className: "company-about-emphasis" },
+    ],
+    [
+      { phrase: "Offensive Security", className: "company-about-emphasis" },
+      { phrase: "Defensive Security", className: "company-about-emphasis" },
+      { phrase: "Security Operations", className: "company-about-emphasis" },
+      { phrase: "Governance, Risk & Compliance", className: "company-about-emphasis" },
+    ],
+    [
+      { phrase: "People, Process, dan Technology", className: "company-about-emphasis" },
+      { phrase: "pembelajaran dengan praktik", className: "company-about-emphasis" },
+      { phrase: "situasi yang lebih realistis", className: "company-about-emphasis" },
+    ],
+  ],
+  en: [
+    [
+      { phrase: "CyberXatria", className: "company-about-emphasis" },
+      { phrase: "cybersecurity learning and exercise ecosystem", className: "company-about-emphasis" },
+      { phrase: "competencies", className: "company-about-emphasis" },
+      { phrase: "readiness", className: "company-about-emphasis" },
+      { phrase: "cyber threats", className: "company-about-emphasis" },
+    ],
+    [
+      { phrase: "Offensive Security", className: "company-about-emphasis" },
+      { phrase: "Defensive Security", className: "company-about-emphasis" },
+      { phrase: "Security Operations", className: "company-about-emphasis" },
+      { phrase: "Governance, Risk & Compliance", className: "company-about-emphasis" },
+    ],
+    [
+      { phrase: "People, Process, and Technology", className: "company-about-emphasis" },
+      { phrase: "connects learning with hands-on practice", className: "company-about-emphasis" },
+      { phrase: "more realistic situations", className: "company-about-emphasis" },
+    ],
+  ],
+} satisfies Record<"id" | "en", AboutHighlight[][]>;
+
+function renderHighlightedParagraph(text: string, highlights: AboutHighlight[]): ReactNode {
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+
+  highlights.forEach((highlight, index) => {
+    const start = text.indexOf(highlight.phrase, cursor);
+
+    if (start === -1) {
+      return;
+    }
+
+    if (start > cursor) {
+      parts.push(text.slice(cursor, start));
+    }
+
+    parts.push(
+      <span key={`${highlight.phrase}-${index}`} className={highlight.className}>
+        {highlight.phrase}
+      </span>,
+    );
+    cursor = start + highlight.phrase.length;
+  });
+
+  if (cursor < text.length) {
+    parts.push(text.slice(cursor));
+  }
+
+  return parts;
+}
 
 export function CompanyPageContent() {
   const { language, t } = usePublicPreferences();
@@ -204,13 +283,13 @@ export function CompanyPageContent() {
 
       <section className="py-16 sm:py-20">
         <div className="page-grid">
-          <div className="cyber-card grid items-center gap-5 rounded-3xl border-slate-200/80 p-5 shadow-sm dark:border-white/10 dark:shadow-none sm:p-6 lg:grid-cols-[0.48fr_0.52fr] lg:gap-6">
-            <div className="space-y-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
-              {copy.aboutParagraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+          <div className="company-about-card cyber-card grid items-center gap-5 rounded-3xl border-slate-200/80 p-5 shadow-sm dark:border-white/10 dark:shadow-none sm:p-6 lg:grid-cols-[0.48fr_0.52fr] lg:gap-6">
+            <div className="company-about-copy company-about-copy-start space-y-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
+              {copy.aboutParagraphs.slice(0, 2).map((paragraph, index) => (
+                <p key={paragraph}>{renderHighlightedParagraph(paragraph, aboutHighlights[language][index] ?? [])}</p>
               ))}
             </div>
-            <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl">
+            <div className="company-about-visual relative aspect-[3/2] w-full overflow-hidden rounded-2xl">
               <Image
                 src={publicAsset("/images/Tentang Kami 2.png")}
                 alt=""
@@ -218,6 +297,14 @@ export function CompanyPageContent() {
                 sizes="(max-width: 1024px) 100vw, 52vw"
                 className="object-contain"
               />
+            </div>
+            <div className="company-about-copy company-about-copy-end text-lg leading-8 text-slate-600 dark:text-slate-400">
+              {copy.aboutParagraphs.slice(2).map((paragraph, offset) => {
+                const index = offset + 2;
+                return (
+                  <p key={paragraph}>{renderHighlightedParagraph(paragraph, aboutHighlights[language][index] ?? [])}</p>
+                );
+              })}
             </div>
           </div>
         </div>

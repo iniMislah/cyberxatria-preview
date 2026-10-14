@@ -155,6 +155,7 @@ export function ServicePage({ content }: ServicePageProps) {
   const { t } = usePublicPreferences();
   const props = t(content);
   const flowImages = props.flowImages;
+  const hasCompactMobileFlow = Boolean(flowImages && props.flow.length === 6 && props.flowVariant !== "processGrid");
   const hasFeatures = props.features.length > 0;
   const hasPackages = props.packages.length > 0;
   const hasAudience = props.audience.length > 0 || props.benefits.length > 0;
@@ -305,10 +306,10 @@ export function ServicePage({ content }: ServicePageProps) {
               ))}
             </div>
           ) : flowImages ? (
-            <div className={`mx-auto grid justify-center gap-3.5 sm:grid-cols-2 md:grid-cols-3 ${props.flow.length === 6 ? "max-w-5xl lg:grid-cols-6" : "lg:grid-cols-7"}`}>{props.flow.map((step, index) => (
-              <div key={`${index}-${step}`} className="motion-card group relative flex h-full min-h-[190px] flex-col items-center rounded-xl border border-rose-500/25 bg-white p-3 text-center shadow-sm transition-all hover:border-rose-500/60 hover:shadow-md dark:border-rose-500/30 dark:bg-[#090d15] dark:shadow-none">
-                <span className="text-xs font-black text-rose-600 dark:text-rose-400">{String(index + 1).padStart(2, "0")}</span>
-                <div className="relative mx-auto mt-2 aspect-square w-full max-w-[104px] flex-1">
+            <div className={`mx-auto grid justify-center gap-3.5 sm:grid-cols-2 md:grid-cols-3 ${hasCompactMobileFlow ? "service-flow-compact-mobile" : ""} ${props.flow.length === 6 ? "max-w-5xl lg:grid-cols-6" : "lg:grid-cols-7"}`}>{props.flow.map((step, index) => (
+              <div key={`${index}-${step}`} className="service-flow-card motion-card group relative flex h-full min-h-[190px] flex-col items-center rounded-xl border border-rose-500/25 bg-white p-3 text-center shadow-sm transition-all hover:border-rose-500/60 hover:shadow-md dark:border-rose-500/30 dark:bg-[#090d15] dark:shadow-none">
+                <span className="service-flow-number text-xs font-black text-rose-600 dark:text-rose-400">{String(index + 1).padStart(2, "0")}</span>
+                <div className="service-flow-icon relative mx-auto mt-2 aspect-square w-full max-w-[104px] flex-1">
                   <Image
                     src={publicAsset(flowImages[index])}
                     alt={step}
@@ -317,7 +318,7 @@ export function ServicePage({ content }: ServicePageProps) {
                     className="object-contain"
                   />
                 </div>
-                <p className="mt-3 text-xs font-bold uppercase leading-5 text-slate-800 dark:text-slate-200">{step}</p>
+                <p className="service-flow-title mt-3 text-xs font-bold uppercase leading-5 text-slate-800 dark:text-slate-200">{step}</p>
                 {props.flowDescriptions?.[index] && <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{props.flowDescriptions[index]}</p>}
                 {index < props.flow.length - 1 && <ArrowRight className="absolute -right-3.5 top-1/2 z-10 hidden size-4 -translate-y-1/2 text-rose-400/60 dark:text-rose-600 lg:block" />}
               </div>

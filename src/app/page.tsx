@@ -449,7 +449,7 @@ export default function Home() {
               const image = threatImages[index];
               const tone =
                 index === 3
-                  ? "text-orange-500 dark:text-orange-400"
+                  ? "text-gradient"
                   : index === 2
                   ? "text-red-500"
                   : "text-rose-500";
