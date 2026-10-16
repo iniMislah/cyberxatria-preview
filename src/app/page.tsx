@@ -77,6 +77,11 @@ const industryMeta = [
   { image: "/images/Konstruksi dan Infrastruktur.png" },
 ];
 
+const certificationImages = [
+  "/images/Sertifikasi Logo ISO 27001.png",
+  "/images/Sertifikasi Logo ISO 9001.png",
+];
+
 const content = {
   id: {
     hero: {
@@ -217,6 +222,23 @@ const content = {
         {
           name: "Konstruksi & Infrastruktur",
           text: "Melindungi proyek, aset kritikal, dan infrastruktur dari risiko serangan siber.",
+        },
+      ],
+    },
+    certifications: {
+      eyebrow: "SERTIFIKASI",
+      title: "Sertifikasi",
+      accent: "yang Kami Miliki",
+      intro:
+        "Didukung oleh sertifikasi global yang diakui, kami menghadirkan layanan dengan standar keamanan, kualitas, dan profesionalisme terbaik.",
+      items: [
+        {
+          title: "ISO 27001",
+          description: "Sertifikasi global untuk sistem manajemen keamanan informasi (ISMS).",
+        },
+        {
+          title: "ISO 9001",
+          description: "Standar internasional untuk manajemen kualitas dan peningkatan layanan.",
         },
       ],
     },
@@ -365,6 +387,23 @@ const content = {
         {
           name: "Construction & Infrastructure",
           text: "Protect projects, critical assets, and infrastructure from cyberattack risks.",
+        },
+      ],
+    },
+    certifications: {
+      eyebrow: "CERTIFICATIONS",
+      title: "Our",
+      accent: "Certifications",
+      intro:
+        "Backed by globally recognized certifications, we deliver services with high standards of security, quality, and professionalism.",
+      items: [
+        {
+          title: "ISO 27001",
+          description: "Global certification for information security management systems (ISMS).",
+        },
+        {
+          title: "ISO 9001",
+          description: "International standard for quality management and service improvement.",
         },
       ],
     },
@@ -713,6 +752,50 @@ export default function Home() {
                 </Reveal>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section id="certifications" aria-labelledby="certifications-title" className="bg-white py-16 dark:bg-[#070a12] sm:py-20">
+        <div className="page-grid">
+          <Reveal className="mx-auto mb-10 max-w-2xl text-center">
+            <p className="eyebrow justify-center">
+              {copy.certifications.eyebrow}
+            </p>
+            <h2
+              id="certifications-title"
+              className="mt-4 flex min-h-[2.5em] items-center justify-center text-3xl font-bold leading-tight text-slate-900 dark:text-white sm:min-h-[1.25em] sm:text-4xl"
+            >
+              <span>
+                {copy.certifications.title}{" "}
+                <span className="text-gradient">{copy.certifications.accent}</span>
+              </span>
+            </h2>
+            <p className="mt-4 min-h-40 text-lg leading-8 text-slate-600 dark:text-slate-400 sm:min-h-24 lg:min-h-16">
+              {copy.certifications.intro}
+            </p>
+          </Reveal>
+          <div className="mx-auto grid max-w-3xl auto-rows-fr gap-6 sm:grid-cols-2">
+            {copy.certifications.items.map((certification, index) => (
+              <Reveal key={certification.title} className="h-full">
+                <article className="flex h-full flex-col items-center rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-white/10 dark:bg-[#080c14] dark:shadow-none">
+                  <div className="relative h-40 w-full max-w-[200px] shrink-0">
+                    <Image
+                      src={publicAsset(certificationImages[index])}
+                      alt={certification.title}
+                      fill
+                      sizes="200px"
+                      className="object-contain object-center"
+                    />
+                  </div>
+                  <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">{certification.title}</h3>
+                  <span aria-hidden="true" className="mt-2 h-0.5 w-10 shrink-0 rounded-full bg-rose-500" />
+                  <p className="mt-2 min-h-[5.25rem] text-base leading-7 text-slate-600 dark:text-slate-400">
+                    {certification.description}
+                  </p>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
