@@ -454,11 +454,6 @@ html:not(.dark) .brand-logo {
   z-index: 1;
 }
 
-.company-about-emphasis {
-  color: #EA4036;
-  font-weight: 700;
-}
-
 .company-about-visual {
   display: grid;
   place-items: center;
@@ -1015,6 +1010,8 @@ html:not(.dark) .hero-ambient {
     width: 100%;
     max-width: 26.25rem;
     gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
   }
 
   .service-flow-compact-mobile .service-flow-card {
@@ -1023,6 +1020,7 @@ html:not(.dark) .hero-ambient {
     align-items: center;
     min-height: 0;
     width: 100%;
+    max-width: 26.25rem;
     gap: 1rem;
     padding: 1rem 1.25rem;
     text-align: left;

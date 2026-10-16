@@ -12,9 +12,27 @@ import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 import { solutionServiceMeta } from "@/lib/solution-services";
 
 const experienceImages = [
-  "/images/Mini Bootcamp.png",
-  "/images/CTF.png",
-  "/images/CDE & TTX.png",
+  {
+    light: "/images/Mini Bootcamp_Light.png",
+    dark: "/images/Mini Bootcamp_Dark.png",
+    width: 1774,
+    height: 887,
+    crop: { x: 31, y: 164, width: 1713, height: 590 },
+  },
+  {
+    light: "/images/CTF_Light.png",
+    dark: "/images/CTF_Dark.png",
+    width: 1672,
+    height: 941,
+    crop: { x: 0, y: 0, width: 1672, height: 941 },
+  },
+  {
+    light: "/images/CDE & TTX_Light.png",
+    dark: "/images/CDE & TTX_Dark.png",
+    width: 1774,
+    height: 887,
+    crop: { x: 27, y: 178, width: 1719, height: 526 },
+  },
 ];
 
 const experienceMeta = [
@@ -33,42 +51,34 @@ type AboutHighlight = {
 const aboutHighlights = {
   id: [
     [
-      { phrase: "CyberXatria", className: "company-about-emphasis" },
-      { phrase: "ekosistem pembelajaran dan exercise keamanan siber", className: "company-about-emphasis" },
-      { phrase: "kompetensi", className: "company-about-emphasis" },
-      { phrase: "kesiapan", className: "company-about-emphasis" },
-      { phrase: "ancaman siber", className: "company-about-emphasis" },
+      { phrase: "CyberXatria", className: "text-gradient font-bold" },
+      { phrase: "kompetensi dan kesiapan menghadapi ancaman siber", className: "text-gradient font-bold" },
     ],
     [
-      { phrase: "Offensive Security", className: "company-about-emphasis" },
-      { phrase: "Defensive Security", className: "company-about-emphasis" },
-      { phrase: "Security Operations", className: "company-about-emphasis" },
-      { phrase: "Governance, Risk & Compliance", className: "company-about-emphasis" },
+      { phrase: "Program kami", className: "text-gradient font-bold" },
+      { phrase: "Keamanan Ofensif", className: "font-semibold" },
+      { phrase: "Keamanan Defensif", className: "font-semibold" },
+      { phrase: "Operasi Keamanan", className: "font-semibold" },
+      { phrase: "Tata Kelola, Risiko, dan Kepatuhan", className: "font-semibold" },
     ],
     [
-      { phrase: "People, Process, dan Technology", className: "company-about-emphasis" },
-      { phrase: "pembelajaran dengan praktik", className: "company-about-emphasis" },
-      { phrase: "situasi yang lebih realistis", className: "company-about-emphasis" },
+      { phrase: "Manusia, Proses, dan Teknologi (People, Process, and Technology)", className: "text-gradient font-bold" },
     ],
   ],
   en: [
     [
-      { phrase: "CyberXatria", className: "company-about-emphasis" },
-      { phrase: "cybersecurity learning and exercise ecosystem", className: "company-about-emphasis" },
-      { phrase: "competencies", className: "company-about-emphasis" },
-      { phrase: "readiness", className: "company-about-emphasis" },
-      { phrase: "cyber threats", className: "company-about-emphasis" },
+      { phrase: "CyberXatria", className: "text-gradient font-bold" },
+      { phrase: "competencies and readiness needed to face cyber threats", className: "text-gradient font-bold" },
     ],
     [
-      { phrase: "Offensive Security", className: "company-about-emphasis" },
-      { phrase: "Defensive Security", className: "company-about-emphasis" },
-      { phrase: "Security Operations", className: "company-about-emphasis" },
-      { phrase: "Governance, Risk & Compliance", className: "company-about-emphasis" },
+      { phrase: "Our programs", className: "text-gradient font-bold" },
+      { phrase: "Offensive Security", className: "font-semibold" },
+      { phrase: "Defensive Security", className: "font-semibold" },
+      { phrase: "Security Operations", className: "font-semibold" },
+      { phrase: "Governance, Risk & Compliance", className: "font-semibold" },
     ],
     [
-      { phrase: "People, Process, and Technology", className: "company-about-emphasis" },
-      { phrase: "connects learning with hands-on practice", className: "company-about-emphasis" },
-      { phrase: "more realistic situations", className: "company-about-emphasis" },
+      { phrase: "People, Process, and Technology", className: "text-gradient font-bold" },
     ],
   ],
 } satisfies Record<"id" | "en", AboutHighlight[][]>;
@@ -116,9 +126,9 @@ export function CompanyPageContent() {
       ],
       heroSupport: ["Dari Pembelajaran hingga Simulasi,", "CyberXatria Membantu Membangun Kesiapan Siber"],
       aboutParagraphs: [
-        "CyberXatria merupakan ekosistem pembelajaran dan exercise keamanan siber yang dirancang untuk membantu individu maupun organisasi mengembangkan kompetensi dan kesiapan menghadapi ancaman siber.",
-        "Program kami mencakup berbagai area keamanan siber, mulai dari Offensive Security, Defensive Security, Security Operations, hingga Governance, Risk & Compliance.",
-        "Melalui pendekatan People, Process, dan Technology, CyberXatria menghubungkan pembelajaran dengan praktik sehingga kemampuan yang dibangun dapat diterapkan dalam situasi yang lebih realistis.",
+        "CyberXatria merupakan ekosistem pembelajaran dan latihan keamanan siber yang dirancang untuk membantu individu maupun organisasi mengembangkan kompetensi dan kesiapan menghadapi ancaman siber.",
+        "Program kami mencakup berbagai bidang keamanan siber, mulai dari Keamanan Ofensif, Keamanan Defensif, Operasi Keamanan, hingga Tata Kelola, Risiko, dan Kepatuhan.",
+        "Melalui pendekatan Manusia, Proses, dan Teknologi (People, Process, and Technology), CyberXatria menghubungkan pembelajaran dengan praktik sehingga kemampuan yang dibangun dapat diterapkan dalam situasi yang lebih realistis.",
       ],
       servicesEyebrow: "LAYANAN KAMI",
       servicesTitle: "Layanan Utama Kami",
@@ -374,6 +384,13 @@ export function CompanyPageContent() {
           <div className="grid gap-5 md:grid-cols-3">
             {copy.experiences.map((experience, index) => {
               const image = experienceImages[index];
+              // Crop the shared artwork bounds without changing the source assets.
+              const imageStyle = {
+                left: `${(-image.crop.x / image.crop.width) * 100}%`,
+                top: `${(-image.crop.y / image.crop.height) * 100}%`,
+                width: `${(image.width / image.crop.width) * 100}%`,
+                height: "auto",
+              };
               const meta = experienceMeta[index];
               const Icon = meta.Icon;
               return (
@@ -381,14 +398,30 @@ export function CompanyPageContent() {
                   key={experience.title}
                   className="cyber-card motion-card flex h-full flex-col rounded-2xl p-4"
                 >
-                  <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
-                    <Image
-                      src={publicAsset(image)}
-                      alt={experience.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover"
-                    />
+                  <div className="relative aspect-[8/3] overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
+                    <div
+                      className="absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden"
+                      style={{ aspectRatio: `${image.crop.width} / ${image.crop.height}` }}
+                    >
+                      <Image
+                        src={publicAsset(image.light)}
+                        alt={experience.title}
+                        width={image.width}
+                        height={image.height}
+                        sizes="(max-width: 1024px) 100vw, 33vw"
+                        className="absolute max-w-none object-cover object-center dark:hidden"
+                        style={imageStyle}
+                      />
+                      <Image
+                        src={publicAsset(image.dark)}
+                        alt={experience.title}
+                        width={image.width}
+                        height={image.height}
+                        sizes="(max-width: 1024px) 100vw, 33vw"
+                        className="absolute hidden max-w-none object-cover object-center dark:block"
+                        style={imageStyle}
+                      />
+                    </div>
                     <span className="absolute left-3 top-3 rounded-full bg-background/90 px-2.5 py-1 text-sm font-bold text-rose-600 shadow-sm backdrop-blur dark:text-rose-400">
                       {meta.number}
                     </span>
