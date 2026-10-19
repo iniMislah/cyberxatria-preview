@@ -486,12 +486,6 @@ export default function Home() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {copy.threats.items.map(([label, value, note], index) => {
               const image = threatImages[index];
-              const tone =
-                index === 3
-                  ? "text-orange-500 dark:text-orange-400"
-                  : index === 2
-                  ? "text-red-500"
-                  : "text-rose-500";
               return (
                 <Reveal key={label} delay={index * 90} className="h-full flex flex-col">
                   <div tabIndex={0} className="cyber-card motion-card group flex h-full min-h-[390px] flex-1 flex-col items-center rounded-2xl p-6 text-center">
@@ -509,7 +503,7 @@ export default function Home() {
                     </div>
                     <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{label}</p>
                     <span className="mt-4 h-0.5 w-10 rounded-full bg-rose-500" />
-                    <p className={`mt-5 text-4xl font-black ${tone}`}>
+                    <p className="text-gradient mt-5 text-4xl font-black">
                       <CountUpValue value={value} />
                     </p>
                     <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-500 flex-1">{note}</p>
