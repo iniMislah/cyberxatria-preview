@@ -80,6 +80,11 @@ const industryMeta = [
 const certificationImages = [
   "/images/Sertifikasi Logo ISO 27001.png",
   "/images/Sertifikasi Logo ISO 9001.png",
+  "/images/CEH.png",
+  "/images/CSA.png",
+  "/images/BL_2.png",
+  "/images/BL_1.png",
+  "/images/CIR.png",
 ];
 
 const content = {
@@ -239,6 +244,26 @@ const content = {
         {
           title: "ISO 9001",
           description: "Standar internasional untuk manajemen kualitas dan peningkatan layanan.",
+        },
+        {
+          title: "CEH",
+          description: "Kompetensi dalam mengidentifikasi kerentanan dan mengevaluasi keamanan sistem melalui pendekatan ethical hacking.",
+        },
+        {
+          title: "CSA",
+          description: "Kompetensi dalam menganalisis ancaman, mengidentifikasi risiko, dan mendukung operasi keamanan siber.",
+        },
+        {
+          title: "Blue Team Level 2 (BTL2)",
+          description: "Sertifikasi lanjutan dalam deteksi ancaman, investigasi insiden, dan pertahanan siber.",
+        },
+        {
+          title: "Blue Team Level 1 (BTL1)",
+          description: "Sertifikasi dalam pemantauan keamanan, analisis ancaman, dan penanganan insiden siber.",
+        },
+        {
+          title: "eCIR",
+          description: "Kompetensi dalam investigasi, penanganan, dan respons terhadap insiden keamanan siber.",
         },
       ],
     },
@@ -404,6 +429,26 @@ const content = {
         {
           title: "ISO 9001",
           description: "International standard for quality management and service improvement.",
+        },
+        {
+          title: "CEH",
+          description: "Competency in identifying vulnerabilities and evaluating system security through ethical hacking.",
+        },
+        {
+          title: "CSA",
+          description: "Competency in analyzing threats, identifying risks, and supporting cybersecurity operations.",
+        },
+        {
+          title: "Blue Team Level 2 (BTL2)",
+          description: "Advanced certification in threat detection, incident investigation, and cyber defense.",
+        },
+        {
+          title: "Blue Team Level 1 (BTL1)",
+          description: "Certification in security monitoring, threat analysis, and cyber incident response.",
+        },
+        {
+          title: "eCIR",
+          description: "Competency in investigating, handling, and responding to cybersecurity incidents.",
         },
       ],
     },
@@ -750,7 +795,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="certifications" aria-labelledby="certifications-title" className="bg-white py-16 dark:bg-[#070a12] sm:py-20">
+      <section id="certifications" aria-labelledby="certifications-title" className="overflow-x-clip bg-white py-16 dark:bg-[#070a12] sm:py-20">
         <div className="page-grid">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">
@@ -769,22 +814,24 @@ export default function Home() {
               {copy.certifications.intro}
             </p>
           </Reveal>
-          <div className="mx-auto grid max-w-3xl auto-rows-fr gap-6 sm:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {copy.certifications.items.map((certification, index) => (
-              <Reveal key={certification.title} className="h-full">
+              <Reveal key={certification.title} className="h-full lg:last:col-start-2">
                 <article className="flex h-full flex-col items-center rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-white/10 dark:bg-[#080c14] dark:shadow-none">
-                  <div className="relative h-40 w-full max-w-[200px] shrink-0">
+                  <div className={`relative h-40 w-full max-w-[200px] shrink-0 ${index === 2 || index === 3 ? "rounded-lg dark:bg-white" : ""}`}>
                     <Image
                       src={publicAsset(certificationImages[index])}
                       alt={certification.title}
                       fill
                       sizes="200px"
                       className="object-contain object-center"
+                      // Compensate for the transparent padding in ISO 27001 and CEH.
+                      style={index === 0 ? { transform: "scale(1.7)" } : index === 2 ? { transform: "scale(1.45)" } : undefined}
                     />
                   </div>
                   <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">{certification.title}</h3>
-                  <span aria-hidden="true" className="mt-2 h-0.5 w-10 shrink-0 rounded-full bg-rose-500" />
-                  <p className="mt-2 min-h-[5.25rem] text-base leading-7 text-slate-600 dark:text-slate-400">
+                  <span aria-hidden="true" className={`mt-2 h-0.5 w-10 shrink-0 rounded-full ${index > 1 ? "bg-[#EA4036]" : "bg-rose-500"}`} />
+                  <p className={`mt-2 ${index > 1 ? "min-h-[8.75rem]" : "min-h-[5.25rem]"} text-base leading-7 text-slate-600 dark:text-slate-400`}>
                     {certification.description}
                   </p>
                 </article>
