@@ -24,9 +24,9 @@ import { solutionServiceMeta } from "@/lib/solution-services";
 
 const threatImages = [
   { image: "/images/Ransomware Trend.png", scale: 1.03 },
-  { image: "/images/Phishing Trend.png", scale: 0.8 },
-  { image: "/images/Data Breach Trend.png", scale: 0.85 },
-  { image: "/images/Insider Threat Trend.png", scale: 0.84 },
+  { image: "/images/Phishing Trend.png", scale: 1.15 },
+  { image: "/images/Data Breach Trend.png", scale: 0.93 },
+  { image: "/images/Insider Threat Trend.png", scale: 1.01 },
 ];
 
 const readinessImpactImages = [
@@ -535,7 +535,7 @@ export default function Home() {
                 <Reveal key={label} delay={index * 90} className="h-full flex flex-col">
                   <div tabIndex={0} className="cyber-card motion-card group flex h-full min-h-[390px] flex-1 flex-col items-center rounded-2xl p-6 text-center">
                     <div className="mb-6 grid h-40 w-full place-items-center">
-                      <div className="relative h-40 w-full max-w-[234px] overflow-visible">
+                      <div className="relative h-40 w-[234px] overflow-visible">
                         <Image
                           src={publicAsset(image.image)}
                           alt=""
@@ -795,9 +795,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="certifications" aria-labelledby="certifications-title" className="overflow-x-clip bg-white py-16 dark:bg-[#070a12] sm:py-20">
+      <section id="certifications" aria-labelledby="certifications-title" className="overflow-x-clip bg-white py-12 dark:bg-[#070a12] sm:py-16">
         <div className="page-grid">
-          <Reveal className="mx-auto mb-10 max-w-2xl text-center">
+          <Reveal className="mx-auto mb-8 max-w-2xl text-center">
             <p className="eyebrow justify-center">
               {copy.certifications.eyebrow}
             </p>
@@ -810,28 +810,28 @@ export default function Home() {
                 <span className="text-gradient">{copy.certifications.accent}</span>
               </span>
             </h2>
-            <p className="mt-4 min-h-40 text-lg leading-8 text-slate-600 dark:text-slate-400 sm:min-h-24 lg:min-h-16">
+            <p className="mt-4 min-h-32 text-base leading-7 text-slate-600 dark:text-slate-400 sm:min-h-20 lg:min-h-14">
               {copy.certifications.intro}
             </p>
           </Reveal>
-          <div className="mx-auto grid max-w-6xl auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto grid max-w-5xl auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {copy.certifications.items.map((certification, index) => (
               <Reveal key={certification.title} className="h-full lg:last:col-start-2">
-                <article className="flex h-full flex-col items-center rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-white/10 dark:bg-[#080c14] dark:shadow-none">
-                  <div className={`relative h-40 w-full max-w-[200px] shrink-0 ${index === 2 || index === 3 ? "rounded-lg dark:bg-white" : ""}`}>
+                <article className="flex h-full flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm dark:border-white/10 dark:bg-[#080c14] dark:shadow-none">
+                  <div className={`relative h-24 w-full max-w-[120px] shrink-0 ${index === 2 || index === 3 ? "rounded-lg dark:bg-white" : ""}`}>
                     <Image
                       src={publicAsset(certificationImages[index])}
                       alt={certification.title}
                       fill
-                      sizes="200px"
+                      sizes="120px"
                       className="object-contain object-center"
                       // Compensate for the transparent padding in ISO 27001 and CEH.
                       style={index === 0 ? { transform: "scale(1.7)" } : index === 2 ? { transform: "scale(1.45)" } : undefined}
                     />
                   </div>
-                  <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">{certification.title}</h3>
+                  <h3 className="mt-4 text-base font-bold text-slate-900 dark:text-white">{certification.title}</h3>
                   <span aria-hidden="true" className={`mt-2 h-0.5 w-10 shrink-0 rounded-full ${index > 1 ? "bg-[#EA4036]" : "bg-rose-500"}`} />
-                  <p className={`mt-2 ${index > 1 ? "min-h-[8.75rem]" : "min-h-[5.25rem]"} text-base leading-7 text-slate-600 dark:text-slate-400`}>
+                  <p className="mt-2 min-h-24 text-sm leading-6 text-slate-600 dark:text-slate-400">
                     {certification.description}
                   </p>
                 </article>
