@@ -4,7 +4,7 @@ import { ServicePage } from "@/components/service-page";
 export const metadata: Metadata = { title: "Cyber Drill Exercise", description: "Uji kesiapan teknis organisasi melalui simulasi serangan siber yang realistis dan terukur." };
 
 export default function CyberDrillPage() {
-  return <ServicePage content={{
+  return <ServicePage cardVariant="resilience" content={{
     id: {
       eyebrow: "Cyber Drill Exercise",
       title: "Simulasi. Respon.",
@@ -47,6 +47,7 @@ export default function CyberDrillPage() {
       flowImages: ["/images/Identifikasi.png", "/images/Deteksi.png", "/images/Response.png", "/images/Pengendalian.png", "/images/Pemulihan.png", "/images/Evaluasi.png"],
       assessmentEyebrow: "Lingkup penilaian",
       assessmentTitle: "Area yang Dinilai",
+      assessmentVariant: "compact",
       assessment: [
         { icon: "Eye", title: "Kemampuan mendeteksi ancaman", text: "" },
         { icon: "Siren", title: "Kemampuan merespons insiden", text: "" },
@@ -133,6 +134,7 @@ export default function CyberDrillPage() {
       flowImages: ["/images/Identifikasi.png", "/images/Deteksi.png", "/images/Response.png", "/images/Pengendalian.png", "/images/Pemulihan.png", "/images/Evaluasi.png"],
       assessmentEyebrow: "Assessment scope",
       assessmentTitle: "Areas We Assess",
+      assessmentVariant: "compact",
       assessment: [
         { icon: "Eye", title: "Detection Capability", text: "" },
         { icon: "Siren", title: "Response Capability", text: "" },

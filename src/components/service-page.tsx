@@ -139,6 +139,7 @@ export type ServicePageCopy = {
 
 export type ServicePageProps = {
   content: Localized<ServicePageCopy>;
+  cardVariant?: "resilience";
 };
 
 function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
@@ -151,9 +152,10 @@ function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: stri
   );
 }
 
-export function ServicePage({ content }: ServicePageProps) {
+export function ServicePage({ content, cardVariant }: ServicePageProps) {
   const { t } = usePublicPreferences();
   const props = t(content);
+  const hasResilienceCards = cardVariant === "resilience";
   const flowImages = props.flowImages;
   const hasCompactMobileFlow = Boolean(flowImages && props.flow.length === 6 && props.flowVariant !== "processGrid");
   const hasFeatures = props.features.length > 0;
@@ -161,7 +163,7 @@ export function ServicePage({ content }: ServicePageProps) {
   const hasAudience = props.audience.length > 0 || props.benefits.length > 0;
 
   return (
-    <main className="site-shell min-h-screen bg-background text-foreground">
+    <main className={`site-shell min-h-screen bg-background text-foreground ${hasResilienceCards ? "service-resilience-cards" : ""}`}>
       <SiteHeader />
       <section className="relative min-h-[610px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
         {props.imageLight && (
@@ -214,7 +216,7 @@ export function ServicePage({ content }: ServicePageProps) {
             <p className="relative text-xs font-bold uppercase tracking-widest text-rose-500 dark:text-rose-400">{props.pillarLabel ?? "People · Process · Technology"}</p>
             <div className={`relative mt-6 grid grid-cols-1 gap-3.5 ${props.pillars.length === 4 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
               {props.pillars.map((item, index) => (
-                <div key={item} className="motion-card group relative flex min-h-[132px] flex-col items-center justify-center rounded-xl border border-slate-200/90 dark:border-white/10 bg-slate-50/80 dark:bg-white/[0.03] p-4 text-center transition hover:border-rose-500/40 hover:bg-rose-50/50 dark:hover:bg-rose-950/20 shadow-sm dark:shadow-none">
+                <div key={item} className="service-info-card motion-card group relative flex min-h-[132px] flex-col items-center justify-center rounded-xl border border-slate-200/90 dark:border-white/10 bg-slate-50/80 dark:bg-white/[0.03] p-4 text-center transition hover:border-rose-500/40 hover:bg-rose-50/50 dark:hover:bg-rose-950/20 shadow-sm dark:shadow-none">
                   {props.pillarImages?.[index] ? (
                     <div className="relative mx-auto mb-4 h-16 w-16 sm:h-20 sm:w-20">
                       <Image
@@ -238,20 +240,20 @@ export function ServicePage({ content }: ServicePageProps) {
 
       <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
         <div className="page-grid"><SectionHeading eyebrow={props.challengesEyebrow} title={props.challengesTitle} text={props.challengesText} />
-          <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ${props.challengesVariant === "centeredCards" ? "justify-items-center" : ""}`}>
+          <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ${hasResilienceCards ? "auto-rows-fr" : ""} ${props.challengesVariant === "centeredCards" ? "justify-items-center" : ""}`}>
             {props.challenges.map((item, index) => {
               const Icon = icons[item.icon];
               const iconImage = props.challengeIconImages?.[index];
-              const isCenteredChallenge = props.challengesVariant === "centeredCards" || Boolean(iconImage);
+              const isCenteredChallenge = hasResilienceCards || props.challengesVariant === "centeredCards" || Boolean(iconImage);
               return (
-                <article key={item.title} className={`motion-card flex h-full min-h-[220px] w-full max-w-[380px] flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none ${isCenteredChallenge ? "items-center text-center" : ""}`}>
+                <article key={item.title} className={`service-info-card service-challenge-card motion-card flex h-full min-h-[220px] w-full max-w-[380px] flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none ${isCenteredChallenge ? "items-center text-center" : ""}`}>
                   {iconImage ? (
                     <span className="relative block size-16 sm:size-[72px]">
                       <Image src={publicAsset(iconImage)} alt="" fill sizes="(max-width: 640px) 64px, 72px" className="object-contain" />
                     </span>
                   ) : (
                     <span className={isCenteredChallenge ? "grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400" : ""}>
-                      <Icon className={isCenteredChallenge ? "size-6" : "size-8 text-rose-500"} />
+                      <Icon className={hasResilienceCards ? "size-8" : isCenteredChallenge ? "size-6" : "size-8 text-rose-500"} />
                     </span>
                   )}
                   <h3 className={`mt-5 min-h-[3rem] font-bold text-slate-900 dark:text-white ${isCenteredChallenge ? "flex items-center justify-center" : "flex items-center"}`}>{item.title}</h3>
@@ -265,14 +267,14 @@ export function ServicePage({ content }: ServicePageProps) {
 
       {hasFeatures && <section className="py-16 sm:py-20">
         <div className="page-grid"><SectionHeading eyebrow={props.featuresEyebrow} title={props.featuresTitle} />
-          <div className={`grid gap-5 ${props.features.length === 4 ? "sm:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto" : "sm:grid-cols-2 lg:grid-cols-3"} ${props.featuresVariant === "centeredCards" ? "justify-items-center" : ""}`}>
+          <div className={`grid gap-5 ${hasResilienceCards ? "auto-rows-fr" : ""} ${props.features.length === 4 ? "sm:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto" : "sm:grid-cols-2 lg:grid-cols-3"} ${props.featuresVariant === "centeredCards" ? "justify-items-center" : ""}`}>
             {props.features.map((item) => {
               const Icon = icons[item.icon];
-              const isCenteredFeature = props.featuresVariant === "centeredCards";
+              const isCenteredFeature = hasResilienceCards || props.featuresVariant === "centeredCards";
               return (
-                <article key={item.title} className={`cyber-card motion-card flex h-full min-h-[240px] w-full max-w-[380px] flex-col rounded-2xl p-6 ${isCenteredFeature ? "items-center text-center" : "justify-between"}`}>
+                <article key={item.title} className={`service-info-card service-feature-card cyber-card motion-card flex h-full min-h-[240px] w-full max-w-[380px] flex-col rounded-2xl p-6 ${isCenteredFeature ? "items-center text-center" : "justify-between"}`}>
                   <div className="mb-5 grid size-12 place-items-center rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-500 dark:text-rose-400">
-                    <Icon className="size-6" />
+                    <Icon className={hasResilienceCards ? "size-8" : "size-6"} />
                   </div>
                   <div className={`flex flex-1 flex-col ${isCenteredFeature ? "items-center" : ""}`}>
                     <h3 className="font-bold text-lg text-slate-900 dark:text-white">{item.title}</h3>
@@ -339,24 +341,25 @@ export function ServicePage({ content }: ServicePageProps) {
                 const iconImage = props.assessmentIconImages?.[index];
                 const isCompactAssessment = props.assessmentVariant === "compact";
                 return (
-                  <article key={item.title} className={`motion-card flex flex-col items-center rounded-2xl border border-slate-200 bg-white text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none lg:col-span-2 ${isCompactAssessment ? "h-[200px] justify-center px-5 py-8" : "h-[280px] p-5"} ${props.assessment?.length === 8 && index === 6 ? "lg:col-start-2" : ""}`}>
-                    <span className={`grid place-items-center text-rose-600 dark:text-rose-300 ${isCompactAssessment ? "mb-4 size-11" : "mb-3 size-16"}`}>
+                  <article key={item.title} className={`service-info-card motion-card flex flex-col items-center rounded-2xl border border-slate-200 bg-white text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none lg:col-span-2 ${isCompactAssessment ? `h-44 justify-center ${hasResilienceCards ? "px-4 py-3" : "p-4"}` : "h-[280px] p-5"} ${props.assessment?.length === 8 && index === 6 ? "lg:col-start-2" : ""}`}>
+                    <span className={`grid place-items-center ${hasResilienceCards ? "size-12 shrink-0 text-rose-500 dark:text-rose-400" : `mb-3 text-rose-600 dark:text-rose-300 ${isCompactAssessment ? "size-[52px] shrink-0" : "size-16"}`}`}>
                       {iconImage ? (
                         <Image
                           src={publicAsset(iconImage)}
                           alt=""
                           width={64}
                           height={64}
-                          sizes={isCompactAssessment ? "44px" : "64px"}
+                          sizes={isCompactAssessment ? "52px" : "64px"}
                           className="h-full w-full object-contain"
                         />
                       ) : (
-                        <span className={`grid place-items-center rounded-lg bg-rose-500/10 ${isCompactAssessment ? "size-12" : "size-10"}`}>
-                          <Icon className={isCompactAssessment ? "size-5" : "size-5"} />
+                        <span className={`grid place-items-center bg-rose-500/10 ${hasResilienceCards ? "size-12 rounded-xl border border-rose-500/30" : `rounded-lg ${isCompactAssessment ? "size-[52px]" : "size-10"}`}`}>
+                          <Icon className={hasResilienceCards ? "size-8" : isCompactAssessment ? "size-[26px]" : "size-5"} />
                         </span>
                       )}
                     </span>
-                    <h3 className={`flex items-center justify-center font-bold text-slate-900 dark:text-white ${isCompactAssessment ? "min-h-10 text-sm leading-5 sm:text-[15px]" : "min-h-12 text-[15px] leading-6 sm:text-base"}`}>{item.title}</h3>
+                    {hasResilienceCards && <span aria-hidden="true" className="my-2 h-0.5 w-10 shrink-0 rounded-full bg-[#EA4036]" />}
+                    <h3 className={`flex min-h-12 items-center justify-center font-bold text-slate-900 dark:text-white ${hasResilienceCards ? "text-lg" : "text-[15px] leading-6 sm:text-base"}`}>{item.title}</h3>
                     {item.text && <p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400">{item.text}</p>}
                   </article>
                 );
@@ -376,7 +379,7 @@ export function ServicePage({ content }: ServicePageProps) {
                 const iconImage = props.deliverableIconImages?.[index];
                 const deliverableImage = props.deliverableImages?.[index];
                 return (
-                  <article key={item.title} className={`motion-card flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none ${props.deliverablesVariant === "centeredGrid" ? `h-[280px] lg:col-span-2 ${props.deliverables?.length === 7 && index === 6 ? "lg:col-start-3" : ""}` : "h-full min-h-[152px]"}`}>
+                  <article key={item.title} className={`service-info-card motion-card flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#090d15] dark:shadow-none ${props.deliverablesVariant === "centeredGrid" ? `h-[280px] lg:col-span-2 ${props.deliverables?.length === 7 && index === 6 ? "lg:col-start-3" : ""}` : "h-full min-h-[152px]"}`}>
                     {deliverableImage ? (
                       <span className="relative mb-4 block size-20">
                         <Image
@@ -443,7 +446,7 @@ export function ServicePage({ content }: ServicePageProps) {
       {hasAudience && <section className="border-y border-slate-200/80 dark:border-white/5 bg-slate-50/70 dark:bg-[#070a12] py-16 sm:py-20 transition-colors">
         <div className="page-grid grid gap-10 lg:grid-cols-2">
           <div><p className="eyebrow">{props.audienceEyebrow}</p><h2 className="mt-5 text-3xl font-bold text-slate-900 dark:text-white">{props.audienceTitle}</h2><ul className="mt-7 space-y-4 text-base text-slate-700 dark:text-slate-300">{props.audience.map((item) => <li key={item} className="flex gap-3"><Check className="size-5 shrink-0 text-rose-500" />{item}</li>)}</ul></div>
-          <div className="grid gap-4 sm:grid-cols-2">{props.benefits.map((item) => { const Icon = icons[item.icon]; return <div key={item.title} className="motion-card flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none"><Icon className="size-7 text-rose-500 dark:text-orange-300" /><h3 className="mt-4 font-bold text-slate-900 dark:text-white min-h-[2.5rem] flex items-center">{item.title}</h3><p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400 flex-1">{item.text}</p></div>; })}</div>
+          <div className="grid gap-4 sm:grid-cols-2">{props.benefits.map((item) => { const Icon = icons[item.icon]; return <div key={item.title} className="service-info-card motion-card flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#090d15] p-5 shadow-sm dark:shadow-none"><Icon className="size-7 text-rose-500 dark:text-orange-300" /><h3 className="mt-4 font-bold text-slate-900 dark:text-white min-h-[2.5rem] flex items-center">{item.title}</h3><p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400 flex-1">{item.text}</p></div>; })}</div>
         </div>
       </section>}
 

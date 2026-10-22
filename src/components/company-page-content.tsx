@@ -17,7 +17,7 @@ const experienceImages = [
     dark: "/images/Mini Bootcamp_Dark.png",
     width: 1774,
     height: 887,
-    crop: { x: 31, y: 164, width: 1713, height: 590 },
+    crop: { x: 31, y: 170, width: 1713, height: 578 },
   },
   {
     light: "/images/CTF_Light.png",
@@ -31,7 +31,7 @@ const experienceImages = [
     dark: "/images/CDE & TTX_Dark.png",
     width: 1774,
     height: 887,
-    crop: { x: 27, y: 178, width: 1719, height: 526 },
+    crop: { x: 29, y: 184, width: 1715, height: 516 },
   },
 ];
 
@@ -400,8 +400,12 @@ export function CompanyPageContent() {
                 >
                   <div className="relative aspect-[8/3] overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
                     <div
-                      className="absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden"
-                      style={{ aspectRatio: `${image.crop.width} / ${image.crop.height}` }}
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden"
+                      style={{
+                        aspectRatio: `${image.crop.width} / ${image.crop.height}`,
+                        // Cover the 8:3 frame while preserving the artwork's proportions.
+                        width: `${Math.max(1, (image.crop.width / image.crop.height) / (8 / 3)) * 100}%`,
+                      }}
                     >
                       <Image
                         src={publicAsset(image.light)}

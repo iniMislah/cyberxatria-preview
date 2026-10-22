@@ -197,6 +197,42 @@ body {
   transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
+.service-resilience-cards .service-info-card {
+  align-items: center;
+  border-color: var(--border);
+  border-radius: var(--radius-2xl);
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.dark .service-resilience-cards .service-info-card {
+  border-color: color-mix(in oklab, var(--color-white) 8%, transparent);
+  background: #0a0e17;
+  box-shadow: none;
+}
+
+.service-resilience-cards :is(.service-challenge-card, .service-feature-card) {
+  min-height: 220px;
+  padding: 1.25rem;
+}
+
+.service-resilience-cards .service-challenge-card > h3 {
+  margin-top: 1rem;
+}
+
+.service-resilience-cards .service-feature-card > div:first-child {
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.service-resilience-cards .service-feature-card h3 {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+}
+
 .base-card {
   border: 1px solid rgba(15, 23, 42, 0.09);
   background: #ffffff;
@@ -646,10 +682,25 @@ html:not(.dark) .brand-logo {
 
 .approach-card-visual-01 img {
   object-position: 58% center;
+  /* Match the PNG bounds so only its edges fade, including when letterboxed. */
+  mask-image: url("../../public/images/learning-platform-edge-mask.svg");
+  mask-size: contain;
+  mask-position: 58% center;
+  mask-repeat: no-repeat;
+}
+
+.approach-card-visual-02 img,
+.approach-card-visual-03 img,
+.approach-card-visual-04 img {
+  mask-image: url("../../public/images/learning-platform-edge-mask.svg");
+  mask-size: contain;
+  mask-position: 58% center;
+  mask-repeat: no-repeat;
 }
 
 .approach-card-visual-02 img {
   object-position: 56% center;
+  mask-position: 56% center;
 }
 
 .approach-card-visual-03 img {
