@@ -731,7 +731,7 @@ export default function Home() {
               return (
                 <Reveal key={meta.number} delay={index * 80} className="h-full flex flex-col">
                   <article
-                    className={`approach-feature-card approach-feature-card-${meta.number} motion-card relative h-full flex-1 overflow-hidden rounded-2xl border p-6`}
+                    className={`approach-feature-card approach-feature-card-${meta.number} ${card.description ? "gap-y-3" : ""} motion-card relative h-full flex-1 overflow-hidden rounded-2xl border p-6`}
                   >
                     <div className="approach-card-heading relative z-10 min-w-0">
                       <div className="flex items-center gap-3">
@@ -740,20 +740,19 @@ export default function Home() {
                           <IdentityIcon className="size-5" />
                         </span>
                       </div>
-                      <h3 className="mt-4 text-xl font-bold leading-snug text-slate-900 dark:text-white">
-                        {card.title}
-                      </h3>
+                      <div className="mt-4 flex flex-col gap-2">
+                        <h3 className="text-xl font-bold leading-snug text-slate-900 dark:text-white">
+                          {card.title}
+                        </h3>
+                        {card.description && (
+                          <p className="text-base leading-7 text-slate-600 dark:text-slate-400">
+                            {card.description}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <div className="approach-card-copy relative z-10 flex min-w-0 flex-1 flex-col">
-                      {card.description && (
-                        <p
-                          className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400"
-                          data-layout-description={meta.number === "01" || meta.number === "04" ? card.description : undefined}
-                        >
-                          <span>{card.description}</span>
-                        </p>
-                      )}
-                      <ul className="approach-items mt-5 grid gap-3 text-base text-slate-700 dark:text-slate-300">
+                    <div className={`approach-card-copy ${card.description ? "mt-3 min-[641px]:mt-0" : ""} relative z-10 flex min-w-0 flex-1 flex-col`}>
+                      <ul className={`approach-items ${card.description ? "" : "mt-5"} grid gap-3 text-base text-slate-700 dark:text-slate-300`}>
                         {card.items.map(([label, detail], itemIndex) => {
                           const ItemIcon = itemIcons[itemIndex] ?? Check;
                           return (

@@ -1059,26 +1059,6 @@ html:not(.dark) .hero-ambient {
   }
 }
 
-@media (min-width: 768px) {
-  .approach-card-copy > p[data-layout-description] {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .approach-card-copy > p[data-layout-description]::before {
-    /* Reserve the original text height so lists, artwork, and cards stay in place. */
-    content: attr(data-layout-description);
-    grid-area: 1 / 1;
-    visibility: hidden;
-  }
-
-  .approach-card-copy > p[data-layout-description] > span {
-    grid-area: 1 / 1;
-    align-self: start;
-    width: calc(100% + (100% / 1.2) + 1rem);
-  }
-}
-
 @media (min-width: 641px) {
   .approach-feature-card {
     display: grid;
