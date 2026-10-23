@@ -746,7 +746,12 @@ export default function Home() {
                     </div>
                     <div className="approach-card-copy relative z-10 flex min-w-0 flex-1 flex-col">
                       {card.description && (
-                        <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">{card.description}</p>
+                        <p
+                          className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400"
+                          data-layout-description={meta.number === "01" || meta.number === "04" ? card.description : undefined}
+                        >
+                          <span>{card.description}</span>
+                        </p>
                       )}
                       <ul className="approach-items mt-5 grid gap-3 text-base text-slate-700 dark:text-slate-300">
                         {card.items.map(([label, detail], itemIndex) => {
