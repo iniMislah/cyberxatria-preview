@@ -733,7 +733,7 @@ export default function Home() {
                   <article
                     className={`approach-feature-card approach-feature-card-${meta.number} motion-card relative h-full flex-1 overflow-hidden rounded-2xl border p-6`}
                   >
-                    <div className="approach-card-copy relative z-10 flex min-w-0 flex-1 flex-col">
+                    <div className="approach-card-heading relative z-10 min-w-0">
                       <div className="flex items-center gap-3">
                         <span className="approach-number">{meta.number}</span>
                         <span className="approach-icon">
@@ -743,6 +743,8 @@ export default function Home() {
                       <h3 className="mt-4 text-xl font-bold leading-snug text-slate-900 dark:text-white">
                         {card.title}
                       </h3>
+                    </div>
+                    <div className="approach-card-copy relative z-10 flex min-w-0 flex-1 flex-col">
                       {card.description && (
                         <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">{card.description}</p>
                       )}
@@ -764,20 +766,22 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className={`approach-card-visual approach-card-visual-${meta.number}`}>
-                      <Image
-                        src={publicAsset(meta.image)}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 90vw, 28vw"
-                        className="object-contain object-center dark:hidden"
-                      />
-                      <Image
-                        src={publicAsset(meta.imageDark)}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 90vw, 28vw"
-                        className="hidden object-contain object-center dark:block"
-                      />
+                      <div className="approach-card-artwork">
+                        <Image
+                          src={publicAsset(meta.image)}
+                          alt=""
+                          fill
+                          sizes="(max-width: 768px) 90vw, 28vw"
+                          className="object-contain object-center dark:hidden"
+                        />
+                        <Image
+                          src={publicAsset(meta.imageDark)}
+                          alt=""
+                          fill
+                          sizes="(max-width: 768px) 90vw, 28vw"
+                          className="hidden object-contain object-center dark:block"
+                        />
+                      </div>
                     </div>
                   </article>
                 </Reveal>
