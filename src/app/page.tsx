@@ -78,8 +78,6 @@ const industryMeta = [
 ];
 
 const certificationImages = [
-  "/images/Sertifikasi Logo ISO 27001.png",
-  "/images/Sertifikasi Logo ISO 9001.png",
   "/images/CEH.png",
   "/images/CSA.png",
   "/images/BL_2.png",
@@ -112,7 +110,7 @@ const content = {
       note: "Ancaman siber tidak mengenal batas. Satu insiden dapat berdampak besar pada bisnis, reputasi, dan kepercayaan.",
     },
     readiness: {
-      eyebrow: "Cyber resilience",
+      eyebrow: "Ketahanan Siber",
       title: "MENGAPA",
       accent: "KESIAPAN SIBER",
       suffix: "PENTING?",
@@ -237,14 +235,6 @@ const content = {
       intro:
         "Didukung oleh sertifikasi global yang diakui, kami menghadirkan layanan dengan standar keamanan, kualitas, dan profesionalisme terbaik.",
       items: [
-        {
-          title: "ISO 27001",
-          description: "Keamanan Informasi",
-        },
-        {
-          title: "ISO 9001",
-          description: "Manajemen Mutu",
-        },
         {
           title: "CEH",
           description: "Ethical Hacking",
@@ -423,14 +413,6 @@ const content = {
         "Backed by globally recognized certifications, we deliver services with high standards of security, quality, and professionalism.",
       items: [
         {
-          title: "ISO 27001",
-          description: "Information Security",
-        },
-        {
-          title: "ISO 9001",
-          description: "Quality Management",
-        },
-        {
           title: "CEH",
           description: "Ethical Hacking",
         },
@@ -465,21 +447,21 @@ function CertificationCard({ certification, index }: {
   index: number;
 }) {
   return (
-    <article className="flex h-48 w-full flex-col items-center rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm dark:border-white/10 dark:bg-[#080c14] dark:shadow-none">
-      <div className={`relative h-20 w-full max-w-[100px] shrink-0 ${index === 2 || index === 3 ? "rounded-lg dark:bg-white" : ""}`}>
+    <article tabIndex={0} className="motion-card flex h-[168px] w-full flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-3 text-center shadow-sm transition-all hover:border-rose-500/40 dark:border-white/10 dark:bg-[#080c14] dark:shadow-none">
+      <div className={`relative h-16 w-full max-w-[80px] shrink-0 ${index === 0 || index === 1 ? "rounded-lg dark:bg-white" : ""}`}>
         <Image
           src={publicAsset(certificationImages[index])}
           alt={certification.title}
           fill
-          sizes="100px"
+          sizes="80px"
           className="object-contain object-center"
-          // Compensate for the transparent padding in ISO 27001 and CEH.
-          style={index === 0 ? { transform: "scale(1.7)" } : index === 2 ? { transform: "scale(1.45)" } : undefined}
+          // Compensate for the transparent padding in CEH.
+          style={index === 0 ? { transform: "scale(1.45)" } : undefined}
         />
       </div>
-      <h3 className="mt-3 whitespace-nowrap text-base font-bold text-slate-900 dark:text-white">{certification.title}</h3>
-      <span aria-hidden="true" className={`mt-2 h-0.5 w-10 shrink-0 rounded-full ${index > 1 ? "bg-[#EA4036]" : "bg-rose-500"}`} />
-      <p className="mt-2 whitespace-nowrap text-sm leading-6 text-slate-600 dark:text-slate-400">
+      <h3 className="mt-2 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white">{certification.title}</h3>
+      <span aria-hidden="true" className="mt-1.5 h-0.5 w-8 shrink-0 rounded-full bg-[#EA4036]" />
+      <p className="mt-1.5 whitespace-nowrap text-xs leading-5 text-slate-600 dark:text-slate-400">
         {certification.description}
       </p>
     </article>
@@ -841,9 +823,9 @@ export default function Home() {
               {copy.certifications.intro}
             </p>
           </Reveal>
-          <div className="mx-auto grid max-w-[228px] grid-cols-1 gap-4 sm:max-w-[472px] sm:grid-cols-4 lg:max-w-[960px] lg:grid-cols-8">
+          <div className="mx-auto flex max-w-[1048px] flex-wrap justify-center gap-3">
             {copy.certifications.items.map((certification, index) => (
-              <Reveal key={certification.title} className="sm:col-span-2 sm:last:col-start-2 lg:[&:nth-child(5)]:col-start-2 lg:last:col-start-auto">
+              <Reveal key={certification.title} className="w-[200px] max-w-full shrink-0">
                 <CertificationCard certification={certification} index={index} />
               </Reveal>
             ))}

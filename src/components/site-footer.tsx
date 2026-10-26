@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   UsersRound,
 } from "lucide-react";
-import { APP_VERSION } from "@/lib/app-version";
 import { publicAsset } from "@/lib/asset-path";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 
@@ -110,7 +109,21 @@ export function SiteFooter() {
               en: "An integrated cybersecurity platform that helps organizations prepare, detect threats, and respond to incidents.",
             })}
           </p>
-          <div className="mt-6 flex gap-3">
+          <div className="mt-6 flex items-center gap-4">
+            {["ISO 27001", "ISO 9001"].map((name) => (
+              <span key={name} className="relative block h-16 w-[72px] shrink-0">
+                <Image
+                  src={publicAsset(`/images/Sertifikasi Logo ${name}.png`)}
+                  alt={name}
+                  fill
+                  sizes="72px"
+                  className="object-contain object-center"
+                  style={name === "ISO 27001" ? { transform: "scale(1.7)" } : undefined}
+                />
+              </span>
+            ))}
+          </div>
+          <div className="mt-5 flex gap-3">
             <InstagramSocialIcon />
             <LinkedInSocialIcon />
           </div>
@@ -182,8 +195,8 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="page-grid relative mt-10 flex flex-col gap-3 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-white/8">
-        <p>&copy; 2026 CyberXatria. {t({ id: "Semua hak dilindungi.", en: "All rights reserved." })} &middot; v{APP_VERSION}</p>
+      <div className="page-grid relative mt-6 flex flex-col gap-3 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-white/8">
+        <p>&copy; 2026 CyberXatria. {t({ id: "Semua hak dilindungi.", en: "All rights reserved." })}</p>
         <div className="flex gap-5">
           <a href="#" className="transition hover:text-rose-600 dark:hover:text-rose-400">{t({ id: "Kebijakan Privasi", en: "Privacy Policy" })}</a>
           <a href="#" className="transition hover:text-rose-600 dark:hover:text-rose-400">{t({ id: "Syarat & Ketentuan", en: "Terms & Conditions" })}</a>
