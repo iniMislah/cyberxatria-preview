@@ -654,20 +654,13 @@ export default function Home() {
               return (
                 <Reveal key={service.title} delay={index * 90} className="h-full flex flex-col">
                   <article className={`cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-4 ${comingSoon ? "opacity-80" : ""}`}>
-                    <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
+                    <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
                       <Image
-                        src={publicAsset(meta.imageLight)}
+                        src={publicAsset(meta.homepageImage)}
                         alt={service.title}
                         fill
                         sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="object-cover dark:hidden"
-                      />
-                      <Image
-                        src={publicAsset(meta.image)}
-                        alt={service.title}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="hidden object-cover dark:block"
+                        className="object-contain"
                       />
                     </div>
                     <div className="flex flex-1 flex-col p-3 pt-5">

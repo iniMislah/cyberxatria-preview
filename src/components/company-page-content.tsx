@@ -332,20 +332,13 @@ export function CompanyPageContent() {
               const meta = solutionServiceMeta[index];
               return (
                 <article key={service.title} className="cyber-card motion-card flex h-full flex-col rounded-2xl p-4">
-                  <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
+                  <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
                     <Image
-                      src={publicAsset(meta.imageLight)}
+                      src={publicAsset(meta.homepageImage)}
                       alt={service.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover dark:hidden"
-                    />
-                    <Image
-                      src={publicAsset(meta.image)}
-                      alt={service.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="hidden object-cover dark:block"
+                      className="object-contain"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-3 pt-5">
