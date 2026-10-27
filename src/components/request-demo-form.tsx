@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePublicPreferences } from "@/lib/public-preferences";
+import { publicAsset } from "@/lib/asset-path";
 
 type SelectOption = { value: string; label: string; searchText?: string };
 
@@ -48,9 +49,11 @@ const dropdownScrollClass =
 
 export function RequestDemoForm() {
   const formRef = useRef<HTMLFormElement>(null);
+  const submittingRef = useRef(false);
+  const submissionRef = useRef<{ payload: string; key: string } | null>(null);
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<"" | "failed" | "partial" | "uncertain" | "unavailable">("");
   const [phoneCountry, setPhoneCountry] = useState("Indonesia");
   const [interest, setInterest] = useState("");
   const [requestType, setRequestType] = useState("");
@@ -136,8 +139,8 @@ export function RequestDemoForm() {
         <h2 className="mt-5 text-2xl font-bold text-slate-900 dark:text-white">{t({ id: "Pesan Anda Diterima", en: "Your Message Has Been Received" })}</h2>
         <p className="mt-3 text-lg leading-8 text-slate-600 dark:text-slate-400">
           {t({
-            id: "Permintaan demo berhasil dikirim. Silakan periksa email Anda untuk konfirmasi.",
-            en: "Your demo request has been sent successfully. Please check your email for confirmation.",
+            id: "Permintaan Anda telah diterima. Email konfirmasi telah diterima layanan pengiriman. Silakan periksa kotak masuk atau spam Anda.",
+            en: "Your inquiry has been received. The email service has accepted your confirmation. Please check your inbox or spam folder.",
           })}
         </p>
         <button onClick={() => setSent(false)} className="mt-6 text-sm font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition">
@@ -149,10 +152,17 @@ export function RequestDemoForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (submitting) return;
+    if (submittingRef.current || error === "partial" || error === "uncertain") return;
 
+    const externalEndpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
+    if (process.env.NEXT_PUBLIC_STATIC_EXPORT === "true" && !externalEndpoint) {
+      setError("unavailable");
+      return;
+    }
+
+    submittingRef.current = true;
     setSubmitting(true);
-    setError(false);
+    setError("");
 
     const formData = new FormData(event.currentTarget);
     const phoneCountryCode = selectedPhoneCountry.code;
@@ -164,29 +174,53 @@ export function RequestDemoForm() {
       phone: phoneNumber ? `${phoneCountryCode} ${phoneNumber}` : "",
     };
 
+    const body = JSON.stringify({ ...payload, language });
+    if (submissionRef.current?.payload !== body) {
+      submissionRef.current = { payload: body, key: crypto.randomUUID() };
+    }
+
     try {
-      const response = await fetch("/api/request-demo", {
+      const response = await fetch(externalEndpoint || publicAsset("/api/contact"), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...payload, language }),
+        headers: { "Content-Type": "application/json", "Idempotency-Key": submissionRef.current.key },
+        body,
+        signal: AbortSignal.timeout(30_000),
       });
 
-      if (!response.ok) throw new Error("Request demo submission failed");
+      const result = await response.json();
+      if (result.code === "partial" && result.internal === "accepted") {
+        setError("partial");
+        return;
+      }
+      if (result.code === "uncertain") {
+        setError("uncertain");
+        return;
+      }
+      if (!response.ok || result.ok !== true || result.internal !== "accepted" || result.acknowledgment !== "accepted") {
+        setError(result.code === "configuration" ? "unavailable" : "failed");
+        return;
+      }
 
       formRef.current?.reset();
       setPhoneCountry("Indonesia");
       setInterest("");
       setRequestType("");
+      submissionRef.current = null;
       setSent(true);
     } catch {
-      setError(true);
+      setError("uncertain");
     } finally {
+      submittingRef.current = false;
       setSubmitting(false);
     }
   }
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="cyber-card rounded-3xl p-6 sm:p-8">
+      <div hidden aria-hidden="true">
+        <label htmlFor="contact-website">Website</label>
+        <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{copy.formTitle}</h2>
       <p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400">{copy.intro}</p>
       <div className="mt-7 grid gap-5 sm:grid-cols-2">
@@ -237,14 +271,23 @@ export function RequestDemoForm() {
         </div>
       </div>
       {error && (
-        <p className="mt-5 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-base text-red-700 dark:text-red-300">
-          {t({
-            id: "Permintaan demo belum berhasil dikirim. Silakan coba kembali.",
-            en: "Your demo request could not be sent. Please try again.",
+        <p role="status" aria-live="polite" className="mt-5 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-base text-red-700 dark:text-red-300">
+          {error === "partial" ? t({
+            id: "Permintaan Anda telah diterima tim kami, tetapi email konfirmasi belum berhasil dikirim atau statusnya belum dapat dipastikan. Jangan kirim ulang permintaan ini. Data Anda tetap tersedia di form.",
+            en: "Our team has received your inquiry, but the confirmation email failed or its status is uncertain. Please do not resubmit this inquiry. Your form data has been retained.",
+          }) : error === "uncertain" ? t({
+            id: "Status pengiriman belum dapat dipastikan. Untuk menghindari email ganda, jangan kirim ulang permintaan ini. Data Anda tetap tersedia di form.",
+            en: "The submission status is uncertain. To avoid duplicate emails, please do not resubmit this inquiry. Your form data has been retained.",
+          }) : error === "unavailable" ? t({
+            id: "Layanan pengiriman kontak belum tersedia. Data Anda tetap tersedia di form. Silakan hubungi admin@cyberxatria.id.",
+            en: "Contact submission is currently unavailable. Your form data has been retained. Please contact admin@cyberxatria.id.",
+          }) : t({
+            id: "Permintaan belum berhasil dikirim. Periksa isian Anda atau coba kembali nanti. Data Anda tetap tersedia di form.",
+            en: "Your inquiry could not be sent. Please check your entries or try again later. Your form data has been retained.",
           })}
         </p>
       )}
-      <Button disabled={submitting} type="submit" className="glow-button mt-7 h-12 w-full rounded-lg text-sm font-semibold text-white inline-flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70">
+      <Button disabled={submitting || error === "partial" || error === "uncertain"} type="submit" className="glow-button mt-7 h-12 w-full rounded-lg text-sm font-semibold text-white inline-flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70">
         {submitting ? copy.submitting : copy.submit} <Send className="size-4" />
       </Button>
     </form>

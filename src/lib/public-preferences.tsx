@@ -28,7 +28,7 @@ export function PublicPreferencesProvider({ children }: { children: React.ReactN
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const currentPath = typeof window !== "undefined" ? window.location.pathname : pathname || "/";
+    const currentPath = pathname || "/";
     const urlLanguage = getLocaleFromPath(currentPath);
     const savedLanguage = readPreference(LANGUAGE_KEY);
     const savedTheme = readPreference(THEME_KEY);
