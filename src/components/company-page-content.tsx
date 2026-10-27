@@ -334,11 +334,18 @@ export function CompanyPageContent() {
                 <article key={service.title} className="cyber-card motion-card flex h-full flex-col rounded-2xl p-4">
                   <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
                     <Image
-                      src={publicAsset(meta.homepageImage)}
+                      src={publicAsset(meta.imageLight)}
                       alt={service.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-contain"
+                      className="object-cover dark:hidden"
+                    />
+                    <Image
+                      src={publicAsset(meta.image)}
+                      alt={service.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 33vw"
+                      className="hidden object-cover dark:block"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-3 pt-5">

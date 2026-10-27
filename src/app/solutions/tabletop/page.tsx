@@ -11,7 +11,7 @@ export default function TabletopPage() {
       accent: "Insiden Siber Sebenarnya Terjadi",
       summary: "Tabletop Exercise adalah simulasi berbasis skenario yang membantu organisasi menguji kesiapan, koordinasi, dan pengambilan keputusan dalam menghadapi insiden keamanan siber.",
       image: "/images/tabletop-hero.png",
-      imageLight: "/images/Solusi_TTX_Light.png",
+      imageLight: "/images/solusi_ttx_Light.png",
       imageAlt: "Simulasi krisis siber untuk eksekutif",
       heroCtaButton: "Ajukan Tabletop Exercise",
       heroHighlights: [
@@ -141,7 +141,7 @@ export default function TabletopPage() {
       accent: "Real Cyber Incident Happens",
       summary: "A tabletop exercise is a scenario-based simulation that helps organizations test their preparedness, coordination, and decision-making in the face of a cybersecurity incident.",
       image: "/images/tabletop-hero.png",
-      imageLight: "/images/Solusi_TTX_Light.png",
+      imageLight: "/images/solusi_ttx_Light.png",
       imageAlt: "Cyber crisis simulation for executives",
       heroCtaButton: "Request a Tabletop Exercise",
       heroSecondaryCtaButton: "Explore Our Scenarios",

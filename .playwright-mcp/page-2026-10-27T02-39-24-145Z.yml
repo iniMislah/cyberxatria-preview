@@ -1,0 +1,139 @@
+- generic [active] [ref=f1e1]:
+  - main [ref=f1e2]:
+    - generic [ref=f1e4]:
+      - link "CyberXatria Home" [ref=f1e5] [cursor=pointer]:
+        - /url: /en
+        - img "CyberXatria" [ref=f1e6]
+      - navigation [ref=f1e7]:
+        - link "Home" [ref=f1e8] [cursor=pointer]:
+          - /url: /en
+        - button "Services" [ref=f1e10]
+        - link "About Us" [ref=f1e13] [cursor=pointer]:
+          - /url: /en/company
+        - link "Contact" [ref=f1e15] [cursor=pointer]:
+          - /url: /en/request-demo
+      - generic [ref=f1e16]:
+        - generic [ref=f1e17]:
+          - button "ID" [ref=f1e18]
+          - button "EN" [pressed] [ref=f1e23]
+        - button "Switch to light mode" [ref=f1e31]
+    - generic [ref=f1e41]:
+      - paragraph [ref=f1e42]: ABOUT US
+      - heading "Building Cyber Readiness through Real-World Experience" [level=1] [ref=f1e43]: Building Cyber Readinessthrough Real-World Experience
+      - generic [ref=f1e44]:
+        - paragraph [ref=f1e45]: CyberXatria helps organizations improve their readiness against cyber threats through training, simulations, and exercises designed around real-world needs and scenarios.
+        - paragraph [ref=f1e46]: We combine cybersecurity knowledge, hands-on practice, and realistic simulation to help teams build technical capabilities, coordination, and decision-making skills when facing cybersecurity incidents.
+      - paragraph [ref=f1e48]: From Learning to Simulation,CyberXatria Helps Build Cyber Readiness
+    - generic [ref=f1e51]:
+      - generic [ref=f1e52]:
+        - paragraph [ref=f1e53]: CyberXatria is a cybersecurity learning and exercise ecosystem designed to help individuals and organizations develop the competencies and readiness needed to face cyber threats.
+        - paragraph [ref=f1e54]: Our programs cover various cybersecurity areas, including Offensive Security, Defensive Security, Security Operations, and Governance, Risk & Compliance.
+      - paragraph [ref=f1e57]: Through a People, Process, and Technology approach, CyberXatria connects learning with hands-on practice so the capabilities developed can be applied in more realistic situations.
+    - generic [ref=f1e59]:
+      - generic [ref=f1e60]:
+        - paragraph [ref=f1e61]: OUR EXPERTISE
+        - heading "Our Core Services" [level=2] [ref=f1e62]
+        - paragraph [ref=f1e63]: We provide integrated services to help organizations build stronger and more sustainable cyber readiness.
+      - generic [ref=f1e64]:
+        - article [ref=f1e65]:
+          - img "CYBER DRILL EXERCISE" [ref=f1e67]
+          - generic [ref=f1e68]:
+            - heading "CYBER DRILL EXERCISE" [level=3] [ref=f1e69]
+            - paragraph [ref=f1e70]: A technical cyberattack simulation designed to test an organization's ability to detect, respond to, and handle real-world security incidents.
+            - link "Learn More" [ref=f1e71] [cursor=pointer]:
+              - /url: /en/solutions/cyber-drill
+        - article [ref=f1e74]:
+          - img "TABLETOP EXERCISE" [ref=f1e76]
+          - generic [ref=f1e77]:
+            - heading "TABLETOP EXERCISE" [level=3] [ref=f1e78]
+            - paragraph [ref=f1e79]: A scenario-based simulation involving various functions within an organization to test decision-making, coordination, and cyber incident response procedures.
+            - link "Learn More" [ref=f1e80] [cursor=pointer]:
+              - /url: /en/solutions/tabletop
+        - article [ref=f1e83]:
+          - img "AI FOR SOC" [ref=f1e85]
+          - generic [ref=f1e86]:
+            - heading "AI FOR SOC" [level=3] [ref=f1e87]
+            - paragraph [ref=f1e88]: An artificial intelligence-based solution that helps SOC teams analyze alerts, identify potential threats, prioritize risks, and accelerate security investigations and responses.
+            - generic [ref=f1e89]: Learn More
+    - generic [ref=f1e91]:
+      - generic [ref=f1e92]:
+        - paragraph [ref=f1e93]: OUR EXPERIENCE
+        - heading "Our Collaboration Journey" [level=2] [ref=f1e94]
+        - paragraph [ref=f1e95]: Various experiences and achievements that have become part of our journey in supporting cybersecurity readiness across different sectors.
+      - generic [ref=f1e96]:
+        - article [ref=f1e97]:
+          - generic [ref=f1e98]:
+            - img "Mini Bootcamp" [ref=f1e100]
+            - generic [ref=f1e101]: "01"
+          - generic [ref=f1e106]:
+            - heading "Mini Bootcamp" [level=3] [ref=f1e107]
+            - paragraph [ref=f1e108]: Red Team and Blue Team for Beginner
+            - paragraph [ref=f1e109]: A focused learning program introducing red team and blue team capabilities.
+        - article [ref=f1e110]:
+          - generic [ref=f1e111]:
+            - img "Public CTF" [ref=f1e113]
+            - generic [ref=f1e114]: "02"
+          - generic [ref=f1e118]:
+            - heading "Public CTF" [level=3] [ref=f1e119]
+            - paragraph [ref=f1e120]: Kurusetra Warrior 2025 and CTF Forage
+            - paragraph [ref=f1e121]: Challenge-based practice activities to sharpen cybersecurity capabilities.
+        - article [ref=f1e122]:
+          - generic [ref=f1e123]:
+            - img "Cyber Drill and Tabletop Exercise" [ref=f1e125]
+            - generic [ref=f1e126]: "03"
+          - generic [ref=f1e132]:
+            - heading "Cyber Drill and Tabletop Exercise" [level=3] [ref=f1e133]
+            - paragraph [ref=f1e134]: across various industries
+            - paragraph [ref=f1e135]: Scenario-based exercises to help teams understand incident response coordination.
+    - generic [ref=f1e137]:
+      - heading "Ready to Strengthen Your Organization's Cyber Resilience?" [level=2] [ref=f1e138]
+      - paragraph [ref=f1e139]: Discover how CyberXatria helps organizations prepare for, detect, and respond to cyber threats.
+      - link "Request Demo" [ref=f1e140] [cursor=pointer]:
+        - /url: /en/request-demo
+    - generic [ref=f1e145]:
+      - generic [ref=f1e146]:
+        - generic [ref=f1e147]:
+          - img "CyberXatria" [ref=f1e148]
+          - paragraph [ref=f1e149]: An integrated cybersecurity platform that helps organizations prepare, detect threats, and respond to incidents.
+          - generic [ref=f1e150]:
+            - img "ISO 27001" [ref=f1e152]
+            - img "ISO 9001" [ref=f1e154]
+          - generic [ref=f1e155]:
+            - link "Instagram" [ref=f1e156] [cursor=pointer]:
+              - /url: "#"
+            - link "LinkedIn" [ref=f1e162] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=f1e166]:
+          - heading "Services" [level=3] [ref=f1e168]
+          - generic [ref=f1e170]:
+            - link "Cyber Drill Exercise" [ref=f1e171] [cursor=pointer]:
+              - /url: /en/solutions/cyber-drill
+            - link "Tabletop Exercise" [ref=f1e180] [cursor=pointer]:
+              - /url: /en/solutions/tabletop
+            - generic [ref=f1e196]:
+              - generic [ref=f1e197]: AI for SOC
+              - generic [ref=f1e198]: Coming Soon
+        - generic [ref=f1e199]:
+          - heading "Company" [level=3] [ref=f1e201]
+          - generic [ref=f1e203]:
+            - link "About Us" [ref=f1e204] [cursor=pointer]:
+              - /url: /en/company
+            - link "Request Demo" [ref=f1e212] [cursor=pointer]:
+              - /url: /en/request-demo
+        - generic [ref=f1e218]:
+          - heading "Contact" [level=3] [ref=f1e220]
+          - generic [ref=f1e222]:
+            - link "admin@cyberxatria.id" [ref=f1e223] [cursor=pointer]:
+              - /url: mailto:admin@cyberxatria.id
+            - link "+62 857-0536-5051" [ref=f1e230] [cursor=pointer]:
+              - /url: tel:+628575365051
+            - paragraph [ref=f1e236]:
+              - generic [ref=f1e242]: Jakarta, Indonesia
+      - generic [ref=f1e243]:
+        - paragraph [ref=f1e244]: © 2026 CyberXatria. All rights reserved.
+        - generic [ref=f1e245]:
+          - link "Privacy Policy" [ref=f1e246] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms & Conditions" [ref=f1e247] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=f1e253] [cursor=pointer]
