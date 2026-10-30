@@ -165,7 +165,7 @@ export function ServicePage({ content, cardVariant }: ServicePageProps) {
   return (
     <main className={`site-shell min-h-screen bg-background text-foreground ${hasResilienceCards ? "service-resilience-cards" : ""}`}>
       <SiteHeader />
-      <section className="relative min-h-[560px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
+      <section className="service-hero relative min-h-[560px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
         <div className="service-hero-artwork absolute inset-0">
           {props.imageLight && (
             <Image src={publicAsset(props.imageLight)} alt={props.imageAlt} fill priority sizes="100vw" className="object-contain object-top opacity-90 dark:hidden lg:object-right" />
@@ -174,7 +174,7 @@ export function ServicePage({ content, cardVariant }: ServicePageProps) {
         </div>
         <div className="hero-vignette absolute inset-0" />
         <div className="hero-ambient" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />
+        <div className="service-hero-fade absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />
         <div className="page-grid relative z-10 flex min-h-[560px] items-center py-16 sm:min-h-[590px] sm:py-20">
           <Reveal className="min-w-0 max-w-2xl">
             <p className="mb-5 text-sm font-bold uppercase tracking-[0.2em] text-rose-500 dark:text-rose-400">{props.eyebrow}</p>
