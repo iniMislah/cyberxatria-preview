@@ -119,24 +119,79 @@ async function deliverContact(data: NonNullable<ReturnType<typeof parseContact>>
   const id = data.language === "id";
   const internalSubject = id ? "[CyberXatria] Pengajuan Baru dari Contact Form" : "[CyberXatria] New Contact Form Inquiry";
   const visitorSubject = id ? "[CyberXatria] Permintaan Anda Telah Diterima" : "[CyberXatria] We've Received Your Inquiry";
+  const submittedAt = new Date().toISOString();
   const rows = [
     [id ? "Nama" : "Name", data.name],
     ["Email", data.email],
     [id ? "Telepon" : "Phone", data.phoneNumber ? `${data.phoneCountryCode} ${data.phoneNumber}` : "-"],
-    [id ? "Kode negara telepon" : "Phone country code", data.phoneCountryCode],
     [id ? "Perusahaan / organisasi" : "Company / organization", data.company],
     [id ? "Negara / wilayah" : "Country / region", data.country],
     [id ? "Layanan" : "Solution", data.interest],
     [id ? "Tipe permintaan" : "Request type", data.requestType],
     [id ? "Pesan" : "Message", data.message || "-"],
-    [id ? "Waktu pengajuan (UTC)" : "Submitted at (UTC)", new Date().toISOString()],
+    [id ? "Tanggal Pengiriman" : "Submitted date", submittedAt.slice(0, 10)],
   ];
   const summary = rows.map(([label, value]) => `${label}: ${value}`).join("\n");
   const greeting = id ? `Halo ${data.name},` : `Hello ${data.name},`;
   const intro = id ? "Terima kasih telah menghubungi CyberXatria. Permintaan Anda telah kami terima." : "Thank you for contacting CyberXatria. We have received your inquiry.";
   const followUp = id ? "Tim CyberXatria akan menindaklanjuti permintaan Anda." : "The CyberXatria team will follow up on your inquiry.";
-  const table = `<table role="presentation" style="border-collapse:collapse;width:100%;table-layout:fixed">${rows.map(([label, value]) => `<tr><td style="padding:10px 4px;border-bottom:1px solid #e2e8f0;overflow-wrap:anywhere"><strong>${escapeHtml(label)}</strong><br>${escapeHtml(value).replace(/\n/g, "<br>")}</td></tr>`).join("")}</table>`;
-  const template = (title: string, content: string) => `<!doctype html><html lang="${data.language}"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"></head><body style="margin:0;background:#f1f5f9;font-family:Arial,sans-serif;color:#0f172a"><div style="max-width:600px;margin:0 auto;padding:24px;background:#fff;overflow-wrap:anywhere"><p style="color:#be123c;font-weight:bold">CyberXatria</p><h1 style="font-size:22px">${escapeHtml(title)}</h1>${content}<p style="margin-top:24px;color:#64748b">CyberXatria</p></div></body></html>`;
+  const closing = id ? "Tim CyberXatria" : "CyberXatria Team";
+  const internalTitle = id ? "Permintaan Baru dari Website CyberXatria" : "New Inquiry from the CyberXatria Website";
+  const visitorTitle = id ? "Permintaan Anda Telah Diterima" : "We've Received Your Inquiry";
+  const internalIntro = id ? "Pengajuan baru telah diterima melalui formulir kontak website. Berikut detail pengajuannya." : "A new inquiry has been received through the website contact form. The submission details are below.";
+  const notice = id ? "Email ini dikirim secara otomatis oleh website CyberXatria." : "This email was sent automatically by the CyberXatria website.";
+  const groups = [
+    { title: id ? "Detail kontak" : "Contact details", rows: rows.slice(0, 5) },
+    { title: id ? "Detail permintaan" : "Request details", rows: [...rows.slice(5, 7), rows[8]] },
+    { title: id ? "Pesan" : "Message", rows: rows.slice(7, 8) },
+  ];
+  const table = `<table width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;table-layout:fixed">
+    <colgroup><col width="36%" style="width:36%"><col width="64%" style="width:64%"></colgroup>
+    ${groups.map(group => `<tbody>
+      <tr><th colspan="2" align="left" style="padding:20px 0 8px;font-size:13px;line-height:20px;color:#191C22;font-weight:bold">${group.title}</th></tr>
+      ${group.rows.map(([label, value]) => `<tr>
+        <th scope="row" width="36%" align="left" valign="top" bgcolor="#F6F7F9" style="width:36%;padding:8px 12px;border-bottom:1px solid #E5E7EB;font-size:13px;line-height:20px;font-weight:normal;color:#596170;word-wrap:break-word;overflow-wrap:anywhere">${escapeHtml(label)}</th>
+        <td width="64%" align="left" valign="top" bgcolor="#FAFBFC" style="width:64%;padding:8px 12px;border-bottom:1px solid #E5E7EB;font-size:14px;line-height:20px;color:#191C22;word-wrap:break-word;overflow-wrap:anywhere;word-break:break-word">${escapeHtml(value).replace(/\n/g, "<br>")}</td>
+      </tr>`).join("")}
+    </tbody>`).join("")}
+  </table>`;
+  const accentStyle = "width:35%;background-color:#8E235E;background-image:linear-gradient(115deg,#191C22 18%,#8E235E 18%,#EA4036 100%);font-size:0;line-height:0";
+  const template = (title: string, content: string) => `<!doctype html>
+    <html lang="${data.language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title></head>
+    <body style="margin:0;padding:0;background-color:#EEF0F3;color:#191C22;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#EEF0F3" style="width:100%;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt"><tr><td align="center" style="padding:24px 12px">
+        <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" style="width:100%;max-width:600px;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt">
+          <tr><td bgcolor="#191C22" style="background-color:#191C22">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;table-layout:fixed"><tr>
+              <td width="65%" align="left" valign="middle" style="width:65%;padding:18px 20px">
+                <img src="https://inimislah.github.io/cyberxatria-preview/images/cyberxatria-logo.png" alt="CyberXatria" width="213" height="57" style="display:block;width:213px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none">
+                <p style="margin:6px 0 0;font-size:10px;line-height:16px;color:#D1D5DB">Cyber Readiness &amp; Security Operations</p>
+              </td>
+              <td width="35%" bgcolor="#8E235E" aria-hidden="true" style="${accentStyle}">&nbsp;</td>
+            </tr></table>
+          </td></tr>
+          <tr><td align="left" style="padding:24px;background-color:#FFFFFF;font-size:14px;line-height:22px;word-wrap:break-word;overflow-wrap:anywhere">
+            <h1 style="margin:0 0 20px;font-size:22px;line-height:30px;font-weight:bold;color:#191C22">${escapeHtml(title)}</h1>
+            ${content}
+          </td></tr>
+          <tr><td bgcolor="#191C22" style="background-color:#191C22">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;table-layout:fixed"><tr>
+              <td width="65%" align="left" style="width:65%;padding:10px 20px">
+                <p style="margin:0;font-size:13px;line-height:18px;font-weight:bold;color:#FFFFFF">CyberXatria</p>
+                <p style="margin:2px 0 0;font-size:9px;line-height:14px;color:#D1D5DB">Cyber Readiness &amp; Security Operations</p>
+              </td>
+              <td width="35%" bgcolor="#8E235E" aria-hidden="true" style="${accentStyle}">&nbsp;</td>
+            </tr></table>
+          </td></tr>
+          <tr><td bgcolor="#F3F4F6" align="left" style="padding:8px 20px;background-color:#F3F4F6;font-size:10px;line-height:14px;color:#6B7280">
+            <p style="margin:0 0 2px">&copy; ${submittedAt.slice(0, 4)} CyberXatria.</p>
+            <p style="margin:0">${notice}</p>
+          </td></tr>
+        </table>
+        <!--[if mso]></td></tr></table><![endif]-->
+      </td></tr></table>
+    </body></html>`;
 
   async function send(to: string, subject: string, htmlContent: string, textContent: string, replyTo?: string): Promise<Delivery> {
     try {
@@ -159,11 +214,11 @@ async function deliverContact(data: NonNullable<ReturnType<typeof parseContact>>
     }
   }
 
-  const internal = await send(config.admin, internalSubject, template(internalSubject, table), `${internalSubject}\n\n${summary}`, data.email);
+  const internal = await send(config.admin, internalSubject, template(internalTitle, `<p style="margin:0 0 4px">${internalIntro}</p>${table}`), `${internalTitle}\n\n${internalIntro}\n\n${summary}\n\n${notice}`, data.email);
   if (internal !== "accepted") {
     return { status: 502, body: { ok: false, code: internal === "unknown" ? "uncertain" : "delivery_failed", internal, acknowledgment: "not_attempted" as Delivery } };
   }
-  const acknowledgment = await send(data.email, visitorSubject, template(visitorSubject, `<p>${escapeHtml(greeting)}</p><p>${intro}</p>${table}<p>${followUp}</p>`), `${greeting}\n\n${intro}\n\n${summary}\n\n${followUp}`);
+  const acknowledgment = await send(data.email, visitorSubject, template(visitorTitle, `<p style="margin:0 0 12px">${escapeHtml(greeting)}</p><p style="margin:0 0 4px">${intro}</p>${table}<p style="margin:24px 0 16px">${followUp}</p><p style="margin:0">${closing}</p>`), `${greeting}\n\n${intro}\n\n${summary}\n\n${followUp}\n\n${closing}\n\n${notice}`);
   return { status: acknowledgment === "accepted" ? 200 : 207, body: { ok: acknowledgment === "accepted", code: acknowledgment === "accepted" ? "sent" : "partial", internal, acknowledgment } };
 }
 

@@ -54,8 +54,31 @@ for (const language of ["id", "en"]) {
       assert.deepEqual(call.body.sender, { name: "CyberXatria", email: "sender@example.test" });
       assert(call.signal instanceof AbortSignal);
       assert(call.body.htmlContent.includes(`lang="${language}"`));
-      for (const field of [payload.name, payload.company, payload.country, payload.email, payload.interest, payload.message, "+62 81234567890"]) assert(call.body.htmlContent.includes(field));
-      assert.match(call.body.textContent, /\d{4}-\d{2}-\d{2}T/);
+      for (const field of [payload.name, payload.company, payload.country, payload.email, payload.interest, payload.requestType, payload.message, "+62 81234567890"]) assert(call.body.htmlContent.includes(field));
+      assert.match(call.body.textContent, /(?:Tanggal Pengiriman|Submitted date): \d{4}-\d{2}-\d{2}(?:\n|$)/);
+      const html = call.body.htmlContent;
+      const logo = new URL(html.match(/<img[^>]+src="([^"]+)"/)[1]);
+      assert.equal(logo.protocol, "https:");
+      assert(!["localhost", "127.0.0.1", "[::1]"].includes(logo.hostname));
+      assert(logo.pathname.endsWith("/cyberxatria-logo.png"));
+      assert.equal((html.match(/<th scope="row"/g) ?? []).length, 9);
+      assert(!html.includes("Phone country code"));
+      assert(!html.includes("Kode negara telepon"));
+      assert(!call.body.textContent.includes("Phone country code"));
+      assert(!call.body.textContent.includes("Kode negara telepon"));
+      assert(!/\d{4}-\d{2}-\d{2}T\d{2}:/.test(html));
+      assert(!/\d{4}-\d{2}-\d{2}T\d{2}:/.test(call.body.textContent));
+      assert(!html.includes("mock-only-key"));
+      assert(!html.includes("<script"));
+      assert(!html.includes("class="));
+      for (const heading of language === "id" ? ["Detail kontak", "Detail permintaan", "Pesan"] : ["Contact details", "Request details", "Message"]) assert(html.includes(heading));
+      assert(html.includes("Cyber Readiness &amp; Security Operations"));
+      assert(html.includes("#191C22"));
+      assert(html.includes("#8E235E"));
+      assert(html.includes("#EA4036"));
+      assert.equal((html.match(/bgcolor="#8E235E"/g) ?? []).length, 2);
+      assert(html.includes(`&copy; ${new Date().getUTCFullYear()} CyberXatria.`));
+      assert(html.includes(language === "id" ? "Email ini dikirim secara otomatis" : "This email was sent automatically"));
     }
     assert.deepEqual(calls[0].body.to, [{ email: "admin@example.test" }]);
     assert.deepEqual(calls[0].body.replyTo, { email: payload.email });
@@ -63,6 +86,10 @@ for (const language of ["id", "en"]) {
     assert.equal(calls[0].body.subject, language === "id" ? "[CyberXatria] Pengajuan Baru dari Contact Form" : "[CyberXatria] New Contact Form Inquiry");
     assert.equal(calls[1].body.subject, language === "id" ? "[CyberXatria] Permintaan Anda Telah Diterima" : "[CyberXatria] We've Received Your Inquiry");
     assert(calls[1].body.textContent.includes(language === "id" ? "akan menindaklanjuti" : "will follow up"));
+    assert(calls[0].body.htmlContent.includes(language === "id" ? "Permintaan Baru dari Website CyberXatria" : "New Inquiry from the CyberXatria Website"));
+    assert(calls[1].body.htmlContent.includes(language === "id" ? "Permintaan Anda Telah Diterima" : "We&#39;ve Received Your Inquiry"));
+    assert(calls[1].body.htmlContent.includes(language === "id" ? `Halo ${payload.name},` : `Hello ${payload.name},`));
+    assert(calls[1].body.htmlContent.includes(language === "id" ? "Tim CyberXatria" : "CyberXatria Team"));
   });
 }
 
@@ -176,6 +203,32 @@ test("all user HTML is escaped in both emails", async t => {
     assert(call.body.htmlContent.includes("&quot;"));
     assert(call.body.htmlContent.includes("&#39;"));
     assert(call.body.htmlContent.includes("&amp; test"));
+  }
+});
+
+test("long multiline messages remain complete in the two-column email table", async t => {
+  const { POST, calls } = await setup(t);
+  const longLine = "LongMessage".repeat(140);
+  assert.equal((await POST(request({ ...payload, message: `${longLine}\nSecond line & details` }))).status, 200);
+  for (const call of calls) {
+    assert(call.body.htmlContent.includes(`${longLine}<br>Second line &amp; details`));
+    assert(call.body.htmlContent.includes("table-layout:fixed"));
+    assert(call.body.htmlContent.includes("word-wrap:break-word"));
+    assert(call.body.textContent.includes(`${longLine}\nSecond line & details`));
+  }
+});
+
+test("submitted date formats the original UTC timestamp without a time suffix", async t => {
+  const { POST, calls } = await setup(t);
+  const timestamp = "2026-10-27T23:59:58.959Z";
+  t.mock.method(Date.prototype, "toISOString", () => timestamp);
+  assert.equal((await POST(request())).status, 200);
+  for (const call of calls) {
+    assert(call.body.htmlContent.includes("Tanggal Pengiriman"));
+    assert(call.body.htmlContent.includes("2026-10-27"));
+    assert(call.body.textContent.includes("Tanggal Pengiriman: 2026-10-27\n"));
+    assert(!call.body.htmlContent.includes(timestamp));
+    assert(!call.body.textContent.includes(timestamp));
   }
 });
 
