@@ -165,20 +165,22 @@ export function ServicePage({ content, cardVariant }: ServicePageProps) {
   return (
     <main className={`site-shell min-h-screen bg-background text-foreground ${hasResilienceCards ? "service-resilience-cards" : ""}`}>
       <SiteHeader />
-      <section className="relative min-h-[610px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
-        {props.imageLight && (
-          <Image src={publicAsset(props.imageLight)} alt={props.imageAlt} fill priority sizes="100vw" className="hero-visual object-cover object-[66%_center] opacity-90 dark:hidden" />
-        )}
-        <Image src={publicAsset(props.image)} alt={props.imageAlt} fill priority sizes="100vw" className={`hero-visual object-cover object-[66%_center] opacity-90 ${props.imageLight ? "hidden dark:block" : ""}`} />
+      <section className="relative min-h-[560px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
+        <div className="service-hero-artwork absolute inset-0">
+          {props.imageLight && (
+            <Image src={publicAsset(props.imageLight)} alt={props.imageAlt} fill priority sizes="100vw" className="object-contain object-top opacity-90 dark:hidden lg:object-right" />
+          )}
+          <Image src={publicAsset(props.image)} alt={props.imageAlt} fill priority sizes="100vw" className={`object-contain object-top opacity-90 lg:object-right ${props.imageLight ? "hidden dark:block" : ""}`} />
+        </div>
         <div className="hero-vignette absolute inset-0" />
         <div className="hero-ambient" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />
-        <div className="page-grid relative z-10 flex min-h-[590px] items-center py-20">
-          <Reveal className="max-w-2xl">
+        <div className="page-grid relative z-10 flex min-h-[560px] items-center py-16 sm:min-h-[590px] sm:py-20">
+          <Reveal className="min-w-0 max-w-2xl">
             <p className="mb-5 text-sm font-bold uppercase tracking-[0.2em] text-rose-500 dark:text-rose-400">{props.eyebrow}</p>
-            <h1 className="text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl">{props.title}<br /><span className="text-gradient">{props.accent}</span></h1>
-            <p className="mt-6 max-w-xl text-xl leading-9 text-slate-600 dark:text-slate-300">{props.summary}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <h1 className="text-4xl font-bold leading-[1.1] tracking-[-0.04em] text-slate-900 dark:text-white sm:text-5xl xl:text-6xl">{props.title}<br /><span className="text-gradient">{props.accent}</span></h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300 sm:text-xl sm:leading-9">{props.summary}</p>
+            <div className="mt-8 flex flex-col flex-wrap gap-3 sm:flex-row">
               <RequestDemoCta>{props.heroCtaButton}</RequestDemoCta>
               {props.heroSecondaryCtaButton && <a href="#exercise-flow" className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-300 bg-white/70 px-6 text-sm font-semibold text-slate-800 transition hover:border-rose-500/50 hover:text-rose-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:border-rose-400/50 dark:hover:text-rose-300">{props.heroSecondaryCtaButton}</a>}
             </div>

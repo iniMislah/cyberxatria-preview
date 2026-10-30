@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { ServicePage } from "@/components/service-page";
+import { solutionServiceMeta } from "@/lib/solution-services";
+
+const cyberDrill = solutionServiceMeta[0];
 
 export const metadata: Metadata = { title: "Cyber Drill Exercise", description: "Uji kesiapan teknis organisasi melalui simulasi serangan siber yang realistis dan terukur." };
 
@@ -10,8 +13,8 @@ export default function CyberDrillPage() {
       title: "Simulasi. Respon.",
       accent: "Peningkatan.",
       summary: "Uji kemampuan organisasi dalam menghadapi serangan siber melalui simulasi serangan yang realistis dan terukur.",
-      image: "/images/cyber-drill-hero.png",
-      imageLight: "/images/Solusi_Cyberdrill_Light.png",
+      image: cyberDrill.image,
+      imageLight: cyberDrill.imageLight,
       imageAlt: "Simulasi serangan siber CyberXatria",
       heroCtaButton: "Ajukan Demo",
       aboutEyebrow: "Tentang layanan",
@@ -98,8 +101,8 @@ export default function CyberDrillPage() {
       title: "Simulate. Respond.",
       accent: "Improve.",
       summary: "Test your organizations ability to respond to cyberattacks through realistic and measurable attack simulations.",
-      image: "/images/cyber-drill-hero.png",
-      imageLight: "/images/Solusi_Cyberdrill_Light.png",
+      image: cyberDrill.image,
+      imageLight: cyberDrill.imageLight,
       imageAlt: "CyberXatria cyberattack simulation",
       heroCtaButton: "Request Demo",
       aboutEyebrow: "About the service",

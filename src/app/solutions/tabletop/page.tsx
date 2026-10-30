@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { ServicePage } from "@/components/service-page";
+import { solutionServiceMeta } from "@/lib/solution-services";
+
+const tabletop = solutionServiceMeta[1];
 
 export const metadata: Metadata = { title: "Tabletop Exercise", description: "Simulasi krisis siber untuk menguji keputusan eksekutif, koordinasi, dan kesiapan organisasi." };
 
@@ -10,8 +13,8 @@ export default function TabletopPage() {
       title: "Uji Kesiapan Anda Sebelum",
       accent: "Insiden Siber Sebenarnya Terjadi",
       summary: "Tabletop Exercise adalah simulasi berbasis skenario yang membantu organisasi menguji kesiapan, koordinasi, dan pengambilan keputusan dalam menghadapi insiden keamanan siber.",
-      image: "/images/tabletop-hero.png",
-      imageLight: "/images/Solusi_TTX_Light.png",
+      image: tabletop.image,
+      imageLight: tabletop.imageLight,
       imageAlt: "Simulasi krisis siber untuk eksekutif",
       heroCtaButton: "Ajukan Tabletop Exercise",
       heroHighlights: [
@@ -140,8 +143,8 @@ export default function TabletopPage() {
       title: "Test Your Readiness Before a",
       accent: "Real Cyber Incident Happens",
       summary: "A tabletop exercise is a scenario-based simulation that helps organizations test their preparedness, coordination, and decision-making in the face of a cybersecurity incident.",
-      image: "/images/tabletop-hero.png",
-      imageLight: "/images/Solusi_TTX_Light.png",
+      image: tabletop.image,
+      imageLight: tabletop.imageLight,
       imageAlt: "Cyber crisis simulation for executives",
       heroCtaButton: "Request a Tabletop Exercise",
       heroSecondaryCtaButton: "Explore Our Scenarios",
