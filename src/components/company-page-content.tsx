@@ -15,23 +15,14 @@ const experienceImages = [
   {
     light: "/images/Mini Bootcamp_Light.png",
     dark: "/images/Mini Bootcamp_Dark.png",
-    width: 1774,
-    height: 887,
-    crop: { x: 31, y: 170, width: 1713, height: 578 },
   },
   {
     light: "/images/CTF_Light.png",
     dark: "/images/CTF_Dark.png",
-    width: 1672,
-    height: 941,
-    crop: { x: 0, y: 0, width: 1672, height: 941 },
   },
   {
     light: "/images/CDE & TTX_Light.png",
     dark: "/images/CDE & TTX_Dark.png",
-    width: 1774,
-    height: 887,
-    crop: { x: 29, y: 184, width: 1715, height: 516 },
   },
 ];
 
@@ -159,18 +150,18 @@ export function CompanyPageContent() {
       experiences: [
         {
           title: "Mini Bootcamp",
-          subtitle: "Red Team dan Blue Team for Beginner",
-          description: "Program pembelajaran terarah untuk pengenalan kemampuan red team dan blue team.",
+          subtitle: "Dasar Red Team dan Blue Team untuk Pemula",
+          description: "Pelatihan terarah untuk mengenalkan dasar pengujian keamanan dan pertahanan siber melalui praktik red team dan blue team.",
         },
         {
-          title: "Public CTF",
-          subtitle: "Kurusetra Warrior 2025 dan CTF Forage",
-          description: "Kegiatan praktik berbasis tantangan untuk mengasah kemampuan keamanan siber.",
+          title: "CTF Terbuka",
+          subtitle: "Kompetisi dan Latihan Capture The Flag",
+          description: "Kurusetra Warrior 2025 dan CTF Forage menghadirkan tantangan praktik untuk mengasah keterampilan keamanan siber.",
         },
         {
           title: "Cyber Drill dan Tabletop Exercise",
-          subtitle: "di berbagai industri",
-          description: "Latihan berbasis skenario untuk membantu tim memahami koordinasi respons insiden.",
+          subtitle: "Latihan Respons Insiden Lintas Industri",
+          description: "Latihan berbasis skenario untuk melatih pengambilan keputusan dan koordinasi tim dalam merespons insiden siber.",
         },
       ],
       ctaTitle: "Siap Memperkuat Ketahanan Siber Organisasi Anda?",
@@ -219,18 +210,18 @@ export function CompanyPageContent() {
       experiences: [
         {
           title: "Mini Bootcamp",
-          subtitle: "Red Team and Blue Team for Beginner",
-          description: "A focused learning program introducing red team and blue team capabilities.",
+          subtitle: "Red Team and Blue Team Fundamentals for Beginners",
+          description: "Structured training introducing security testing and cyber defense fundamentals through red team and blue team practices.",
         },
         {
           title: "Public CTF",
-          subtitle: "Kurusetra Warrior 2025 and CTF Forage",
-          description: "Challenge-based practice activities to sharpen cybersecurity capabilities.",
+          subtitle: "Capture The Flag Competitions and Practice",
+          description: "Kurusetra Warrior 2025 and CTF Forage offer hands-on challenges to develop cybersecurity skills.",
         },
         {
           title: "Cyber Drill and Tabletop Exercise",
-          subtitle: "across various industries",
-          description: "Scenario-based exercises to help teams understand incident response coordination.",
+          subtitle: "Incident Response Exercises Across Industries",
+          description: "Scenario-based exercises to practice decision-making and team coordination when responding to cyber incidents.",
         },
       ],
       ctaTitle: "Ready to Strengthen Your Organization's Cyber Resilience?",
@@ -384,13 +375,6 @@ export function CompanyPageContent() {
           <div className="grid gap-5 md:grid-cols-3">
             {copy.experiences.map((experience, index) => {
               const image = experienceImages[index];
-              // Crop the shared artwork bounds without changing the source assets.
-              const imageStyle = {
-                left: `${(-image.crop.x / image.crop.width) * 100}%`,
-                top: `${(-image.crop.y / image.crop.height) * 100}%`,
-                width: `${(image.width / image.crop.width) * 100}%`,
-                height: "auto",
-              };
               const meta = experienceMeta[index];
               const Icon = meta.Icon;
               return (
@@ -398,34 +382,21 @@ export function CompanyPageContent() {
                   key={experience.title}
                   className="cyber-card motion-card flex h-full flex-col rounded-2xl p-4"
                 >
-                  <div className="relative aspect-[8/3] overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
-                    <div
-                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden"
-                      style={{
-                        aspectRatio: `${image.crop.width} / ${image.crop.height}`,
-                        // Cover the 8:3 frame while preserving the artwork's proportions.
-                        width: `${Math.max(1, (image.crop.width / image.crop.height) / (8 / 3)) * 100}%`,
-                      }}
-                    >
-                      <Image
-                        src={publicAsset(image.light)}
-                        alt={experience.title}
-                        width={image.width}
-                        height={image.height}
-                        sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="absolute max-w-none object-cover object-center dark:hidden"
-                        style={imageStyle}
-                      />
-                      <Image
-                        src={publicAsset(image.dark)}
-                        alt={experience.title}
-                        width={image.width}
-                        height={image.height}
-                        sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="absolute hidden max-w-none object-cover object-center dark:block"
-                        style={imageStyle}
-                      />
-                    </div>
+                  <div className="relative aspect-video overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
+                    <Image
+                      src={publicAsset(image.light)}
+                      alt={experience.title}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 33vw"
+                      className="object-contain object-center dark:hidden"
+                    />
+                    <Image
+                      src={publicAsset(image.dark)}
+                      alt={experience.title}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 33vw"
+                      className="hidden object-contain object-center dark:block"
+                    />
                     <span className="absolute left-3 top-3 rounded-full bg-background/90 px-2.5 py-1 text-sm font-bold text-rose-600 shadow-sm backdrop-blur dark:text-rose-400">
                       {meta.number}
                     </span>
