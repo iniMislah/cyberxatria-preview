@@ -372,6 +372,27 @@ html:not(.dark) .brand-logo {
   opacity: 0.7;
 }
 
+.service-tabletop .service-hero-artwork {
+  left: auto;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  container-type: inline-size;
+}
+
+.service-tabletop .service-hero-artwork img {
+  object-position: right top;
+}
+
+.dark .service-tabletop .service-hero-artwork img {
+  /* Align the board in the 16:9 dark artwork with the 4:3 light reference. */
+  transform: translateY(6.5cqw) scale(0.97);
+  transform-origin: right top;
+  mask-image: linear-gradient(180deg, transparent, black 8cqw, black 42cqw, transparent 56.28cqw), linear-gradient(90deg, transparent, black 25%, black 94%, transparent);
+  mask-composite: intersect;
+}
+
 .dot-field {
   background-image: radial-gradient(rgba(251, 49, 92, 0.28) 1px, transparent 1px);
   background-size: 17px 17px;

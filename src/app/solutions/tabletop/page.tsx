@@ -7,7 +7,7 @@ const tabletop = solutionServiceMeta[1];
 export const metadata: Metadata = { title: "Tabletop Exercise", description: "Simulasi krisis siber untuk menguji keputusan eksekutif, koordinasi, dan kesiapan organisasi." };
 
 export default function TabletopPage() {
-  return <ServicePage content={{
+  return <ServicePage className="service-tabletop" content={{
     id: {
       eyebrow: "Tabletop Exercise",
       title: "Uji Kesiapan Anda Sebelum",

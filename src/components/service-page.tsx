@@ -140,6 +140,7 @@ export type ServicePageCopy = {
 export type ServicePageProps = {
   content: Localized<ServicePageCopy>;
   cardVariant?: "resilience";
+  className?: string;
 };
 
 function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
@@ -152,7 +153,7 @@ function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: stri
   );
 }
 
-export function ServicePage({ content, cardVariant }: ServicePageProps) {
+export function ServicePage({ content, cardVariant, className = "" }: ServicePageProps) {
   const { t } = usePublicPreferences();
   const props = t(content);
   const hasResilienceCards = cardVariant === "resilience";
@@ -163,7 +164,7 @@ export function ServicePage({ content, cardVariant }: ServicePageProps) {
   const hasAudience = props.audience.length > 0 || props.benefits.length > 0;
 
   return (
-    <main className={`site-shell min-h-screen bg-background text-foreground ${hasResilienceCards ? "service-resilience-cards" : ""}`}>
+    <main className={`site-shell min-h-screen bg-background text-foreground ${hasResilienceCards ? "service-resilience-cards" : ""} ${className}`}>
       <SiteHeader />
       <section className="service-hero relative min-h-[560px] overflow-hidden border-b border-slate-200/80 dark:border-white/5">
         <div className="service-hero-artwork absolute inset-0">
