@@ -32,7 +32,7 @@ const experienceMeta = [
   { number: "03", Icon: ClipboardCheck },
 ];
 
-const heroImageClass = "hero-visual object-contain object-center opacity-95 scale-110";
+const heroImageClass = "hero-visual object-cover object-center opacity-95 lg:object-right";
 
 type AboutHighlight = {
   phrase: string;
@@ -235,7 +235,7 @@ export function CompanyPageContent() {
       <SiteHeader />
 
       <section className="relative overflow-hidden border-b border-slate-200/80 dark:border-white/5">
-        <div className="home-hero-artwork absolute inset-y-0 right-0" style={{ transform: "translateX(clamp(-3.5rem, -4vw, -2rem))" }}>
+        <div className="home-hero-artwork company-hero-artwork absolute inset-y-0 right-0">
           <Image
             src={publicAsset("/images/Tentang Kami Light.png")}
             alt=""

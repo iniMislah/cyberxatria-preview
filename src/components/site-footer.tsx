@@ -18,6 +18,12 @@ import {
 import { publicAsset } from "@/lib/asset-path";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 
+// Visible artwork bounds exclude transparent PNG padding, with a 2px edge allowance.
+const isoCertifications = [
+  { name: "ISO 27001", width: 1672, height: 941, bounds: { x: 481, y: 98, width: 716, height: 757 } },
+  { name: "ISO 9001", width: 1448, height: 1086, bounds: { x: 297, y: 93, width: 854, height: 911 } },
+];
+
 const footerIconClass =
   "grid size-12 shrink-0 place-items-center rounded-[13px] border border-rose-500/15 bg-white/45 text-rose-600 shadow-[0_4px_14px_rgba(15,23,42,0.04)] backdrop-blur-[2px] transition group-hover:border-rose-500/25 group-hover:bg-white/55 dark:border-rose-200/10 dark:bg-white/[0.045] dark:text-rose-400 dark:group-hover:border-rose-300/20 dark:group-hover:bg-white/[0.07]";
 const footerIconInnerClass =
@@ -110,16 +116,24 @@ export function SiteFooter() {
             })}
           </p>
           <div className="mt-6 flex items-center gap-4">
-            {["ISO 27001", "ISO 9001"].map((name) => (
-              <span key={name} className="relative block h-16 w-[72px] shrink-0">
-                <Image
-                  src={publicAsset(`/images/Sertifikasi Logo ${name}.png`)}
-                  alt={name}
-                  fill
-                  sizes="72px"
-                  className="object-contain object-center"
-                  style={name === "ISO 27001" ? { transform: "scale(1.7)" } : undefined}
-                />
+            {isoCertifications.map(({ name, width, height, bounds }) => (
+              <span key={name} className="flex h-16 w-[72px] shrink-0 items-center justify-center">
+                <span className="relative block h-full overflow-hidden" style={{ aspectRatio: `${bounds.width} / ${bounds.height}` }}>
+                  <Image
+                    src={publicAsset(`/images/Sertifikasi Logo ${name}.png`)}
+                    alt={name}
+                    width={width}
+                    height={height}
+                    sizes="144px"
+                    className="absolute max-w-none"
+                    style={{
+                      width: `${(width / bounds.width) * 100}%`,
+                      height: "auto",
+                      left: `${(-bounds.x / bounds.width) * 100}%`,
+                      top: `${(-bounds.y / bounds.height) * 100}%`,
+                    }}
+                  />
+                </span>
               </span>
             ))}
           </div>

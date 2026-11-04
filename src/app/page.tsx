@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { CountUpValue, Reveal } from "@/components/public-motion";
 import { RequestDemoCta } from "@/components/request-demo-cta";
+import { HomeFaq } from "@/components/home-faq";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
@@ -839,6 +840,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <HomeFaq />
 
       <section className="py-16 sm:py-20">
         <Reveal className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 dark:bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,0.20),transparent_34%),linear-gradient(135deg,#0b0f19,#05070c)] px-6 py-12 text-center sm:px-12 lg:flex lg:items-center lg:justify-between lg:text-left shadow-lg dark:shadow-[0_0_50px_rgba(244,63,94,0.15)]">

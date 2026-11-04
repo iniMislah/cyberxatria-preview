@@ -473,6 +473,10 @@ html:not(.dark) .brand-logo {
   transform: translateX(clamp(3.5rem, 5vw, 7rem));
 }
 
+.home-hero-artwork.company-hero-artwork {
+  transform: none;
+}
+
 .home-hero-artwork::before,
 .home-hero-artwork::after {
   content: "";
