@@ -69,7 +69,7 @@ function LinkedInIcon({ className = "" }: { className?: string }) {
 
 function InstagramSocialIcon() {
   return (
-    <a href="#" aria-label="Instagram" className={socialIconClass}>
+    <a href="https://www.instagram.com/cyberxatria/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={socialIconClass}>
       <span className="grid size-full place-items-center rounded-[12px] transition">
         <InstagramIcon className="size-5" />
       </span>
@@ -79,7 +79,7 @@ function InstagramSocialIcon() {
 
 function LinkedInSocialIcon() {
   return (
-    <a href="#" aria-label="LinkedIn" className={socialIconClass}>
+    <a href="https://www.linkedin.com/showcase/cyberxatria/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className={socialIconClass}>
       <span className="grid size-full place-items-center rounded-[12px] transition">
         <LinkedInIcon className="size-5" />
       </span>
