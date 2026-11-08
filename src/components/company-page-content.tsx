@@ -7,6 +7,7 @@ import { ArrowRight, ClipboardCheck, Flag, GraduationCap } from "lucide-react";
 import { RequestDemoCta } from "@/components/request-demo-cta";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ServiceScroll } from "@/components/service-scroll";
 import { publicAsset } from "@/lib/asset-path";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 import { solutionServiceMeta } from "@/lib/solution-services";
@@ -138,12 +139,12 @@ export function CompanyPageContent() {
           description:
             "Simulasi berbasis skenario yang melibatkan berbagai fungsi dalam organisasi untuk menguji pengambilan keputusan, koordinasi, dan prosedur respons insiden siber.",
         },
+        { title: learningContent.id.hero.label, description: learningContent.id.hero.description },
         {
           title: "AI FOR SOC",
           description:
             "Solusi berbasis kecerdasan buatan yang membantu tim SOC menganalisis peringatan, mengidentifikasi potensi ancaman, memprioritaskan risiko, serta mempercepat penyelidikan dan respons keamanan.",
         },
-        { title: learningContent.id.hero.label, description: learningContent.id.hero.description },
       ],
       experienceEyebrow: "PENGALAMAN KAMI",
       experienceTitle: "Jejak Kolaborasi Kami",
@@ -199,12 +200,12 @@ export function CompanyPageContent() {
           description:
             "A scenario-based simulation involving various functions within an organization to test decision-making, coordination, and cyber incident response procedures.",
         },
+        { title: learningContent.en.hero.label, description: learningContent.en.hero.description },
         {
           title: "AI FOR SOC",
           description:
             "An artificial intelligence-based solution that helps SOC teams analyze alerts, identify potential threats, prioritize risks, and accelerate security investigations and responses.",
         },
-        { title: learningContent.en.hero.label, description: learningContent.en.hero.description },
       ],
       experienceEyebrow: "OUR EXPERIENCE",
       experienceTitle: "Our Collaboration Journey",
@@ -318,33 +319,33 @@ export function CompanyPageContent() {
         <div className="page-grid">
           <div className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.servicesEyebrow}</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.servicesTitle}</h2>
+            <h2 id="company-services-heading" className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.servicesTitle}</h2>
             <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.servicesDescription}</p>
           </div>
-          <div className="grid gap-6 md:auto-rows-fr md:grid-cols-2">
+          <ServiceScroll headingId="company-services-heading">
             {copy.services.map((service, index) => {
               const meta = solutionServiceMeta[index];
               return (
-                <article key={service.title} className="cyber-card motion-card flex h-full flex-col rounded-2xl p-4">
+                <article key={service.title} className="cyber-card motion-card flex h-full min-w-0 snap-start flex-col rounded-2xl p-4">
                   <div className="solution-card-image relative shrink-0 overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
                     <Image
                       src={publicAsset(meta.imageLight)}
                       alt={service.title}
                       fill
-                      sizes="(max-width: 767px) 100vw, 50vw"
+                      sizes="(max-width: 639px) 88vw, 360px"
                       className={`${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:hidden`}
                     />
                     <Image
                       src={publicAsset(meta.image)}
                       alt={service.title}
                       fill
-                      sizes="(max-width: 767px) 100vw, 50vw"
+                      sizes="(max-width: 639px) 88vw, 360px"
                       className={`hidden ${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:block`}
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-3 pt-5">
-                    <h3 className="flex min-h-14 items-center text-xl font-bold text-slate-900 dark:text-white">{service.title}</h3>
-                    <p className="mt-4 flex-1 text-base leading-7 text-slate-600 dark:text-slate-400">{service.description}</p>
+                  <div className="flex flex-1 flex-col p-2 pt-4">
+                    <h3 className="flex min-h-14 items-center text-lg font-bold text-slate-900 dark:text-white">{service.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{service.description}</p>
                     {meta.href ? (
                       <Link
                         href={localePath(meta.href, language)}
@@ -364,7 +365,7 @@ export function CompanyPageContent() {
                 </article>
               );
             })}
-          </div>
+          </ServiceScroll>
         </div>
       </section>
 

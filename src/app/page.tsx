@@ -19,6 +19,7 @@ import { RequestDemoCta } from "@/components/request-demo-cta";
 import { HomeFaq } from "@/components/home-faq";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ServiceScroll } from "@/components/service-scroll";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
 import { solutionServiceMeta } from "@/lib/solution-services";
@@ -148,6 +149,7 @@ const content = {
             "Simulasi berbasis skenario yang melibatkan berbagai fungsi dalam organisasi untuk menguji pengambilan keputusan, koordinasi, dan prosedur respons insiden siber.",
           points: ["Crisis Simulation", "Real Scenario", "Executive Readiness", "Stakeholder Coordination"],
         },
+        { title: learningContent.id.hero.label, description: learningContent.id.hero.description, points: learningContent.id.benefits.items.map((item) => item.title) },
         {
           title: "AI for SOC",
           description:
@@ -161,7 +163,6 @@ const content = {
             "Respons Berbantuan AI",
           ],
         },
-        { title: learningContent.id.hero.label, description: learningContent.id.hero.description, points: learningContent.id.benefits.items.map((item) => item.title) },
       ],
     },
     whyCyberXatria: {
@@ -326,6 +327,7 @@ const content = {
             "A scenario-based simulation involving various functions within an organization to test decision-making, coordination, and cyber incident response procedures.",
           points: ["Crisis Simulation", "Real Scenario", "Executive Readiness", "Stakeholder Coordination"],
         },
+        { title: learningContent.en.hero.label, description: learningContent.en.hero.description, points: learningContent.en.benefits.items.map((item) => item.title) },
         {
           title: "AI for SOC",
           description:
@@ -339,7 +341,6 @@ const content = {
             "AI-Assisted Response",
           ],
         },
-        { title: learningContent.en.hero.label, description: learningContent.en.hero.description, points: learningContent.en.benefits.items.map((item) => item.title) },
       ],
     },
     whyCyberXatria: {
@@ -628,46 +629,46 @@ export default function Home() {
         <div className="page-grid relative">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
             <p className="eyebrow justify-center">{copy.solutions.eyebrow}</p>
-            <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">
+            <h2 id="services-heading" className="mt-4 text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl">
               {copy.solutions.title} <span className="text-gradient">{copy.solutions.accent}</span>
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.solutions.intro}</p>
           </Reveal>
-          <div className="grid gap-6 md:auto-rows-fr md:grid-cols-2">
+          <ServiceScroll headingId="services-heading">
             {copy.solutions.services.map((service, index) => {
               const meta = solutionServiceMeta[index];
               const comingSoon = !meta.href;
               return (
-                <Reveal key={service.title} delay={index * 90} className="h-full flex flex-col">
+                <Reveal key={service.title} delay={index * 90} className="flex h-full min-w-0 snap-start flex-col">
                   <article className={`cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-4 ${comingSoon ? "opacity-80" : ""}`}>
                     <div className="solution-card-image relative shrink-0 overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
                       <Image
                         src={publicAsset(meta.imageLight)}
                         alt={service.title}
                         fill
-                        sizes="(max-width: 767px) 100vw, 50vw"
+                        sizes="(max-width: 639px) 88vw, 360px"
                         className={`${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:hidden`}
                       />
                       <Image
                         src={publicAsset(meta.image)}
                         alt={service.title}
                         fill
-                        sizes="(max-width: 767px) 100vw, 50vw"
+                        sizes="(max-width: 639px) 88vw, 360px"
                         className={`hidden ${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:block`}
                       />
                     </div>
-                    <div className="flex flex-1 flex-col p-3 pt-5">
+                    <div className="flex flex-1 flex-col p-2 pt-4">
                       <div className="flex min-h-14 items-center gap-3">
-                        <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-rose-500/35 bg-rose-500/10 text-rose-500 dark:text-rose-400">
+                        <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-rose-500/35 bg-rose-500/10 text-rose-500 dark:text-rose-400">
                           <ShieldCheck className="size-5" />
                         </span>
-                        <h3 className="min-w-0 text-xl font-bold text-slate-900 dark:text-white">{service.title}</h3>
+                        <h3 className="min-w-0 text-lg font-bold text-slate-900 dark:text-white">{service.title}</h3>
                       </div>
                       {service.description && (
-                        <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-400">{service.description}</p>
+                        <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">{service.description}</p>
                       )}
                       {service.points.length > 0 && (
-                        <ul className="mt-6 space-y-3 text-base text-slate-700 dark:text-slate-300">
+                        <ul className="mt-5 space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
                           {service.points.map((point) => (
                             <li key={point} className="flex items-center gap-2">
                               <Check className="size-4 shrink-0 text-rose-500" /> {point}
@@ -692,7 +693,7 @@ export default function Home() {
                 </Reveal>
               );
             })}
-          </div>
+          </ServiceScroll>
         </div>
       </section>
 

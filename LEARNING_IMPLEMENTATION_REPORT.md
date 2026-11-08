@@ -5,8 +5,8 @@
 - Branch remains `landing-page-without-login`. No commit, push, PR, merge, or branch change.
 - New public presentation page: `/id/solutions/cyberxatria-learning` and `/en/solutions/cyberxatria-learning`; also follows the existing unprefixed `/solutions/cyberxatria-learning` convention.
 - Six sections: hero, about, benefits (6), categories (2), audience (6), closing CTA.
-- Learning is appended after the existing services, without changing their descriptions or order, in homepage cards, About Us cards, desktop/mobile service navigation, and footer links.
-- Homepage and About service grids use 2 columns with equal row heights from tablet upward and 1 natural-height column on mobile. Shared image ratios, heading space, padding, and bottom-aligned CTAs keep cards consistent. Learning artwork uses `object-contain`; existing service artwork retains its current presentation. Homepage Learning benefits use the six approved benefit titles; the duplicate AI for SOC Coming Soon badge was removed, retaining its unavailable status at the bottom.
+- Service order: Cyber Drill Exercise, Tabletop Exercise, CyberXatria Learning, then AI for SOC, consistently in homepage cards, About Us cards, desktop/mobile service navigation, and footer links. AI for SOC is last in both horizontal scroll rows.
+- Homepage and About services share `ServiceScroll`: 360px cards on tablet/desktop, responsive cards on mobile, hidden scrollbars, scroll snapping, previous/next buttons, native scrolling, keyboard focus, and reduced-motion behavior. Card heights and CTA baselines match within each row; typography and spacing are compact. Shared image ratios preserve the artwork presentation. Learning artwork uses `object-contain`; existing services retain their fit. Homepage Learning benefits use the six approved benefit titles; AI for SOC retains a single unavailable status at the bottom.
 - Uses the existing header/footer, `Reveal`, motion/card classes, typography, containers, buttons, theme classes, `localePath`, and `publicAsset`. No dependencies or global design tokens added.
 - A dedicated Learning content component follows the existing public-page composition pattern. The generic exercise `ServicePage` requires exercise-specific challenges, flow, and package sections; it was left unchanged rather than adding unrelated variants or empty exercise data.
 - Localized route parameters select the correct copy in static HTML. English translates the supplied Indonesian text. Metadata descriptions are localized; the service's brand name is retained in titles. No sitemap/robots/canonical/hreflang convention exists for the current service pages, so no global SEO configuration was introduced.
@@ -16,6 +16,7 @@
 
 - `src/lib/learning-content.ts`: copy, ordered image mapping, service route.
 - `src/components/learning-page-content.tsx`: responsive six-section presentation.
+- `src/components/service-scroll.tsx`: shared accessible horizontal service row and controls for homepage/About.
 - `src/app/solutions/cyberxatria-learning/page.tsx`: unprefixed route.
 - `src/app/[lang]/solutions/cyberxatria-learning/page.tsx`: ID/EN route, validation and localized metadata.
 - `LEARNING_IMPLEMENTATION_REPORT.md`: this report.
@@ -92,8 +93,10 @@ No authentication, LMS, enrollment, API, Brevo/email template, environment secre
 
 ## Final Git state
 
-This feature adds 4 implementation files and this report, with additions in 5 existing files. The 16 supplied Learning PNGs remain untracked user-provided assets. Existing FAQ/contact/WhatsApp/license/ISO modifications and old ISO deletions from earlier work remain in the working tree. No generated browser artifact was added to Git; no staged changes, commit, push, or branch change was made by this task.
+This feature adds 5 implementation files and this report, with additions in 5 existing files. Supplied illustrations and unrelated prior changes are preserved. No generated browser artifact was added to Git; no staging, commit, push, or branch change was performed by the agent.
 
 Follow-up layout/CTA validation: browser assertions checked homepage and About cards in ID/EN, light/dark, at widths 320, 390, 768, and 1440. All 32 combinations have 4 cards and no horizontal overflow. At tablet/desktop widths, all 4 cards in each section have equal width, height, image height, and CTA bottom spacing; light/dark dimensions match. Mobile cards retain natural text heights to avoid unnecessary empty space.
 
 Next review: provide the DOCX/screenshot for direct comparison; review the shared Next.js static segment-prefetch issue before publishing. A future LMS remains outside this presentation feature.
+
+Latest shared-scroll revision: Playwright assertions passed for 32 homepage/About, ID/EN, light/dark, 320/390/768/1440px combinations: scrollbar width is none and the WebKit scrollbar is hidden, horizontal overflow stays within each service row, all 4 cards have equal height, ordering is preserved, and previous/next buttons scroll correctly. Keyboard Enter on the shared scroll controls passed with normal motion. Desktop card width is approximately 360px. Lint, normal build, and diff check passed for this revision; the GitHub Pages build was not repeated for this UI-only follow-up.

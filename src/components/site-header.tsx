@@ -16,8 +16,8 @@ type SolutionItem =
 const solutions: SolutionItem[] = [
   { href: "/solutions/cyber-drill", label: "Cyber Drill Exercise" },
   { href: "/solutions/tabletop", label: "Tabletop Exercise" },
-  { label: "AI for SOC", comingSoon: true },
   { href: learningRoute, label: "CyberXatria Learning" },
+  { label: "AI for SOC", comingSoon: true },
 ];
 
 function IndonesiaFlag() {

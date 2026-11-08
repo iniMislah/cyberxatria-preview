@@ -155,6 +155,11 @@ export function SiteFooter() {
               <span className="min-w-0 flex-1">Tabletop Exercise</span>
               <ChevronRight className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-rose-500 dark:text-slate-500" />
             </Link>
+            <Link className={footerRowClass} href={href(learningRoute)}>
+              <FooterIcon Icon={BookOpenCheck} />
+              <span className="min-w-0 flex-1">CyberXatria Learning</span>
+              <ChevronRight className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-rose-500 dark:text-slate-500" />
+            </Link>
             <span className="flex cursor-not-allowed items-center gap-3 py-2.5 text-base text-slate-500 dark:text-slate-500">
               <span className={footerIconClass}>
                 <span className={footerIconInnerClass}>
@@ -168,11 +173,6 @@ export function SiteFooter() {
                 </span>
               </span>
             </span>
-            <Link className={footerRowClass} href={href(learningRoute)}>
-              <FooterIcon Icon={BookOpenCheck} />
-              <span className="min-w-0 flex-1">CyberXatria Learning</span>
-              <ChevronRight className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-rose-500 dark:text-slate-500" />
-            </Link>
           </div>
         </div>
 
