@@ -10,6 +10,7 @@ import { SiteHeader } from "@/components/site-header";
 import { publicAsset } from "@/lib/asset-path";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 import { solutionServiceMeta } from "@/lib/solution-services";
+import { learningContent } from "@/lib/learning-content";
 
 const experienceImages = [
   {
@@ -142,6 +143,7 @@ export function CompanyPageContent() {
           description:
             "Solusi berbasis kecerdasan buatan yang membantu tim SOC menganalisis peringatan, mengidentifikasi potensi ancaman, memprioritaskan risiko, serta mempercepat penyelidikan dan respons keamanan.",
         },
+        { title: learningContent.id.hero.label, description: learningContent.id.hero.description },
       ],
       experienceEyebrow: "PENGALAMAN KAMI",
       experienceTitle: "Jejak Kolaborasi Kami",
@@ -202,6 +204,7 @@ export function CompanyPageContent() {
           description:
             "An artificial intelligence-based solution that helps SOC teams analyze alerts, identify potential threats, prioritize risks, and accelerate security investigations and responses.",
         },
+        { title: learningContent.en.hero.label, description: learningContent.en.hero.description },
       ],
       experienceEyebrow: "OUR EXPERIENCE",
       experienceTitle: "Our Collaboration Journey",
@@ -318,29 +321,29 @@ export function CompanyPageContent() {
             <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.servicesTitle}</h2>
             <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.servicesDescription}</p>
           </div>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-6 md:auto-rows-fr md:grid-cols-2">
             {copy.services.map((service, index) => {
               const meta = solutionServiceMeta[index];
               return (
                 <article key={service.title} className="cyber-card motion-card flex h-full flex-col rounded-2xl p-4">
-                  <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
+                  <div className="solution-card-image relative shrink-0 overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
                     <Image
                       src={publicAsset(meta.imageLight)}
                       alt={service.title}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover dark:hidden"
+                      sizes="(max-width: 767px) 100vw, 50vw"
+                      className={`${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:hidden`}
                     />
                     <Image
                       src={publicAsset(meta.image)}
                       alt={service.title}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="hidden object-cover dark:block"
+                      sizes="(max-width: 767px) 100vw, 50vw"
+                      className={`hidden ${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:block`}
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-3 pt-5">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{service.title}</h3>
+                    <h3 className="flex min-h-14 items-center text-xl font-bold text-slate-900 dark:text-white">{service.title}</h3>
                     <p className="mt-4 flex-1 text-base leading-7 text-slate-600 dark:text-slate-400">{service.description}</p>
                     {meta.href ? (
                       <Link

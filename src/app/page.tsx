@@ -22,6 +22,7 @@ import { SiteHeader } from "@/components/site-header";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
 import { solutionServiceMeta } from "@/lib/solution-services";
+import { learningContent } from "@/lib/learning-content";
 
 const threatImages = [
   { image: "/images/Ransomware Trend.png", scale: 1.03 },
@@ -160,6 +161,7 @@ const content = {
             "Respons Berbantuan AI",
           ],
         },
+        { title: learningContent.id.hero.label, description: learningContent.id.hero.description, points: learningContent.id.benefits.items.map((item) => item.title) },
       ],
     },
     whyCyberXatria: {
@@ -337,6 +339,7 @@ const content = {
             "AI-Assisted Response",
           ],
         },
+        { title: learningContent.en.hero.label, description: learningContent.en.hero.description, points: learningContent.en.benefits.items.map((item) => item.title) },
       ],
     },
     whyCyberXatria: {
@@ -630,40 +633,35 @@ export default function Home() {
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.solutions.intro}</p>
           </Reveal>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:auto-rows-fr md:grid-cols-2">
             {copy.solutions.services.map((service, index) => {
               const meta = solutionServiceMeta[index];
               const comingSoon = !meta.href;
               return (
                 <Reveal key={service.title} delay={index * 90} className="h-full flex flex-col">
                   <article className={`cyber-card motion-card flex h-full flex-1 flex-col rounded-2xl p-4 ${comingSoon ? "opacity-80" : ""}`}>
-                    <div className="solution-card-image relative overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
+                    <div className="solution-card-image relative shrink-0 overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
                       <Image
                         src={publicAsset(meta.imageLight)}
                         alt={service.title}
                         fill
-                        sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="object-cover dark:hidden"
+                        sizes="(max-width: 767px) 100vw, 50vw"
+                        className={`${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:hidden`}
                       />
                       <Image
                         src={publicAsset(meta.image)}
                         alt={service.title}
                         fill
-                        sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="hidden object-cover dark:block"
+                        sizes="(max-width: 767px) 100vw, 50vw"
+                        className={`hidden ${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:block`}
                       />
                     </div>
                     <div className="flex flex-1 flex-col p-3 pt-5">
-                      <div className="flex items-center gap-3">
+                      <div className="flex min-h-14 items-center gap-3">
                         <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-rose-500/35 bg-rose-500/10 text-rose-500 dark:text-rose-400">
                           <ShieldCheck className="size-5" />
                         </span>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">{service.title}</h3>
-                        {comingSoon && (
-                          <span className="ml-auto rounded-full border border-slate-300 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-white/10 dark:text-slate-400">
-                            {copy.solutions.comingSoon}
-                          </span>
-                        )}
+                        <h3 className="min-w-0 text-xl font-bold text-slate-900 dark:text-white">{service.title}</h3>
                       </div>
                       {service.description && (
                         <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-400">{service.description}</p>
@@ -684,7 +682,7 @@ export default function Home() {
                       ) : (
                         <Link
                           href={href(meta.href)}
-                          className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300"
+                          className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-500 dark:text-rose-400 dark:hover:text-rose-300"
                         >
                           {copy.solutions.learnMore} <ArrowRight className="size-4" />
                         </Link>

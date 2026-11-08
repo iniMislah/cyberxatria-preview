@@ -1,5 +1,7 @@
 # Laporan FAQ Beranda CyberXatria
 
+Pembaruan 6 November 2026: FAQ nomor 2 kini mencantumkan Learning. FAQ nomor 8 dan tautannya memakai WhatsApp, mengikuti penggantian formulir kontak publik dengan kontak WhatsApp.
+
 Pembaruan FAQ nomor 6: jawaban Indonesia mengikuti naskah yang diminta dan didukung halaman Cyber Drill serta Tabletop. Terjemahan Inggris diselaraskan; tautan diganti ke Cyber Drill menggunakan localePath. Hash tujuh FAQ lainnya dan komponen accordion tetap sama. Lint, build normal, build GitHub Pages, serta diff check lulus; 8 kombinasi browser ID/EN, light/dark, dan mobile/desktop lulus. HTML export kedua locale memuat pertanyaan pengganti, tanpa pertanyaan/tautan SOC lama atau localhost, dengan basePath satu kali. Tidak ada deployment langsung, commit, atau push.
 
 ## Audit dan ruang lingkup
@@ -33,7 +35,7 @@ Sumber: Tentang Kami: pengantar dan ekosistem pembelajaran; Beranda: pendekatan 
 
 #### 2. Layanan apa saja yang tersedia di CyberXatria?
 
-CyberXatria menampilkan Cyber Drill Exercise, Tabletop Exercise, serta AI for SOC yang saat ini ditandai sebagai layanan yang akan hadir. Situs ini juga menjelaskan program pembelajaran dan pelatihan keamanan siber untuk individu dan organisasi.
+CyberXatria menampilkan Cyber Drill Exercise, Tabletop Exercise, AI for SOC, dan Learning untuk mendukung kesiapan serta pembelajaran keamanan siber. AI for SOC saat ini ditandai sebagai layanan yang akan hadir.
 
 Tautan: Lihat layanan CyberXatria (/id/#solutions).
 
@@ -81,9 +83,9 @@ Sumber: Beranda: Mengapa Memilih CyberXatria, Cocok untuk Semua Tingkat Keahlian
 
 #### 8. Bagaimana cara mengetahui layanan CyberXatria yang sesuai untuk organisasi?
 
-Gunakan Cyber Drill Exercise untuk menguji kesiapan teknis dan Tabletop Exercise untuk mengevaluasi keputusan, koordinasi, serta prosedur respons insiden. Sampaikan tujuan dan kebutuhan organisasi melalui formulir kontak pada halaman Ajukan Demo untuk mendiskusikan layanan dan skenario yang relevan.
+Gunakan Cyber Drill Exercise untuk menguji kesiapan teknis dan Tabletop Exercise untuk mengevaluasi keputusan, koordinasi, serta prosedur respons insiden. Sampaikan tujuan dan kebutuhan organisasi melalui WhatsApp untuk mendiskusikan layanan dan skenario yang relevan.
 
-Tautan: Ajukan demo dan diskusikan kebutuhan Anda (/id/request-demo).
+Tautan: Diskusikan kebutuhan Anda melalui WhatsApp (https://wa.me/6285705365051).
 
 Sumber: Cyber Drill dan Tabletop: deskripsi layanan; Request Demo: konsultasi kebutuhan serta formulir kontak.
 
@@ -99,7 +101,7 @@ Sumber: Tentang Kami: pengantar dan ekosistem pembelajaran; Beranda: pendekatan 
 
 #### 2. What services does CyberXatria offer?
 
-CyberXatria presents Cyber Drill Exercise, Tabletop Exercise, and AI for SOC, which is currently marked as coming soon. The website also describes cybersecurity learning and training programs for individuals and organizations.
+CyberXatria presents Cyber Drill Exercise, Tabletop Exercise, AI for SOC, and Learning to support cybersecurity readiness and learning. AI for SOC is currently marked as coming soon.
 
 Tautan: Explore CyberXatria services (/en/#solutions).
 
@@ -147,9 +149,9 @@ Sumber: Beranda: Mengapa Memilih CyberXatria, Cocok untuk Semua Tingkat Keahlian
 
 #### 8. How can an organization choose the right CyberXatria service?
 
-Choose Cyber Drill Exercise to test technical readiness and Tabletop Exercise to evaluate decisions, coordination, and incident response procedures. Share your organization's goals and needs through the contact form on the Request Demo page to discuss relevant services and scenarios.
+Choose Cyber Drill Exercise to test technical readiness and Tabletop Exercise to evaluate decisions, coordination, and incident response procedures. Share your organization's goals and needs on WhatsApp to discuss relevant services and scenarios.
 
-Tautan: Request a demo and discuss your needs (/en/request-demo).
+Tautan: Discuss your needs on WhatsApp (https://wa.me/6285705365051).
 
 Sumber: Cyber Drill dan Tabletop: deskripsi layanan; Request Demo: konsultasi kebutuhan serta formulir kontak.
 

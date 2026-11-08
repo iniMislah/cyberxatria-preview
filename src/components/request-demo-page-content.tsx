@@ -1,7 +1,8 @@
 "use client";
 
 import { Check, MapPin } from "lucide-react";
-import { RequestDemoForm } from "@/components/request-demo-form";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
+import { WHATSAPP_URL } from "@/lib/contact-links";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { usePublicPreferences } from "@/lib/public-preferences";
@@ -42,7 +43,17 @@ export function RequestDemoPageContent() {
               <p className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-400">{copy.mapAddress}</p>
             </div>
           </div>
-          <RequestDemoForm />
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-[#090d15] sm:p-8">
+            <div className="grid size-14 place-items-center rounded-2xl bg-rose-50 dark:bg-rose-500/10">
+              <WhatsAppIcon className="size-8 text-rose-600 dark:text-rose-400" />
+            </div>
+            <h2 className="mt-5 text-2xl font-bold text-slate-900 dark:text-white">{t({ id: "Hubungi Kami melalui WhatsApp", en: "Contact Us on WhatsApp" })}</h2>
+            <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300">{t({ id: "Diskusikan kebutuhan latihan, simulasi, dan layanan CyberXatria bersama tim kami melalui WhatsApp.", en: "Discuss your training, simulation, and CyberXatria service needs with our team on WhatsApp." })}</p>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="glow-button mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg px-6 py-3 text-center text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-500">
+              <WhatsAppIcon className="size-5 shrink-0" />
+              {t({ id: "Chat melalui WhatsApp", en: "Chat on WhatsApp" })}
+            </a>
+          </div>
         </div>
       </section>
       <SiteFooter />

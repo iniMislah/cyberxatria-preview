@@ -1,4 +1,5 @@
 import type { Localized } from "@/lib/public-preferences";
+import { WHATSAPP_URL } from "@/lib/contact-links";
 
 export type FaqEntry = {
   question: string;
@@ -17,7 +18,7 @@ export const homeFaq: Localized<{ title: string; entries: FaqEntry[] }> = {
       },
       {
         question: "Layanan apa saja yang tersedia di CyberXatria?",
-        answer: "CyberXatria menampilkan Cyber Drill Exercise, Tabletop Exercise, serta AI for SOC yang saat ini ditandai sebagai layanan yang akan hadir. Situs ini juga menjelaskan program pembelajaran dan pelatihan keamanan siber untuk individu dan organisasi.",
+        answer: "CyberXatria menampilkan Cyber Drill Exercise, Tabletop Exercise, AI for SOC, dan Learning untuk mendukung kesiapan serta pembelajaran keamanan siber. AI for SOC saat ini ditandai sebagai layanan yang akan hadir.",
         link: { href: "/#solutions", label: "Lihat layanan CyberXatria" },
       },
       {
@@ -47,8 +48,8 @@ export const homeFaq: Localized<{ title: string; entries: FaqEntry[] }> = {
       },
       {
         question: "Bagaimana cara mengetahui layanan CyberXatria yang sesuai untuk organisasi?",
-        answer: "Gunakan Cyber Drill Exercise untuk menguji kesiapan teknis dan Tabletop Exercise untuk mengevaluasi keputusan, koordinasi, serta prosedur respons insiden. Sampaikan tujuan dan kebutuhan organisasi melalui formulir kontak pada halaman Ajukan Demo untuk mendiskusikan layanan dan skenario yang relevan.",
-        link: { href: "/request-demo", label: "Ajukan demo dan diskusikan kebutuhan Anda" },
+        answer: "Gunakan Cyber Drill Exercise untuk menguji kesiapan teknis dan Tabletop Exercise untuk mengevaluasi keputusan, koordinasi, serta prosedur respons insiden. Sampaikan tujuan dan kebutuhan organisasi melalui WhatsApp untuk mendiskusikan layanan dan skenario yang relevan.",
+        link: { href: WHATSAPP_URL, label: "Diskusikan kebutuhan Anda melalui WhatsApp" },
       },
     ],
   },
@@ -62,7 +63,7 @@ export const homeFaq: Localized<{ title: string; entries: FaqEntry[] }> = {
       },
       {
         question: "What services does CyberXatria offer?",
-        answer: "CyberXatria presents Cyber Drill Exercise, Tabletop Exercise, and AI for SOC, which is currently marked as coming soon. The website also describes cybersecurity learning and training programs for individuals and organizations.",
+        answer: "CyberXatria presents Cyber Drill Exercise, Tabletop Exercise, AI for SOC, and Learning to support cybersecurity readiness and learning. AI for SOC is currently marked as coming soon.",
         link: { href: "/#solutions", label: "Explore CyberXatria services" },
       },
       {
@@ -92,8 +93,8 @@ export const homeFaq: Localized<{ title: string; entries: FaqEntry[] }> = {
       },
       {
         question: "How can an organization choose the right CyberXatria service?",
-        answer: "Choose Cyber Drill Exercise to test technical readiness and Tabletop Exercise to evaluate decisions, coordination, and incident response procedures. Share your organization's goals and needs through the contact form on the Request Demo page to discuss relevant services and scenarios.",
-        link: { href: "/request-demo", label: "Request a demo and discuss your needs" },
+        answer: "Choose Cyber Drill Exercise to test technical readiness and Tabletop Exercise to evaluate decisions, coordination, and incident response procedures. Share your organization's goals and needs on WhatsApp to discuss relevant services and scenarios.",
+        link: { href: WHATSAPP_URL, label: "Discuss your needs on WhatsApp" },
       },
     ],
   },

@@ -6,23 +6,34 @@ import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   Building2,
+  BookOpenCheck,
   ChevronRight,
   Clock3,
   Mail,
   MapPin,
   MessageSquareText,
-  Phone,
   ShieldCheck,
   UsersRound,
 } from "lucide-react";
 import { publicAsset } from "@/lib/asset-path";
 import { localePath, usePublicPreferences } from "@/lib/public-preferences";
+import { WHATSAPP_NUMBER, WHATSAPP_URL } from "@/lib/contact-links";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
+import { learningRoute } from "@/lib/learning-content";
 
-// Visible artwork bounds exclude transparent PNG padding, with a 2px edge allowance.
-const isoCertifications = [
-  { name: "ISO 27001", width: 1672, height: 941, bounds: { x: 481, y: 98, width: 716, height: 757 } },
-  { name: "ISO 9001", width: 1448, height: 1086, bounds: { x: 297, y: 93, width: 854, height: 911 } },
-];
+const isoCertificationImages = {
+  id: { light: "/images/ISO_in_Light.png", dark: "/images/ISO_Bahasa.png" },
+  en: { light: "/images/ISO_en_Light.png", dark: "/images/ISO_En.png" },
+};
+
+// Shared safe bounds retain all four certifications and their numbers in every asset.
+const isoBounds = { x: 60, y: 90, width: 2058, height: 520 };
+const isoImageStyle = {
+  width: `${(2172 / isoBounds.width) * 100}%`,
+  height: "auto",
+  left: `${(-isoBounds.x / isoBounds.width) * 100}%`,
+  top: `${(-isoBounds.y / isoBounds.height) * 100}%`,
+};
 
 const footerIconClass =
   "grid size-12 shrink-0 place-items-center rounded-[13px] border border-rose-500/15 bg-white/45 text-rose-600 shadow-[0_4px_14px_rgba(15,23,42,0.04)] backdrop-blur-[2px] transition group-hover:border-rose-500/25 group-hover:bg-white/55 dark:border-rose-200/10 dark:bg-white/[0.045] dark:text-rose-400 dark:group-hover:border-rose-300/20 dark:group-hover:bg-white/[0.07]";
@@ -100,6 +111,11 @@ export function SiteFooter() {
   const { language, t } = usePublicPreferences();
   const href = (path: string) => localePath(path, language);
   const comingSoon = t({ id: "Coming Soon", en: "Coming Soon" });
+  const isoImages = t(isoCertificationImages);
+  const isoAlt = t({
+    id: "Sertifikasi ISO 9001, ISO/IEC 27001, ISO 45001, dan ISO 37001",
+    en: "ISO 9001, ISO/IEC 27001, ISO 45001, and ISO 37001 certifications",
+  });
 
   return (
     <footer
@@ -115,31 +131,14 @@ export function SiteFooter() {
               en: "An integrated cybersecurity platform that helps organizations prepare, detect threats, and respond to incidents.",
             })}
           </p>
-          <div className="mt-6 flex items-center gap-4">
-            {isoCertifications.map(({ name, width, height, bounds }) => (
-              <span key={name} className="flex h-16 w-[72px] shrink-0 items-center justify-center">
-                <span className="relative block h-full overflow-hidden" style={{ aspectRatio: `${bounds.width} / ${bounds.height}` }}>
-                  <Image
-                    src={publicAsset(`/images/Sertifikasi Logo ${name}.png`)}
-                    alt={name}
-                    width={width}
-                    height={height}
-                    sizes="144px"
-                    className="absolute max-w-none"
-                    style={{
-                      width: `${(width / bounds.width) * 100}%`,
-                      height: "auto",
-                      left: `${(-bounds.x / bounds.width) * 100}%`,
-                      top: `${(-bounds.y / bounds.height) * 100}%`,
-                    }}
-                  />
-                </span>
-              </span>
-            ))}
-          </div>
           <div className="mt-5 flex gap-3">
             <InstagramSocialIcon />
             <LinkedInSocialIcon />
+            <a href="https://www.tiktok.com/@cyberxatria" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className={socialIconClass}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="size-5">
+                <path d="M14 3h3c0 3 1.5 4.5 4 5v3a9 9 0 0 1-4-1.5V16a6 6 0 1 1-6-6v3a3 3 0 1 0 3 3Z" />
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -169,6 +168,11 @@ export function SiteFooter() {
                 </span>
               </span>
             </span>
+            <Link className={footerRowClass} href={href(learningRoute)}>
+              <FooterIcon Icon={BookOpenCheck} />
+              <span className="min-w-0 flex-1">CyberXatria Learning</span>
+              <ChevronRight className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-rose-500 dark:text-slate-500" />
+            </Link>
           </div>
         </div>
 
@@ -179,10 +183,10 @@ export function SiteFooter() {
               <FooterIcon Icon={Building2} />
               <span className="min-w-0 flex-1">{t({ id: "Tentang Kami", en: "About Us" })}</span>
             </Link>
-            <Link className={footerRowClass} href={href("/request-demo")}>
+            <a className={footerRowClass} href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               <FooterIcon Icon={MessageSquareText} />
               <span className="min-w-0 flex-1">{t({ id: "Ajukan Demo", en: "Request Demo" })}</span>
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -193,9 +197,11 @@ export function SiteFooter() {
               <FooterIcon Icon={Mail} />
               <span className="break-all">admin@cyberxatria.id</span>
             </a>
-            <a className={footerRowClass} href="tel:+628575365051">
-              <FooterIcon Icon={Phone} />
-              <span>+62 857-0536-5051</span>
+            <a className={footerRowClass} href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${WHATSAPP_NUMBER}`}>
+              <span className={footerIconClass}>
+                <span className={`${footerIconInnerClass} group-hover:text-orange-500 dark:group-hover:text-orange-300`}><WhatsAppIcon className="size-6" /></span>
+              </span>
+              <span>{WHATSAPP_NUMBER}</span>
             </a>
             <p className="flex items-center gap-3 py-2.5 text-base text-slate-700 dark:text-slate-300">
               <span className={footerIconClass}>
@@ -206,6 +212,23 @@ export function SiteFooter() {
               <span>Jakarta, Indonesia</span>
             </p>
           </div>
+        </div>
+      </div>
+
+      <div className="page-grid relative mt-8">
+        <div className="relative w-[90%] max-w-lg overflow-hidden" style={{ aspectRatio: `${isoBounds.width} / ${isoBounds.height}` }}>
+          {[{ src: isoImages.light, className: "dark:hidden" }, { src: isoImages.dark, className: "hidden dark:block" }].map(({ src, className }) => (
+            <Image
+              key={src}
+              src={publicAsset(src)}
+              alt={isoAlt}
+              width={2172}
+              height={724}
+              sizes="(max-width: 640px) 90vw, 512px"
+              className={`absolute max-w-none ${className}`}
+              style={isoImageStyle}
+            />
+          ))}
         </div>
       </div>
 

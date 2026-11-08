@@ -7,6 +7,7 @@ import { ChevronDown, Menu, Moon, Sun, X } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { localePath, stripLocalePrefix, usePublicPreferences, type Language } from "@/lib/public-preferences";
 import { publicAsset } from "@/lib/asset-path";
+import { learningRoute } from "@/lib/learning-content";
 
 type SolutionItem =
   | { href: string; label: string; comingSoon?: false }
@@ -16,6 +17,7 @@ const solutions: SolutionItem[] = [
   { href: "/solutions/cyber-drill", label: "Cyber Drill Exercise" },
   { href: "/solutions/tabletop", label: "Tabletop Exercise" },
   { label: "AI for SOC", comingSoon: true },
+  { href: learningRoute, label: "CyberXatria Learning" },
 ];
 
 function IndonesiaFlag() {
@@ -174,7 +176,7 @@ export function SiteHeader() {
                 />
               )}
             </button>
-            <div className="invisible absolute left-1/2 top-[66px] w-64 -translate-x-1/2 translate-y-2 rounded-xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0a0f1d] p-2 opacity-0 shadow-2xl transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 backdrop-blur-md">
+            <div className="invisible absolute left-1/2 top-[66px] w-64 -translate-x-1/2 translate-y-2 rounded-xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0a0f1d] p-2 opacity-0 shadow-2xl transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 backdrop-blur-md">
               {solutions.map((item) => item.comingSoon ? (
                 <button key={item.label} type="button" disabled className="flex w-full cursor-not-allowed items-center justify-between rounded-lg px-4 py-3 text-left text-slate-500 dark:text-slate-500">
                   <span>{item.label}</span>
