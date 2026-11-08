@@ -16,6 +16,7 @@ import {
 import { PortalShell } from "@/components/portal-shell";
 import { DashboardGreeting } from "@/components/dashboard-greeting";
 import { SocDashboardAccess } from "@/components/soc-dashboard-access";
+import { publicAsset } from "@/lib/asset-path";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -65,7 +66,7 @@ export default function DashboardPage() {
         <div className="mx-auto max-w-[1320px]">
           <section className="relative min-h-[280px] overflow-hidden rounded-2xl border border-rose-500/25 bg-[#090e18] p-6 sm:p-8">
             <Image
-              src="/images/cyber-shield-hero.png"
+              src={publicAsset("/images/cyber-shield-hero.png")}
               alt="CyberXatria dashboard protection"
               fill
               sizes="(max-width: 1024px) 100vw, 75vw"

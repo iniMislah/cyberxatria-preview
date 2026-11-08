@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { publicAsset } from "@/lib/asset-path";
 import {
   Bell,
   Boxes,
@@ -184,11 +185,11 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
         <div className="flex h-[72px] items-center justify-between border-b border-white/10 px-5">
           <Link href="/">
             <Image
-              src="/images/cyberxatria-logo.png"
+              src={publicAsset("/images/cyberxatria-logo.png")}
               alt="CyberXatria"
               width={426}
               height={114}
-              className="h-auto w-44"
+              className="brand-logo h-auto w-44"
             />
           </Link>
           <button

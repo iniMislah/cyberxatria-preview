@@ -1,81 +1,232 @@
 "use client";
 
+import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Award, Check, Handshake, Network, ScanSearch, ShieldCheck, Sparkles, Target, UsersRound } from "lucide-react";
+import { ArrowRight, ClipboardCheck, Flag, GraduationCap } from "lucide-react";
+import { RequestDemoCta } from "@/components/request-demo-cta";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { usePublicPreferences } from "@/lib/public-preferences";
+import { publicAsset } from "@/lib/asset-path";
+import { localePath, usePublicPreferences } from "@/lib/public-preferences";
+import { solutionServiceMeta } from "@/lib/solution-services";
+import { learningContent } from "@/lib/learning-content";
 
-const reasonIcons = [Target, UsersRound, Network, Sparkles];
-const badgeIcons = [Award, ShieldCheck, Handshake, Network];
+const experienceImages = [
+  {
+    light: "/images/Mini Bootcamp_Light.png",
+    dark: "/images/Mini Bootcamp_Dark.png",
+  },
+  {
+    light: "/images/CTF_Light.png",
+    dark: "/images/CTF_Dark.png",
+  },
+  {
+    light: "/images/CDE & TTX_Light.png",
+    dark: "/images/CDE & TTX_Dark.png",
+  },
+];
+
+const experienceMeta = [
+  { number: "01", Icon: GraduationCap },
+  { number: "02", Icon: Flag },
+  { number: "03", Icon: ClipboardCheck },
+];
+
+const heroImageClass = "hero-visual object-cover object-center opacity-95 lg:object-right";
+
+type AboutHighlight = {
+  phrase: string;
+  className: string;
+};
+
+const aboutHighlights = {
+  id: [
+    [
+      { phrase: "CyberXatria", className: "text-gradient font-bold" },
+      { phrase: "kompetensi dan kesiapan menghadapi ancaman siber", className: "text-gradient font-bold" },
+    ],
+    [
+      { phrase: "Program kami", className: "text-gradient font-bold" },
+      { phrase: "Keamanan Ofensif", className: "font-semibold" },
+      { phrase: "Keamanan Defensif", className: "font-semibold" },
+      { phrase: "Operasi Keamanan", className: "font-semibold" },
+      { phrase: "Tata Kelola, Risiko, dan Kepatuhan", className: "font-semibold" },
+    ],
+    [
+      { phrase: "Manusia, Proses, dan Teknologi (People, Process, and Technology)", className: "text-gradient font-bold" },
+    ],
+  ],
+  en: [
+    [
+      { phrase: "CyberXatria", className: "text-gradient font-bold" },
+      { phrase: "competencies and readiness needed to face cyber threats", className: "text-gradient font-bold" },
+    ],
+    [
+      { phrase: "Our programs", className: "text-gradient font-bold" },
+      { phrase: "Offensive Security", className: "font-semibold" },
+      { phrase: "Defensive Security", className: "font-semibold" },
+      { phrase: "Security Operations", className: "font-semibold" },
+      { phrase: "Governance, Risk & Compliance", className: "font-semibold" },
+    ],
+    [
+      { phrase: "People, Process, and Technology", className: "text-gradient font-bold" },
+    ],
+  ],
+} satisfies Record<"id" | "en", AboutHighlight[][]>;
+
+function renderHighlightedParagraph(text: string, highlights: AboutHighlight[]): ReactNode {
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+
+  highlights.forEach((highlight, index) => {
+    const start = text.indexOf(highlight.phrase, cursor);
+
+    if (start === -1) {
+      return;
+    }
+
+    if (start > cursor) {
+      parts.push(text.slice(cursor, start));
+    }
+
+    parts.push(
+      <span key={`${highlight.phrase}-${index}`} className={highlight.className}>
+        {highlight.phrase}
+      </span>,
+    );
+    cursor = start + highlight.phrase.length;
+  });
+
+  if (cursor < text.length) {
+    parts.push(text.slice(cursor));
+  }
+
+  return parts;
+}
 
 export function CompanyPageContent() {
-  const { t } = usePublicPreferences();
+  const { language, t } = usePublicPreferences();
+
   const copy = t({
     id: {
-      eyebrow: "Tentang CyberXatria",
-      title: "Membangun Organisasi yang",
-      accent: "Lebih Tangguh dan Aman",
-      intro: "CyberXatria membantu organisasi memperkuat ketahanan siber melalui monitoring, assessment, simulasi, pelatihan, dan latihan cybersecurity secara langsung.",
-      visionTitle: "Visi Kami",
-      vision: "Memberdayakan organisasi dengan kemampuan cybersecurity yang lebih kuat serta membangun ekosistem digital yang lebih tangguh dan aman.",
-      missionTitle: "Misi Kami",
-      mission: ["Menyediakan solusi cybersecurity yang praktis dan efektif.", "Meningkatkan kesadaran keamanan serta kemampuan teknis.", "Membantu organisasi mengidentifikasi, mengelola, dan merespons ancaman.", "Mendukung peningkatan kesiapan cybersecurity berkelanjutan."],
-      capability: "Kapabilitas",
-      expertiseTitle: "Keahlian",
-      expertiseAccent: "Kami",
-      expertise: ["Security Operations Center (SOC)", "Cyber Drill Exercise", "Tabletop Exercise (TTX)", "Cyber Threat Intelligence", "Security Assessment", "Remediation", "Security Awareness & Training"],
-      framework: "Framework NIST",
-      lifecycleTitle: "Pendekatan",
-      lifecycleAccent: "Berkelanjutan",
-      lifecycleIntro: "People, process, dan technology bergerak dalam satu lifecycle peningkatan kesiapan.",
-      lifecycle: ["Asesmen", "Persiapan", "Deteksi", "Respons", "Peningkatan"],
-      differentiator: "Nilai pembeda",
-      whyTitle: "Mengapa Memilih",
-      reasons: [
-        ["Practical & Scenario-Based", "Pendekatan praktis dengan skenario yang relevan terhadap ancaman nyata."],
-        ["Experienced Professionals", "Didukung tenaga profesional dan ahli di bidang cybersecurity."],
-        ["End-to-End Approach", "Pendekatan menyeluruh mulai dari assessment hingga improvement."],
-        ["Continuous Improvement", "Meningkatkan cybersecurity maturity organisasi secara berkelanjutan."],
+      heroEyebrow: "TENTANG KAMI",
+      heroTitle: ["Membangun Kesiapan Siber", "melalui Pengalaman Nyata"],
+      heroParagraphs: [
+        "CyberXatria membantu organisasi meningkatkan kesiapan menghadapi ancaman siber melalui pelatihan, simulasi, dan exercise yang dirancang berdasarkan kebutuhan serta skenario dunia nyata.",
+        "Kami menggabungkan cybersecurity knowledge, hands-on practice, dan realistic simulation untuk membantu tim membangun kemampuan teknis, koordinasi, dan pengambilan keputusan saat menghadapi insiden keamanan siber.",
       ],
-      ecosystem: "Ekosistem terpercaya",
-      certTitle: "Sertifikasi & Kemitraan",
-      certIntro: "Kami membangun layanan melalui standar yang kuat, teknologi yang relevan, dan kolaborasi bersama ekosistem cybersecurity.",
-      badges: ["Sertifikasi ISO", "Sertifikasi Cybersecurity", "Strategic Partners", "Kolaborasi Industri"],
+      heroSupport: ["Dari Pembelajaran hingga Simulasi,", "CyberXatria Membantu Membangun Kesiapan Siber"],
+      aboutParagraphs: [
+        "CyberXatria merupakan ekosistem pembelajaran dan latihan keamanan siber yang dirancang untuk membantu individu maupun organisasi mengembangkan kompetensi dan kesiapan menghadapi ancaman siber.",
+        "Program kami mencakup berbagai bidang keamanan siber, mulai dari Keamanan Ofensif, Keamanan Defensif, Operasi Keamanan, hingga Tata Kelola, Risiko, dan Kepatuhan.",
+        "Melalui pendekatan Manusia, Proses, dan Teknologi (People, Process, and Technology), CyberXatria menghubungkan pembelajaran dengan praktik sehingga kemampuan yang dibangun dapat diterapkan dalam situasi yang lebih realistis.",
+      ],
+      servicesEyebrow: "LAYANAN KAMI",
+      servicesTitle: "Layanan Utama Kami",
+      servicesDescription:
+        "Kami menyediakan layanan terintegrasi untuk membantu organisasi membangun kesiapan siber yang lebih kuat dan berkelanjutan.",
+      learnMore: "Pelajari Lebih Lanjut",
+      services: [
+        {
+          title: "CYBER DRILL EXERCISE",
+          description:
+            "Simulasi serangan siber dari sisi teknis yang dirancang untuk menguji kemampuan organisasi dalam mendeteksi, merespons, dan menangani insiden keamanan secara nyata.",
+        },
+        {
+          title: "TABLETOP EXERCISE",
+          description:
+            "Simulasi berbasis skenario yang melibatkan berbagai fungsi dalam organisasi untuk menguji pengambilan keputusan, koordinasi, dan prosedur respons insiden siber.",
+        },
+        {
+          title: "AI FOR SOC",
+          description:
+            "Solusi berbasis kecerdasan buatan yang membantu tim SOC menganalisis peringatan, mengidentifikasi potensi ancaman, memprioritaskan risiko, serta mempercepat penyelidikan dan respons keamanan.",
+        },
+        { title: learningContent.id.hero.label, description: learningContent.id.hero.description },
+      ],
+      experienceEyebrow: "PENGALAMAN KAMI",
+      experienceTitle: "Jejak Kolaborasi Kami",
+      experienceDescription:
+        "Berbagai pengalaman dan pencapaian yang menjadi bagian dari perjalanan kami dalam mendukung peningkatan kesiapan di berbagai sektor.",
+      experiences: [
+        {
+          title: "Mini Bootcamp",
+          subtitle: "Dasar Red Team dan Blue Team untuk Pemula",
+          description: "Pelatihan terarah untuk mengenalkan dasar pengujian keamanan dan pertahanan siber melalui praktik red team dan blue team.",
+        },
+        {
+          title: "CTF Terbuka",
+          subtitle: "Kompetisi dan Latihan Capture The Flag",
+          description: "Kurusetra Warrior 2025 dan CTF Forage menghadirkan tantangan praktik untuk mengasah keterampilan keamanan siber.",
+        },
+        {
+          title: "Cyber Drill dan Tabletop Exercise",
+          subtitle: "Latihan Respons Insiden Lintas Industri",
+          description: "Latihan berbasis skenario untuk melatih pengambilan keputusan dan koordinasi tim dalam merespons insiden siber.",
+        },
+      ],
       ctaTitle: "Siap Memperkuat Ketahanan Siber Organisasi Anda?",
       ctaText: "Temukan bagaimana CyberXatria membantu organisasi mempersiapkan diri, mendeteksi, dan merespons ancaman siber.",
-      cta: "Request Demo",
+      cta: "Ajukan Demo",
     },
     en: {
-      eyebrow: "About CyberXatria",
-      title: "Building Organizations That Are",
-      accent: "More Resilient and Secure",
-      intro: "CyberXatria helps organizations strengthen cyber resilience through monitoring, assessment, simulation, training, and hands-on cybersecurity exercises.",
-      visionTitle: "Our Vision",
-      vision: "Empower organizations with stronger cybersecurity capabilities and build a more resilient and secure digital ecosystem.",
-      missionTitle: "Our Mission",
-      mission: ["Provide practical and effective cybersecurity solutions.", "Improve security awareness and technical capabilities.", "Help organizations identify, manage, and respond to threats.", "Support continuous cybersecurity readiness improvement."],
-      capability: "Capabilities",
-      expertiseTitle: "Our",
-      expertiseAccent: "Expertise",
-      expertise: ["Security Operations Center (SOC)", "Cyber Drill Exercise", "Tabletop Exercise (TTX)", "Cyber Threat Intelligence", "Security Assessment", "Remediation", "Security Awareness & Training"],
-      framework: "NIST Framework",
-      lifecycleTitle: "Continuous",
-      lifecycleAccent: "Approach",
-      lifecycleIntro: "People, process, and technology move through one readiness improvement lifecycle.",
-      lifecycle: ["Assess", "Prepare", "Detect", "Respond", "Improve"],
-      differentiator: "Differentiators",
-      whyTitle: "Why Choose",
-      reasons: [
-        ["Practical & Scenario-Based", "A practical approach with scenarios relevant to real threats."],
-        ["Experienced Professionals", "Supported by experienced cybersecurity professionals and experts."],
-        ["End-to-End Approach", "A comprehensive approach from assessment to improvement."],
-        ["Continuous Improvement", "Improving the organization's cybersecurity maturity continuously."],
+      heroEyebrow: "ABOUT US",
+      heroTitle: ["Building Cyber Readiness", "through Real-World Experience"],
+      heroParagraphs: [
+        "CyberXatria helps organizations improve their readiness against cyber threats through training, simulations, and exercises designed around real-world needs and scenarios.",
+        "We combine cybersecurity knowledge, hands-on practice, and realistic simulation to help teams build technical capabilities, coordination, and decision-making skills when facing cybersecurity incidents.",
       ],
-      ecosystem: "Trusted ecosystem",
-      certTitle: "Certifications & Partnerships",
-      certIntro: "We build services through strong standards, relevant technology, and collaboration with the cybersecurity ecosystem.",
-      badges: ["ISO Certification", "Cybersecurity Certification", "Strategic Partners", "Industry Collaboration"],
+      heroSupport: ["From Learning to Simulation,", "CyberXatria Helps Build Cyber Readiness"],
+      aboutParagraphs: [
+        "CyberXatria is a cybersecurity learning and exercise ecosystem designed to help individuals and organizations develop the competencies and readiness needed to face cyber threats.",
+        "Our programs cover various cybersecurity areas, including Offensive Security, Defensive Security, Security Operations, and Governance, Risk & Compliance.",
+        "Through a People, Process, and Technology approach, CyberXatria connects learning with hands-on practice so the capabilities developed can be applied in more realistic situations.",
+      ],
+      servicesEyebrow: "OUR EXPERTISE",
+      servicesTitle: "Our Core Services",
+      servicesDescription:
+        "We provide integrated services to help organizations build stronger and more sustainable cyber readiness.",
+      learnMore: "Learn More",
+      services: [
+        {
+          title: "CYBER DRILL EXERCISE",
+          description:
+            "A technical cyberattack simulation designed to test an organization's ability to detect, respond to, and handle real-world security incidents.",
+        },
+        {
+          title: "TABLETOP EXERCISE",
+          description:
+            "A scenario-based simulation involving various functions within an organization to test decision-making, coordination, and cyber incident response procedures.",
+        },
+        {
+          title: "AI FOR SOC",
+          description:
+            "An artificial intelligence-based solution that helps SOC teams analyze alerts, identify potential threats, prioritize risks, and accelerate security investigations and responses.",
+        },
+        { title: learningContent.en.hero.label, description: learningContent.en.hero.description },
+      ],
+      experienceEyebrow: "OUR EXPERIENCE",
+      experienceTitle: "Our Collaboration Journey",
+      experienceDescription:
+        "Various experiences and achievements that have become part of our journey in supporting cybersecurity readiness across different sectors.",
+      experiences: [
+        {
+          title: "Mini Bootcamp",
+          subtitle: "Red Team and Blue Team Fundamentals for Beginners",
+          description: "Structured training introducing security testing and cyber defense fundamentals through red team and blue team practices.",
+        },
+        {
+          title: "Public CTF",
+          subtitle: "Capture The Flag Competitions and Practice",
+          description: "Kurusetra Warrior 2025 and CTF Forage offer hands-on challenges to develop cybersecurity skills.",
+        },
+        {
+          title: "Cyber Drill and Tabletop Exercise",
+          subtitle: "Incident Response Exercises Across Industries",
+          description: "Scenario-based exercises to practice decision-making and team coordination when responding to cyber incidents.",
+        },
+      ],
       ctaTitle: "Ready to Strengthen Your Organization's Cyber Resilience?",
       ctaText: "Discover how CyberXatria helps organizations prepare for, detect, and respond to cyber threats.",
       cta: "Request Demo",
@@ -83,27 +234,200 @@ export function CompanyPageContent() {
   });
 
   return (
-    <main className="site-shell min-h-screen bg-[#03060d] text-white">
+    <main className="site-shell min-h-screen bg-background text-foreground">
       <SiteHeader />
-      <section className="relative overflow-hidden border-b border-white/5 py-28">
+
+      <section className="relative overflow-hidden border-b border-slate-200/80 dark:border-white/5">
+        <div className="home-hero-artwork company-hero-artwork absolute inset-y-0 right-0">
+          <Image
+            src={publicAsset("/images/Tentang Kami Light.png")}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 640px) 126vw, (max-width: 1024px) 82vw, 66vw"
+            className={`${heroImageClass} dark:hidden`}
+          />
+          <Image
+            src={publicAsset("/images/Tentang Kami.png")}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 640px) 126vw, (max-width: 1024px) 82vw, 66vw"
+            className={`${heroImageClass} hidden dark:block`}
+          />
+        </div>
         <div className="dot-field absolute inset-0 opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_68%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(244,63,94,.16),transparent_36%)]" />
-        <div className="page-grid relative text-center"><p className="eyebrow justify-center">{copy.eyebrow}</p><h1 className="mx-auto mt-6 max-w-4xl text-5xl font-bold tracking-[-0.04em] sm:text-6xl">{copy.title} <span className="text-gradient">{copy.accent}</span></h1><p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-400">{copy.intro}</p></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(244,63,94,.14),transparent_36%)]" />
+        <div className="hero-vignette absolute inset-0" />
+        <div className="hero-ambient" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />
+        <div className="page-grid relative z-10 flex min-h-[720px] items-center py-20 sm:py-24 xl:min-h-[760px]">
+          <div className="max-w-[660px] -translate-y-10 pt-8 lg:-translate-y-14">
+            <p className="eyebrow">{copy.heroEyebrow}</p>
+            <h1 className="mt-6 max-w-4xl text-5xl font-bold tracking-[-0.04em] text-slate-900 dark:text-white sm:text-6xl">
+              {copy.heroTitle[0]}
+              <br />
+              <span className="text-gradient">{copy.heroTitle[1]}</span>
+            </h1>
+            <div className="mt-6 max-w-2xl space-y-4 text-xl leading-9 text-slate-600 dark:text-slate-300">
+              {copy.heroParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+            <div className="mt-8 border-l-4 border-rose-500 pl-5">
+              <p className="text-xl font-bold leading-tight text-slate-900 dark:text-white sm:text-2xl">
+                {copy.heroSupport[0]}
+                <br />
+                <span className="text-gradient">{copy.heroSupport[1]}</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section className="py-24"><div className="page-grid grid gap-6 lg:grid-cols-2"><div className="cyber-card rounded-3xl p-8 sm:p-10"><div className="grid size-12 place-items-center rounded-xl bg-rose-500/10 text-rose-400"><ScanSearch /></div><h2 className="mt-6 text-3xl font-bold">{copy.visionTitle}</h2><p className="mt-4 leading-7 text-slate-400">{copy.vision}</p></div><div className="cyber-card rounded-3xl p-8 sm:p-10"><div className="grid size-12 place-items-center rounded-xl bg-rose-500/10 text-rose-400"><ShieldCheck /></div><h2 className="mt-6 text-3xl font-bold">{copy.missionTitle}</h2><ul className="mt-4 space-y-3 text-sm leading-6 text-slate-400">{copy.mission.map((item) => <li key={item} className="flex gap-3"><Check className="mt-1 size-4 shrink-0 text-rose-500" />{item}</li>)}</ul></div></div></section>
+      <section className="py-16 sm:py-20">
+        <div className="page-grid">
+          <div className="company-about-card cyber-card grid items-center gap-5 rounded-3xl border-slate-200/80 p-5 shadow-sm dark:border-white/10 dark:shadow-none sm:p-6 lg:grid-cols-[0.48fr_0.52fr] lg:gap-6">
+            <div className="company-about-copy company-about-copy-start space-y-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
+              {copy.aboutParagraphs.slice(0, 2).map((paragraph, index) => (
+                <p key={paragraph}>{renderHighlightedParagraph(paragraph, aboutHighlights[language][index] ?? [])}</p>
+              ))}
+            </div>
+            <div className="company-about-visual relative aspect-[3/2] w-full overflow-hidden rounded-2xl">
+              <Image
+                src={publicAsset("/images/Tentang Kami 2.png")}
+                alt=""
+                fill
+                sizes="(max-width: 1024px) 100vw, 52vw"
+                className="object-contain"
+              />
+            </div>
+            <div className="company-about-copy company-about-copy-end text-lg leading-8 text-slate-600 dark:text-slate-400">
+              {copy.aboutParagraphs.slice(2).map((paragraph, offset) => {
+                const index = offset + 2;
+                return (
+                  <p key={paragraph}>{renderHighlightedParagraph(paragraph, aboutHighlights[language][index] ?? [])}</p>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section className="border-y border-white/5 bg-[#070a12] py-24"><div className="page-grid"><div className="mx-auto mb-12 max-w-2xl text-center"><p className="eyebrow justify-center">{copy.capability}</p><h2 className="mt-4 text-3xl font-bold sm:text-4xl">{copy.expertiseTitle} <span className="text-gradient">{copy.expertiseAccent}</span></h2></div><div className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">{copy.expertise.map((item, index) => <div key={item} className="flex items-center gap-4 rounded-xl border border-white/10 bg-[#090d15] p-5"><span className="grid size-9 shrink-0 place-items-center rounded-lg bg-rose-500/10 text-xs font-black text-rose-400">0{index + 1}</span><p className="text-sm font-semibold">{item}</p></div>)}</div></div></section>
+      <section className="border-y border-slate-200/80 bg-slate-50/70 py-16 transition-colors dark:border-white/5 dark:bg-[#070a12] sm:py-20">
+        <div className="page-grid">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <p className="eyebrow justify-center">{copy.servicesEyebrow}</p>
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.servicesTitle}</h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.servicesDescription}</p>
+          </div>
+          <div className="grid gap-6 md:auto-rows-fr md:grid-cols-2">
+            {copy.services.map((service, index) => {
+              const meta = solutionServiceMeta[index];
+              return (
+                <article key={service.title} className="cyber-card motion-card flex h-full flex-col rounded-2xl p-4">
+                  <div className="solution-card-image relative shrink-0 overflow-hidden rounded-xl border border-slate-200/80 bg-transparent dark:border-white/10">
+                    <Image
+                      src={publicAsset(meta.imageLight)}
+                      alt={service.title}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 50vw"
+                      className={`${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:hidden`}
+                    />
+                    <Image
+                      src={publicAsset(meta.image)}
+                      alt={service.title}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 50vw"
+                      className={`hidden ${meta.imageFit === "contain" ? "object-contain" : "object-cover"} dark:block`}
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-3 pt-5">
+                    <h3 className="flex min-h-14 items-center text-xl font-bold text-slate-900 dark:text-white">{service.title}</h3>
+                    <p className="mt-4 flex-1 text-base leading-7 text-slate-600 dark:text-slate-400">{service.description}</p>
+                    {meta.href ? (
+                      <Link
+                        href={localePath(meta.href, language)}
+                        className="motion-link mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rose-500 hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-rose-400 dark:hover:text-rose-300"
+                      >
+                        {copy.learnMore} <ArrowRight className="size-4" />
+                      </Link>
+                    ) : (
+                      <span
+                        aria-disabled="true"
+                        className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-slate-500 dark:text-slate-500"
+                      >
+                        {copy.learnMore}
+                      </span>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-      <section className="py-24"><div className="page-grid"><div className="mx-auto mb-12 max-w-2xl text-center"><p className="eyebrow justify-center">{copy.framework}</p><h2 className="mt-4 text-3xl font-bold sm:text-4xl">{copy.lifecycleTitle} <span className="text-gradient">{copy.lifecycleAccent}</span></h2><p className="mt-4 text-slate-400">{copy.lifecycleIntro}</p></div><div className="grid gap-3 sm:grid-cols-5">{copy.lifecycle.map((item, index) => <div key={item} className="relative rounded-2xl border border-rose-500/25 bg-[#090d15] px-4 py-7 text-center"><span className="text-xs font-black text-rose-500">0{index + 1}</span><p className="mt-2 font-bold">{item}</p>{index < copy.lifecycle.length - 1 && <ArrowRight className="absolute -right-5 top-1/2 z-10 hidden size-6 -translate-y-1/2 text-rose-700 sm:block" />}</div>)}</div></div></section>
+      <section className="py-16 sm:py-20">
+        <div className="page-grid">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <p className="eyebrow justify-center">{copy.experienceEyebrow}</p>
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.experienceTitle}</h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.experienceDescription}</p>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {copy.experiences.map((experience, index) => {
+              const image = experienceImages[index];
+              const meta = experienceMeta[index];
+              const Icon = meta.Icon;
+              return (
+                <article
+                  key={experience.title}
+                  className="cyber-card motion-card flex h-full flex-col rounded-2xl p-4"
+                >
+                  <div className="relative aspect-video overflow-hidden rounded-xl border border-slate-200/80 dark:border-white/10">
+                    <Image
+                      src={publicAsset(image.light)}
+                      alt={experience.title}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 33vw"
+                      className="object-contain object-center dark:hidden"
+                    />
+                    <Image
+                      src={publicAsset(image.dark)}
+                      alt={experience.title}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 33vw"
+                      className="hidden object-contain object-center dark:block"
+                    />
+                    <span className="absolute left-3 top-3 rounded-full bg-background/90 px-2.5 py-1 text-sm font-bold text-rose-600 shadow-sm backdrop-blur dark:text-rose-400">
+                      {meta.number}
+                    </span>
+                    <span className="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-background/90 text-rose-600 shadow-sm backdrop-blur dark:text-rose-300">
+                      <Icon className="size-4" aria-hidden="true" />
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col p-3 pt-5">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{experience.title}</h3>
+                    <p className="mt-2 text-base font-semibold text-rose-600 dark:text-rose-400">{experience.subtitle}</p>
+                    <p className="mt-4 flex-1 text-base leading-7 text-slate-600 dark:text-slate-400">{experience.description}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-      <section className="border-y border-white/5 bg-[#070a12] py-24"><div className="page-grid"><div className="mx-auto mb-12 max-w-2xl text-center"><p className="eyebrow justify-center">{copy.differentiator}</p><h2 className="mt-4 text-3xl font-bold sm:text-4xl">{copy.whyTitle} <span className="text-gradient">CyberXatria?</span></h2></div><div className="grid gap-4 md:grid-cols-2">{copy.reasons.map(([title, text], index) => { const Icon = reasonIcons[index]; return <div key={title} className="cyber-card rounded-2xl p-7"><Icon className="size-8 text-rose-500" /><h3 className="mt-5 text-lg font-bold">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-400">{text}</p></div>; })}</div></div></section>
+      <section className="pb-16 sm:pb-20">
+        <div className="page-grid premium-panel rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-50 via-white to-rose-100/50 px-6 py-14 text-center shadow-lg dark:bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,.22),transparent_35%),#080c14] dark:shadow-[0_0_50px_rgba(244,63,94,0.15)] sm:px-12">
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{copy.ctaTitle}</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">{copy.ctaText}</p>
+          <RequestDemoCta className="mt-8">{copy.cta}</RequestDemoCta>
+        </div>
+      </section>
 
-      <section className="py-24"><div className="page-grid grid items-center gap-10 lg:grid-cols-2"><div><p className="eyebrow">{copy.ecosystem}</p><h2 className="mt-5 text-3xl font-bold sm:text-4xl">{copy.certTitle}</h2><p className="mt-5 leading-7 text-slate-400">{copy.certIntro}</p></div><div className="grid gap-4 sm:grid-cols-2">{copy.badges.map((label, index) => { const Icon = badgeIcons[index]; return <div key={label} className="rounded-xl border border-white/10 bg-[#090d15] p-6"><Icon className="size-7 text-rose-500" /><p className="mt-4 font-semibold">{label}</p></div>; })}</div></div></section>
-
-      <section className="pb-24"><div className="page-grid rounded-3xl border border-rose-500/30 bg-[radial-gradient(circle_at_80%_50%,rgba(244,63,94,.22),transparent_35%),#080c14] px-6 py-14 text-center"><h2 className="text-3xl font-bold sm:text-4xl">{copy.ctaTitle}</h2><p className="mx-auto mt-4 max-w-2xl text-slate-400">{copy.ctaText}</p><Link href="/request-demo" className="glow-button mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg px-6 font-semibold">{copy.cta} <ArrowRight className="size-4" /></Link></div></section>
       <SiteFooter />
     </main>
   );
 }
-
